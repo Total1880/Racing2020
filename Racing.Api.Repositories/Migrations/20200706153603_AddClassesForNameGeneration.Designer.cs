@@ -3,61 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Racing.Api.Repositories;
 
 namespace Racing.Api.Repositories.Migrations
 {
     [DbContext(typeof(RacingContext))]
-    partial class RacingContextModelSnapshot : ModelSnapshot
+    [Migration("20200706153603_AddClassesForNameGeneration")]
+    partial class AddClassesForNameGeneration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Racing.Model.FirstNames", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("NationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NationId");
-
-                    b.ToTable("FirstNamesList");
-                });
-
-            modelBuilder.Entity("Racing.Model.LastNames", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("NationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NationId");
-
-                    b.ToTable("LastNamesList");
-                });
 
             modelBuilder.Entity("Racing.Model.Nation", b =>
                 {
@@ -95,20 +57,6 @@ namespace Racing.Api.Repositories.Migrations
                     b.HasIndex("NationId");
 
                     b.ToTable("RacerPersonList");
-                });
-
-            modelBuilder.Entity("Racing.Model.FirstNames", b =>
-                {
-                    b.HasOne("Racing.Model.Nation", "Nation")
-                        .WithMany()
-                        .HasForeignKey("NationId");
-                });
-
-            modelBuilder.Entity("Racing.Model.LastNames", b =>
-                {
-                    b.HasOne("Racing.Model.Nation", "Nation")
-                        .WithMany()
-                        .HasForeignKey("NationId");
                 });
 
             modelBuilder.Entity("Racing.Model.RacerPerson", b =>
