@@ -8,6 +8,27 @@
         Title="MainWindow" Height="450" Width="800"
         DataContext="{Binding MainWindow, Source={StaticResource Locator}}">
     <Grid>
-        <Button Command="{Binding TestCommand}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="0">
+            <Button Content="Add new list" Click="Button_Click_New_List"/>
+            <Button Content="Add new nation" Click="Button_Click_New_Nation"/>
+        </StackPanel>
+        <Frame Grid.Row="0"
+               Grid.Column="1"
+               Grid.ColumnSpan="2"
+               Grid.RowSpan="3"
+               Name="MainFrame"
+               NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
