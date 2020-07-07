@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AddNamesToDatabase
+namespace AddNamesToDatabase.Pages
 {
     /// <summary>
-    /// Interaction logic for NationPage.xaml
+    /// Interaction logic for MainPage.xaml
     /// </summary>
-    public partial class NationPage : Page
+    public partial class MainPage : Page
     {
-        public NationPage()
+        public MainPage()
         {
             InitializeComponent();
         }

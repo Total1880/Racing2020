@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Racing.Api.Services\Racing.Api.Services.csproj" />
+    <ProjectReference Include="..\Racing.Model\Racing.Model.csproj" />
   </ItemGroup>
 
 
