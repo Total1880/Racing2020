@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Racing.Api.Services;
+using Racing.Api.Services.Interfaces;
 using Racing.Model;
+using System;
 using System.Net;
 
 namespace Racing.Api.Controllers
@@ -10,6 +11,11 @@ namespace Racing.Api.Controllers
     public class NationController : ControllerBase
     {
         private readonly INationService _nationService;
+
+        public NationController(INationService nationService)
+        {
+            _nationService = nationService;
+        }
 
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
@@ -22,6 +28,22 @@ namespace Racing.Api.Controllers
             }
             
             return BadRequest();
+        }
+
+        [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult GetNations()
+        {
+            try
+            {
+                return Ok(_nationService.GetNations());
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
         }
     }
 }

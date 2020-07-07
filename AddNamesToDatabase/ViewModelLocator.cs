@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using AddNamesToDatabase.ViewModel;
+using Autofac;
 
 namespace AddNamesToDatabase
 {
