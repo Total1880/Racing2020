@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AddNamesToDatabase.Repositories.RestClient
@@ -27,6 +28,16 @@ namespace AddNamesToDatabase.Repositories.RestClient
             var json = await result.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<IList<T>>(json);
+        }
+
+        public bool CreateData<T>(string endpoint, T data)
+        {
+            var json = JsonConvert.SerializeObject(data).ToString();
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = _instance.PostAsync(endpoint, content);
+            response.Wait();
+
+            return response.Result.IsSuccessStatusCode;
         }
 
         public void Dispose()

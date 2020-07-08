@@ -17,7 +17,7 @@ namespace AddNamesToDatabase.Services
 
         public bool CreateNation(Nation nation)
         {
-            throw new System.NotImplementedException();
+            return _nationRepository.Create(nation);
         }
 
         public Task<IList<Nation>> GetNations()

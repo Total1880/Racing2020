@@ -1,9 +1,10 @@
-﻿using ExcelDataReader;
+﻿using AddNamesToDatabase.Messages;
+using AddNamesToDatabase.Services.Interfaces;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
+using Racing.Model;
+using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace AddNamesToDatabase.ViewModel
 {
@@ -34,5 +35,35 @@ namespace AddNamesToDatabase.ViewModel
         //        LastNames.Add(row[1].ToString());
         //    }
         //}
+
+        private readonly INationService _nationService;
+        private ObservableCollection<Nation> _nationList;
+
+        public ObservableCollection<Nation> NationList
+        {
+            get => _nationList;
+            set
+            {
+                _nationList = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public MainWindowViewModel(INationService nationService)
+        {
+            _nationService = nationService;
+            _ = GetNations();
+            MessengerInstance.Register<NationCreatedMessage>(this, OnNationCreated);
+        }
+
+        private void OnNationCreated(NationCreatedMessage obj)
+        {
+            _ = GetNations();
+        }
+
+        private async Task GetNations()
+        {
+            NationList = new ObservableCollection<Nation>(await _nationService.GetNations());
+        }
     }
 }

@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:AddNamesToDatabase"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainPage">
+      Title="MainPage"
+      DataContext="{Binding MainWindow, Source={StaticResource Locator}}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -26,7 +27,9 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="Nation: "
                        Width="50"/>
-                <ComboBox Width="300"/>
+                <ComboBox Width="300"
+                          ItemsSource="{Binding NationList}"
+                          DisplayMemberPath="Name"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1"

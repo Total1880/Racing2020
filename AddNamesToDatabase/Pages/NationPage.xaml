@@ -22,7 +22,8 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="New nation: "
                        Width="75"/>
-                <TextBox Width="275"/>
+                <TextBox Width="275"
+                         Text="{Binding Nation}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Edit nation: "
@@ -34,7 +35,8 @@
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Grid.Column="1">
-            <Button Content="Save new nation"/>
+            <Button Content="Save new nation"
+                    Command="{Binding AddNationCommand}"/>
             <Button Content="Edit nation"/>
         </StackPanel>
     </Grid>
