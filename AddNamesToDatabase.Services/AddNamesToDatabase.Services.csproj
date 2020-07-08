@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AddNamesToDatabase.Repositories\AddNamesToDatabase.Repositories.csproj" />
+    <ProjectReference Include="..\Racing.Model\Racing.Model.csproj" />
+  </ItemGroup>
+
+</Project>

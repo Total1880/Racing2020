@@ -1,5 +1,8 @@
-﻿using AddNamesToDatabase.ViewModel;
+﻿using AddNamesToDatabase.Repositories.RestClient;
+using AddNamesToDatabase.Services;
+using AddNamesToDatabase.ViewModel;
 using Autofac;
+using static System.Configuration.ConfigurationManager;
 
 namespace AddNamesToDatabase
 {
@@ -11,11 +14,18 @@ namespace AddNamesToDatabase
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterModule<ServicesModule>();
+
+            var _baseURI = AppSettings.Get("BasisURL");
+            builder.RegisterType<RacingRestClient>().As<RacingRestClient>().WithParameter("baseAdress", _baseURI);
+
             builder.RegisterType<MainWindowViewModel>().SingleInstance();
+            builder.RegisterType<NationPageViewModel>().SingleInstance();
 
             _container = builder.Build();
         }
 
         public MainWindowViewModel MainWindow => _container.Resolve<MainWindowViewModel>();
+        public NationPageViewModel NationPage => _container.Resolve<NationPageViewModel>();
     }
 }
