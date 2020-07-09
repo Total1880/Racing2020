@@ -22,7 +22,7 @@
             Grid.Row="0"
             Grid.Column="0">
             <Button Content="Add new list" Click="Button_Click_New_List"/>
-            <Button Content="Add new nation" Click="Button_Click_New_Nation"/>
+            <Button Content="Nation editor" Click="Button_Click_New_Nation"/>
         </StackPanel>
         <Frame Grid.Row="0"
                Grid.Column="1"

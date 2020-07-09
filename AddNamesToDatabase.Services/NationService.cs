@@ -20,6 +20,16 @@ namespace AddNamesToDatabase.Services
             return _nationRepository.Create(nation);
         }
 
+        public bool DeleteNation(int id)
+        {
+            return _nationRepository.Delete(id);
+        }
+
+        public bool EditNation(Nation nation)
+        {
+            return _nationRepository.Update(nation);
+        }
+
         public Task<IList<Nation>> GetNations()
         {
             return _nationRepository.Get();

@@ -30,6 +30,7 @@
                        Width="75"/>
                 <ComboBox Width="275"
                           ItemsSource="{Binding NationList}"
+                          SelectedItem="{Binding SelectedNation}"
                           DisplayMemberPath="Name"/>
             </StackPanel>
         </StackPanel>
@@ -37,7 +38,10 @@
                     Grid.Column="1">
             <Button Content="Save new nation"
                     Command="{Binding AddNationCommand}"/>
-            <Button Content="Edit nation"/>
+            <Button Content="Edit nation"
+                    Command="{Binding EditNationCommand}"/>
+            <Button Content="Delete nation"
+                    Command="{Binding DeleteNationCommand}"/>
         </StackPanel>
     </Grid>
 </Page>

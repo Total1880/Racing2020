@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 
 namespace AddNamesToDatabase.Repositories.RestClient
@@ -35,6 +36,24 @@ namespace AddNamesToDatabase.Repositories.RestClient
             var json = JsonConvert.SerializeObject(data).ToString();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = _instance.PostAsync(endpoint, content);
+            response.Wait();
+
+            return response.Result.IsSuccessStatusCode;
+        }
+
+        public bool UpdateData<T>(string endpoint, T data)
+        {
+            var json = JsonConvert.SerializeObject(data).ToString();
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = _instance.PutAsync(endpoint, content);
+            response.Wait();
+
+            return response.Result.IsSuccessStatusCode;
+        }
+
+        public bool DeleteData(string endpoint, int id)
+        {
+            var response = _instance.DeleteAsync(endpoint + $"/{id}");
             response.Wait();
 
             return response.Result.IsSuccessStatusCode;

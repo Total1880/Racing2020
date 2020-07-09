@@ -8,6 +8,10 @@ namespace AddNamesToDatabase.Services.Interfaces
     {
         bool CreateNation(Nation nation);
 
+        bool EditNation(Nation nation);
+
+        bool DeleteNation(int id);
+
         Task<IList<Nation>> GetNations();
     }
 }

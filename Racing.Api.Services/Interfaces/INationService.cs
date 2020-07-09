@@ -7,6 +7,10 @@ namespace Racing.Api.Services.Interfaces
     {
         bool CreateNation(Nation nation);
 
+        bool EditNation(Nation nation);
+
+        bool DeleteNation(int id);
+
         IList<Nation> GetNations();
     }
 }

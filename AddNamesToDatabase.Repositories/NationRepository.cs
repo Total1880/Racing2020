@@ -22,7 +22,7 @@ namespace AddNamesToDatabase.Repositories
 
         public bool Delete(int id)
         {
-            throw new System.NotImplementedException();
+            return _client.DeleteData(Endpoints.Nation, id);
         }
 
         public async Task<IList<Nation>> Get()
@@ -32,7 +32,7 @@ namespace AddNamesToDatabase.Repositories
 
         public bool Update(Nation item)
         {
-            throw new System.NotImplementedException();
+            return _client.UpdateData(Endpoints.Nation, item);
         }
     }
 }
