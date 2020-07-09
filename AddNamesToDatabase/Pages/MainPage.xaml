@@ -22,19 +22,22 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="Path: "
                        Width="50"/>
-                <TextBox Width="300"/>
+                <TextBox Width="300"
+                         Text="{Binding Path}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Nation: "
                        Width="50"/>
                 <ComboBox Width="300"
                           ItemsSource="{Binding NationList}"
-                          DisplayMemberPath="Name"/>
+                          DisplayMemberPath="Name"
+                          SelectedItem="{Binding SelectedNation}"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Grid.Column="1">
-            <Button Content="Upload list"/>
+            <Button Content="Upload list"
+                    Command="{Binding UploadListCommand}"/>
         </StackPanel>
     </Grid>
 </Page>
