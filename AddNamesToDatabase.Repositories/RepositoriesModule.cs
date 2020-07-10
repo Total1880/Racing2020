@@ -7,6 +7,8 @@ namespace AddNamesToDatabase.Repositories
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<NationRepository>().AsImplementedInterfaces();
+            builder.RegisterType<FirstNameRepository>().AsImplementedInterfaces();
+            builder.RegisterType<LastNameRepository>().AsImplementedInterfaces();
         }
     }
 }

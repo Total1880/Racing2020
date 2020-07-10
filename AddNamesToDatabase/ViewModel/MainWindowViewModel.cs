@@ -16,10 +16,11 @@ namespace AddNamesToDatabase.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly INationService _nationService;
+        private readonly INameService _nameService;
         private ObservableCollection<Nation> _nationList;
         private RelayCommand _uploadListCommand;
-        private List<FirstNames> _firstNames = new List<FirstNames>();
-        private List<LastNames> _lastNames = new List<LastNames>();
+        private List<FirstNames> _firstNames;
+        private List<LastNames> _lastNames;
 
         public ObservableCollection<Nation> NationList
         {
@@ -37,9 +38,10 @@ namespace AddNamesToDatabase.ViewModel
 
         public RelayCommand UploadListCommand => _uploadListCommand ??= new RelayCommand(UploadList);
 
-        public MainWindowViewModel(INationService nationService)
+        public MainWindowViewModel(INationService nationService, INameService nameService)
         {
             _nationService = nationService;
+            _nameService = nameService;
             _ = GetNations();
             MessengerInstance.Register<NationCreatedMessage>(this, OnNationCreated);
         }
@@ -58,6 +60,8 @@ namespace AddNamesToDatabase.ViewModel
         {
             if (File.Exists(Path) && SelectedNation != null)
             {
+                _firstNames = new List<FirstNames>();
+                _lastNames = new List<LastNames>();
                 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
                 using var stream = File.Open(Path, FileMode.Open, FileAccess.Read);
                 using var reader = ExcelReaderFactory.CreateReader(stream);
@@ -82,11 +86,18 @@ namespace AddNamesToDatabase.ViewModel
                         continue;
                     }
 
-                    _firstNames.Add(new FirstNames { FirstName = row[0].ToString(), Nation = SelectedNation });
-                    _lastNames.Add(new LastNames { LastName = row[1].ToString(), Nation = SelectedNation });
+                    if (row[0].ToString().Length > 0)
+                    {
+                        _firstNames.Add(new FirstNames { FirstName = row[0].ToString(), Nation = SelectedNation });
+                    }
 
-                    //TODO: lijsten doorsturen naar db
+                    if (row[1].ToString().Length > 0)
+                    {
+                        _lastNames.Add(new LastNames { LastName = row[1].ToString(), Nation = SelectedNation });
+                    }
                 }
+
+                _nameService.CreateNames(_firstNames, _lastNames);
             }
         }
     }

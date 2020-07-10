@@ -10,6 +10,7 @@ namespace AddNamesToDatabase.Services
             builder.RegisterModule<RepositoriesModule>();
 
             builder.RegisterType<NationService>().AsImplementedInterfaces();
+            builder.RegisterType<NameService>().AsImplementedInterfaces();
         }
     }
 }
