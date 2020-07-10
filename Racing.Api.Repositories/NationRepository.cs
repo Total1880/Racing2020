@@ -31,6 +31,10 @@ namespace Racing.Api.Repositories
             try
             {
                 using var context = new RacingContext();
+                if (context.FirstNamesList.Any(n => n.Nation.NationId == id) || context.LastNamesList.Any(n => n.Nation.NationId == id))
+                {
+                    return false;
+                }
                 context.NationList.Remove(context.NationList.Find(id));
                 context.SaveChanges();
                 return true;
