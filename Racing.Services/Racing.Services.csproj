@@ -4,4 +4,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Racing.Api.Repositories\Racing.Api.Repositories.csproj" />
+    <ProjectReference Include="..\Racing.Model\Racing.Model.csproj" />
+    <ProjectReference Include="..\Racing.Repositories\Racing.Repositories.csproj" />
+  </ItemGroup>
+
 </Project>

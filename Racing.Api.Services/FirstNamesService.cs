@@ -18,5 +18,10 @@ namespace Racing.Api.Services
         {
             return _firstNamesRepository.CreateNames(firstNames);
         }
+
+        public IList<FirstNames> GenerateFirstNames(int numberOfNames)
+        {
+            return _firstNamesRepository.GenerateNames(numberOfNames);
+        }
     }
 }

@@ -6,5 +6,7 @@ namespace Racing.Api.Services.Interfaces
     public interface IFirstNamesService
     {
         bool CreateNames(IList<FirstNames> firstNames);
+
+        IList<FirstNames> GenerateFirstNames(int numberOfNames);
     }
 }

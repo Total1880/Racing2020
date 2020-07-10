@@ -1,7 +1,6 @@
 ﻿using Racing.Api.Repositories;
 using Racing.Api.Services.Interfaces;
 using Racing.Model;
-using System;
 using System.Collections.Generic;
 
 namespace Racing.Api.Services
@@ -18,6 +17,11 @@ namespace Racing.Api.Services
         public bool CreateNames(IList<LastNames> lastNames)
         {
             return _lastNamesRepository.CreateNames(lastNames);
+        }
+
+        public IList<LastNames> GenerateLastNames(int numberOfNames)
+        {
+            return _lastNamesRepository.GenerateNames(numberOfNames);
         }
     }
 }

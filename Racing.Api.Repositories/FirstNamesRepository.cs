@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Racing.Model;
+﻿using Racing.Model;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Racing.Api.Repositories
 {
@@ -34,8 +33,33 @@ namespace Racing.Api.Repositories
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+
                 return false;
+            }
+        }
+
+        public IList<FirstNames> GenerateNames(int numberOfNames)
+        {
+            try
+            {
+                using var context = new RacingContext();
+
+                var firstNames = new List<FirstNames>();
+                var rand = new Random();
+
+                for (int i = 0; i < numberOfNames; i++)
+                {
+                    var toSkip = rand.Next(context.FirstNamesList.Count());
+
+                    firstNames.Add(context.FirstNamesList.Include(c => c.Nation).Skip(toSkip).Take(1).FirstOrDefault());
+                }
+
+                return firstNames;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

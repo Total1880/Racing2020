@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Racing.Messages.WindowOpener;
+using Racing.Pages;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Racing
 {
@@ -20,9 +11,22 @@ namespace Racing
     /// </summary>
     public partial class MainWindow : Window
     {
+        private StartPage _startPage;
+        private HomePage _homePage;
+
+        public StartPage StartPage => _startPage ??= new StartPage();
+        public HomePage HomePage => _homePage ??= new HomePage();
+
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.NavigationService.Navigate(StartPage);
+            Messenger.Default.Register<OpenHomePageMessage>(this, OpenHomePage);
+        }
+
+        private void OpenHomePage(OpenHomePageMessage obj)
+        {
+            MainFrame.NavigationService.Navigate(HomePage);
         }
     }
 }

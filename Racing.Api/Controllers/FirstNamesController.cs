@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Racing.Api.Services.Interfaces;
 using Racing.Model;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Net;
 
@@ -29,6 +29,22 @@ namespace Racing.Api.Controllers
             }
 
             return BadRequest();
+        }
+
+        [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult GenerateFirstNames(int numberOfNames)
+        {
+            try
+            {
+                return Ok(_firstNamesService.GenerateFirstNames(numberOfNames));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using System.Text.Unicode;
 using System.Threading.Tasks;
 
 namespace AddNamesToDatabase.Repositories.RestClient
