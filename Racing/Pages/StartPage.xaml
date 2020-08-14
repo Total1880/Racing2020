@@ -24,6 +24,7 @@
                     Grid.Column="1">
             <Button Content="New Game"
                     Command="{Binding NewGameCommand}"/>
+            <Button Content="ANTD" Click="Button_Click"/>
         </StackPanel>
     </Grid>
 </Page>

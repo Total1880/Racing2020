@@ -12,6 +12,16 @@ namespace Racing.ViewModel
         private IList<RacerPerson> _racerList;
         private int _numberOfNewRacers = 20;
 
+        public IList<RacerPerson> RacerList
+        {
+            get => _racerList;
+            set
+            {
+                _racerList = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public HomePageViewModel(IRacerPersonService racerPersonService)
         {
             _racerPersonService = racerPersonService;
@@ -20,7 +30,7 @@ namespace Racing.ViewModel
 
         private async Task GenerateNewGame()
         {
-            _racerList = await _racerPersonService.GenerateRacerPeople(_numberOfNewRacers);
+            RacerList = await _racerPersonService.GenerateRacerPeople(_numberOfNewRacers);
         }
     }
 }

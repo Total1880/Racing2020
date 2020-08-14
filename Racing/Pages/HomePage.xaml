@@ -9,6 +9,19 @@
       Title="HomePage"
       DataContext="{Binding HomePage, Source={StaticResource Locator}}">
     <Grid>
-        <Label Content="teeeeeeeeeest"/>
+        <ListView ItemsSource="{Binding RacerList}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Racer Name">
+                    <GridViewColumn Width="150"
+                                    DisplayMemberBinding="{Binding FirstName}">
+                        <GridViewColumnHeader Content="First Name"/>
+                    </GridViewColumn>
+                    <GridViewColumn Width="150"
+                                    DisplayMemberBinding="{Binding LastName}">
+                        <GridViewColumnHeader Content="Last Name"/>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>
