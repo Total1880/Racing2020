@@ -10,6 +10,7 @@ namespace Racing.Services
             builder.RegisterModule<RepositoriesModule>();
 
             builder.RegisterType<RacerPersonService>().AsImplementedInterfaces();
+            builder.RegisterType<RaceEngineService>().AsImplementedInterfaces();
         }
     }
 }

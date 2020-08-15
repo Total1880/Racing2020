@@ -1,6 +1,7 @@
 ﻿namespace Racing.Services.Interfaces
 {
-    interface IRaceEngineService
+    public interface IRaceEngineService
     {
+        void Go();
     }
 }

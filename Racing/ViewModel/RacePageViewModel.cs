@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using Racing.Messages;
 using Racing.Model;
+using Racing.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +13,8 @@ namespace Racing.ViewModel
         private IList<RacerPerson> _racerList;
         private int _raceLength;
         private bool _validRaceLength = false;
+        private IRaceEngineService _raceEngineService;
+        private RelayCommand _startRaceCommand;
 
         public IList<RacerPerson> RacerList
         {
@@ -45,14 +49,25 @@ namespace Racing.ViewModel
             }
         }
 
-        public RacePageViewModel()
+        public RelayCommand StartRaceCommand => _startRaceCommand ??= new RelayCommand(StartRace);
+
+        public RacePageViewModel(IRaceEngineService raceEngineService)
         {
+            _raceEngineService = raceEngineService;
             MessengerInstance.Register<OverviewRacerPersonsMessage>(this, OnOpenRacePage);
         }
 
         private void OnOpenRacePage(OverviewRacerPersonsMessage obj)
         {
             RacerList = obj.RacerList;
+        }
+
+        private void StartRace()
+        {
+            if (_validRaceLength)
+            {
+                _raceEngineService.Go();
+            }
         }
     }
 }

@@ -30,6 +30,7 @@
                  />
         <Button Grid.Row="0"
                 Grid.Column="2"
-                Content="Validate"/>
+                Content="Validate"
+                Command="{Binding StartRaceCommand}"/>
     </Grid>
 </Page>
