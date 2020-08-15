@@ -22,11 +22,15 @@ namespace Racing
 
             builder.RegisterType<StartPageViewModel>().SingleInstance();
             builder.RegisterType<HomePageViewModel>().SingleInstance();
+            builder.RegisterType<OverviewRacerPersonsViewModel>().SingleInstance();
+            builder.RegisterType<RacePageViewModel>().SingleInstance();
 
             _container = builder.Build();
         }
 
         public StartPageViewModel StartPage => _container.Resolve<StartPageViewModel>();
         public HomePageViewModel HomePage => _container.Resolve<HomePageViewModel>();
+        public OverviewRacerPersonsViewModel OverviewRacerPersons => _container.Resolve<OverviewRacerPersonsViewModel>();
+        public RacePageViewModel RacePage => _container.Resolve<RacePageViewModel>();
     }
 }

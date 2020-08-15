@@ -3,6 +3,7 @@ using Racing.Model;
 using Racing.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
 
 namespace Racing.Services
 {
@@ -10,6 +11,7 @@ namespace Racing.Services
     {
         private INamesRepository<FirstNames> _firstNamesRepository;
         private INamesRepository<LastNames> _lastNamesRepository;
+        private readonly Random _random = new Random();
 
         public RacerPersonService(INamesRepository<FirstNames> firstNamesRepository, INamesRepository<LastNames> lastNamesRepository)
         {
@@ -29,6 +31,7 @@ namespace Racing.Services
                 RacerPerson newRacerPerson = new RacerPerson { FirstName = name.FirstName };
                 newRacerPerson.LastName = lastNames[index].LastName;
                 newRacerPerson.Nation = lastNames[index].Nation;
+                newRacerPerson.Ability = _random.Next(1, 20);
 
                 generatedRacerPeople.Add(newRacerPerson);
 

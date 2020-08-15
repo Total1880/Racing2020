@@ -9,19 +9,18 @@
       Title="HomePage"
       DataContext="{Binding HomePage, Source={StaticResource Locator}}">
     <Grid>
-        <ListView ItemsSource="{Binding RacerList}">
-            <ListView.View>
-                <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Racer Name">
-                    <GridViewColumn Width="150"
-                                    DisplayMemberBinding="{Binding FirstName}">
-                        <GridViewColumnHeader Content="First Name"/>
-                    </GridViewColumn>
-                    <GridViewColumn Width="150"
-                                    DisplayMemberBinding="{Binding LastName}">
-                        <GridViewColumnHeader Content="Last Name"/>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <Button Content="Overview Racers"
+                    Command="{Binding OpenOverviewRacerPersonsCommand}"/>
+            <Button Content="Start a race"
+                    Command="{Binding StartRaceCommand}"/>
+        </StackPanel>
+        <Frame Grid.Column="1" 
+               x:Name="HomePageFrame"
+               NavigationUIVisibility="Hidden"/>
     </Grid>
 </Page>
