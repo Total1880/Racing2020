@@ -10,6 +10,26 @@
       DataContext="{Binding RacePage, Source={StaticResource Locator}}">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0"
+               Grid.Column="0"
+               Content="The length of the race: "/>
+        <TextBox Grid.Row="0"
+                 Grid.Column="1"
+                 Text="{Binding RaceLength}"
+                 VerticalContentAlignment="Center"
+                 IsEnabled="{Binding InputBoxRaceLengthEnabled}"
+                 />
+        <Button Grid.Row="0"
+                Grid.Column="2"
+                Content="Validate"/>
     </Grid>
 </Page>

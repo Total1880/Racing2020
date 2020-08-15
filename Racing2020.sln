@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddNamesToDatabase.Services
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddNamesToDatabase.Repositories", "AddNamesToDatabase.Repositories\AddNamesToDatabase.Repositories.csproj", "{777D47FB-7EED-4F16-BF6C-D5B8D99B9548}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Racing.Services", "Racing.Services\Racing.Services.csproj", "{80010DF2-31C4-4B86-92D6-304DD5ABE862}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Racing.Services", "Racing.Services\Racing.Services.csproj", "{80010DF2-31C4-4B86-92D6-304DD5ABE862}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

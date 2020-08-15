@@ -9,6 +9,8 @@ namespace Racing.ViewModel
     public class RacePageViewModel : ViewModelBase
     {
         private IList<RacerPerson> _racerList;
+        private int _raceLength;
+        private bool _validRaceLength = false;
 
         public IList<RacerPerson> RacerList
         {
@@ -16,6 +18,29 @@ namespace Racing.ViewModel
             set
             {
                 _racerList = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public int RaceLength
+        {
+            get => _raceLength;
+            set 
+            {
+                if (value > 10 && value <= 1000)
+                {
+                    _raceLength = value;
+                    InputBoxRaceLengthEnabled = false;
+                }
+            }
+        }
+
+        public bool InputBoxRaceLengthEnabled
+        {
+            get => !_validRaceLength;
+            set
+            {
+                _validRaceLength = !value;
                 RaisePropertyChanged();
             }
         }
