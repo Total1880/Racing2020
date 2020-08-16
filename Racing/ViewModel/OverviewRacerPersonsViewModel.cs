@@ -7,14 +7,14 @@ namespace Racing.ViewModel
 {
     public class OverviewRacerPersonsViewModel : ViewModelBase
     {
-        private IList<RacerPerson> _racerList;
+        private IList<RacerPerson> _racerPersonList;
 
-        public IList<RacerPerson> RacerList
+        public IList<RacerPerson> RacerPersonList
         {
-            get => _racerList;
+            get => _racerPersonList;
             set
             {
-                _racerList = value;
+                _racerPersonList = value;
                 RaisePropertyChanged();
             }
         }
@@ -22,12 +22,12 @@ namespace Racing.ViewModel
         public OverviewRacerPersonsViewModel(IList<RacerPerson> racerList)
         {
             MessengerInstance.Register<OverviewRacerPersonsMessage>(this, OnOpenOverviewRacerPersonsOverview);
-            RacerList = racerList;
+            RacerPersonList = racerList;
         }
 
         private void OnOpenOverviewRacerPersonsOverview(OverviewRacerPersonsMessage obj)
         {
-            RacerList = obj.RacerList;
+            RacerPersonList = obj.RacerList;
         }
     }
 }

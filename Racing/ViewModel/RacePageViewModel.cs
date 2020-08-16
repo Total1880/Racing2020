@@ -10,18 +10,18 @@ namespace Racing.ViewModel
 {
     public class RacePageViewModel : ViewModelBase
     {
-        private IList<RacerPerson> _racerList;
+        private IList<RacerPerson> _racerPersonList;
         private int _raceLength;
         private bool _validRaceLength = false;
         private IRaceEngineService _raceEngineService;
         private RelayCommand _startRaceCommand;
 
-        public IList<RacerPerson> RacerList
+        public IList<RacerPerson> RacerPersonList
         {
-            get => _racerList;
+            get => _racerPersonList;
             set
             {
-                _racerList = value;
+                _racerPersonList = value;
                 RaisePropertyChanged();
             }
         }
@@ -59,14 +59,16 @@ namespace Racing.ViewModel
 
         private void OnOpenRacePage(OverviewRacerPersonsMessage obj)
         {
-            RacerList = obj.RacerList;
+            RacerPersonList = obj.RacerList;
         }
 
         private void StartRace()
         {
             if (_validRaceLength)
             {
-                _raceEngineService.Go();
+                _raceEngineService.Go(RacerPersonList, RaceLength);
+                RacerPersonList.Clear();
+                RacerPersonList = _raceEngineService.GetFinishRanking();
             }
         }
     }

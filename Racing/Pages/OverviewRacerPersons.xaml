@@ -10,7 +10,7 @@
       DataContext="{Binding OverviewRacerPersons, Source={StaticResource Locator}}">
 
     <Grid>
-        <ListView ItemsSource="{Binding RacerList}">
+        <ListView ItemsSource="{Binding RacerPersonList}">
             <ListView.View>
                 <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Racer Name">
                     <GridViewColumn Width="150"
