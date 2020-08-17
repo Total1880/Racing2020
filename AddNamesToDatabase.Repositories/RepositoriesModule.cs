@@ -9,6 +9,7 @@ namespace AddNamesToDatabase.Repositories
             builder.RegisterType<NationRepository>().AsImplementedInterfaces();
             builder.RegisterType<FirstNameRepository>().AsImplementedInterfaces();
             builder.RegisterType<LastNameRepository>().AsImplementedInterfaces();
+            builder.RegisterType<RaceRepository>().AsImplementedInterfaces();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AddNamesToDatabase.Repositories;
+using AddNamesToDatabase.Services.Interfaces;
 using Autofac;
 
 namespace AddNamesToDatabase.Services
@@ -11,6 +12,7 @@ namespace AddNamesToDatabase.Services
 
             builder.RegisterType<NationService>().AsImplementedInterfaces();
             builder.RegisterType<NameService>().AsImplementedInterfaces();
+            builder.RegisterType<RaceService>().AsImplementedInterfaces();
         }
     }
 }

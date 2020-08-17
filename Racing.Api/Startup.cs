@@ -32,6 +32,9 @@ namespace Racing.Api
             services.AddScoped<ILastNamesService, LastNamesService>();
             services.AddScoped<INamesRepository<LastNames>, LastNamesRepository>();
 
+            services.AddScoped<IRaceService, RaceService>();
+            services.AddScoped<IRepository<Race>, RaceRepository>();
+
             services.AddControllers();
 
             services.AddSwaggerGen(c =>

@@ -9,6 +9,7 @@ namespace Racing.Api.Repositories
         public DbSet<Nation> NationList { get; set; }
         public DbSet<FirstNames> FirstNamesList { get; set; }
         public DbSet<LastNames> LastNamesList { get; set; }
+        public DbSet<Race> RaceList { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

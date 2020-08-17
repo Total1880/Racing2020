@@ -21,11 +21,13 @@ namespace AddNamesToDatabase
 
             builder.RegisterType<MainWindowViewModel>().SingleInstance();
             builder.RegisterType<NationPageViewModel>().SingleInstance();
+            builder.RegisterType<RacePageViewModel>().SingleInstance();
 
             _container = builder.Build();
         }
 
         public MainWindowViewModel MainWindow => _container.Resolve<MainWindowViewModel>();
         public NationPageViewModel NationPage => _container.Resolve<NationPageViewModel>();
+        public RacePageViewModel RacePage => _container.Resolve<RacePageViewModel>();
     }
 }
