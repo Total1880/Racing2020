@@ -22,23 +22,30 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="New Race: "
                        Width="75"/>
-                <TextBox Width="275"/>
+                <TextBox Width="275"
+                         Text="{Binding RaceName}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Racelength: "
                        Width="75"/>
-                <TextBox Width="75"/>
+                <TextBox Width="75"
+                         Text="{Binding RaceLength}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Edit Race: "
                        Width="75"/>
-                <ComboBox Width="275"/>
+                <ComboBox Width="275"
+                          ItemsSource="{Binding RaceList}"
+                          SelectedItem="{Binding SelectedRace}"
+                          DisplayMemberPath="Name"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Grid.Column="1">
-            <Button Content="Save new race"/>
-            <Button Content="Edit race"/>
+            <Button Content="Save new race"
+                    Command="{Binding AddRaceCommand}"/>
+            <Button Content="Edit race"
+                    Command="{Binding EditRaceCommand}"/>
             <Button Content="Delete race"/>
         </StackPanel>
     </Grid>

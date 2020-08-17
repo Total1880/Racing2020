@@ -12,6 +12,6 @@ namespace AddNamesToDatabase.Services.Interfaces
 
         bool DeleteRace(int id);
 
-        Task<IList<Race>> GetRace();
+        Task<IList<Race>> GetRaces();
     }
 }

@@ -29,7 +29,7 @@ namespace AddNamesToDatabase.Services.Interfaces
             return _raceRepository.Update(race);
         }
 
-        public Task<IList<Race>> GetRace()
+        public Task<IList<Race>> GetRaces()
         {
             return _raceRepository.Get();
         }
