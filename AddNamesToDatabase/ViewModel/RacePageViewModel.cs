@@ -17,6 +17,7 @@ namespace AddNamesToDatabase.ViewModel
         private Race _selectedRace;
         private RelayCommand _addRaceCommand;
         private RelayCommand _editRaceCommand;
+        private RelayCommand _deleteRaceCommand;
 
         public string RaceName
         {
@@ -64,6 +65,7 @@ namespace AddNamesToDatabase.ViewModel
 
         public RelayCommand AddRaceCommand => _addRaceCommand ??= new RelayCommand(AddRace);
         public RelayCommand EditRaceCommand => _editRaceCommand ??= new RelayCommand(EditRace);
+        public RelayCommand DeleteRaceCommand => _deleteRaceCommand ??= new RelayCommand(DeleteRace);
 
         public RacePageViewModel(IRaceService raceService)
         {
@@ -94,6 +96,16 @@ namespace AddNamesToDatabase.ViewModel
                 SelectedRace.Length = RaceLength;
 
                 _raceService.EditRace(SelectedRace);
+
+                _ = GetRaces();
+            }
+        }
+
+        private void DeleteRace()
+        {
+            if (SelectedRace != null)
+            {
+                _raceService.DeleteRace(SelectedRace.RaceId);
 
                 _ = GetRaces();
             }

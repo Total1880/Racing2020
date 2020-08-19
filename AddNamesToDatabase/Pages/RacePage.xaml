@@ -46,7 +46,8 @@
                     Command="{Binding AddRaceCommand}"/>
             <Button Content="Edit race"
                     Command="{Binding EditRaceCommand}"/>
-            <Button Content="Delete race"/>
+            <Button Content="Delete race"
+                    Command="{Binding DeleteRaceCommand}"/>
         </StackPanel>
     </Grid>
 </Page>
