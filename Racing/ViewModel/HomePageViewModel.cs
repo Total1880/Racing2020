@@ -13,6 +13,7 @@ namespace Racing.ViewModel
     public class HomePageViewModel : ViewModelBase
     {
         private IRacerPersonService _racerPersonService;
+        private ISettingService _settingService;
         private IList<RacerPerson> _racerList;
         private int _numberOfNewRacers = 20;
         private RelayCommand _openOverviewRacerPersonsCommand;
@@ -33,14 +34,18 @@ namespace Racing.ViewModel
             }
         }
 
-        public HomePageViewModel(IRacerPersonService racerPersonService)
+        public HomePageViewModel(IRacerPersonService racerPersonService, ISettingService settingService)
         {
             _racerPersonService = racerPersonService;
+            _settingService = settingService;
+
             _ = GenerateNewGame();
         }
 
         private async Task GenerateNewGame()
         {
+            var setting = await _settingService.GetSettingByDescription(SettingsNames.GeneratedRacerPeople);
+            _numberOfNewRacers = int.Parse(setting.Value);
             RacerList = await _racerPersonService.GenerateRacerPeople(_numberOfNewRacers);
         }
 

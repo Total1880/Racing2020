@@ -11,10 +11,12 @@ namespace AddNamesToDatabase
         private MainPage _mainPage;
         private NationPage _nationPage;
         private RacePage _racePage;
+        private SettingPage _settingPage;
 
         private MainPage MainPage => _mainPage ??= new MainPage();
         private NationPage NationPage => _nationPage ??= new NationPage();
         private RacePage RacePage => _racePage ??= new RacePage();
+        private SettingPage SettingPage => _settingPage ??= new SettingPage();
 
         public MainWindow()
         {
@@ -35,6 +37,11 @@ namespace AddNamesToDatabase
         private void Button_Click_New_Race(object sender, RoutedEventArgs e)
         {
             MainFrame.NavigationService.Navigate(RacePage);
+        }
+
+        private void Button_Click_Setting(object sender, RoutedEventArgs e)
+        {
+            MainFrame.NavigationService.Navigate(SettingPage);
         }
     }
 }

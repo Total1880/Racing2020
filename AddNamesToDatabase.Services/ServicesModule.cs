@@ -13,6 +13,7 @@ namespace AddNamesToDatabase.Services
             builder.RegisterType<NationService>().AsImplementedInterfaces();
             builder.RegisterType<NameService>().AsImplementedInterfaces();
             builder.RegisterType<RaceService>().AsImplementedInterfaces();
+            builder.RegisterType<SettingService>().AsImplementedInterfaces();
         }
     }
 }

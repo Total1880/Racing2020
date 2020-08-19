@@ -1,5 +1,5 @@
-﻿using AddNamesToDatabase.Services.Interfaces;
-using Racing.Api.Repositories;
+﻿using AddNamesToDatabase.Repositories;
+using AddNamesToDatabase.Services.Interfaces;
 using Racing.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;

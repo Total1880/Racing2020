@@ -10,6 +10,7 @@ namespace AddNamesToDatabase.Repositories
             builder.RegisterType<FirstNameRepository>().AsImplementedInterfaces();
             builder.RegisterType<LastNameRepository>().AsImplementedInterfaces();
             builder.RegisterType<RaceRepository>().AsImplementedInterfaces();
+            builder.RegisterType<SettingRepository>().AsImplementedInterfaces();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Racing.Model
+﻿namespace Racing.Model
 {
     public class FirstNames
     {

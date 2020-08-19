@@ -24,6 +24,7 @@
             <Button Content="Add new list" Click="Button_Click_New_List"/>
             <Button Content="Nation editor" Click="Button_Click_New_Nation"/>
             <Button Content="Race editor" Click="Button_Click_New_Race"/>
+            <Button Content="Setting editor" Click="Button_Click_Setting"/>
         </StackPanel>
         <Frame Grid.Row="0"
                Grid.Column="1"

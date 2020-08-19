@@ -1,5 +1,4 @@
 ﻿using AddNamesToDatabase.Repositories.RestClient;
-using Racing.Api.Repositories;
 using Racing.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;

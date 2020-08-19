@@ -22,6 +22,7 @@ namespace AddNamesToDatabase
             builder.RegisterType<MainWindowViewModel>().SingleInstance();
             builder.RegisterType<NationPageViewModel>().SingleInstance();
             builder.RegisterType<RacePageViewModel>().SingleInstance();
+            builder.RegisterType<SettingPageViewModel>().SingleInstance();
 
             _container = builder.Build();
         }
@@ -29,5 +30,6 @@ namespace AddNamesToDatabase
         public MainWindowViewModel MainWindow => _container.Resolve<MainWindowViewModel>();
         public NationPageViewModel NationPage => _container.Resolve<NationPageViewModel>();
         public RacePageViewModel RacePage => _container.Resolve<RacePageViewModel>();
+        public SettingPageViewModel SettingPage => _container.Resolve<SettingPageViewModel>();
     }
 }

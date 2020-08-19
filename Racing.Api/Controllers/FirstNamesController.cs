@@ -43,7 +43,7 @@ namespace Racing.Api.Controllers
             catch (Exception)
             {
 
-                throw;
+                return BadRequest();
             }
         }
     }

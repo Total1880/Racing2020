@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Racing.Api.Repositories
+namespace AddNamesToDatabase.Repositories
 {
     public interface IRepository<T>
     {
