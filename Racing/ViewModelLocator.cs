@@ -4,7 +4,6 @@ using Racing.Services;
 using Racing.ViewModel;
 using static System.Configuration.ConfigurationManager;
 
-
 namespace Racing
 {
     public class ViewModelLocator
@@ -24,6 +23,7 @@ namespace Racing
             builder.RegisterType<HomePageViewModel>().SingleInstance();
             builder.RegisterType<OverviewRacerPersonsViewModel>().SingleInstance();
             builder.RegisterType<RacePageViewModel>().SingleInstance();
+            builder.RegisterType<SeasonOverviewViewModel>().SingleInstance();
 
             _container = builder.Build();
         }
@@ -32,5 +32,6 @@ namespace Racing
         public HomePageViewModel HomePage => _container.Resolve<HomePageViewModel>();
         public OverviewRacerPersonsViewModel OverviewRacerPersons => _container.Resolve<OverviewRacerPersonsViewModel>();
         public RacePageViewModel RacePage => _container.Resolve<RacePageViewModel>();
+        public SeasonOverviewViewModel SeasonOverviewPage => _container.Resolve<SeasonOverviewViewModel>();
     }
 }

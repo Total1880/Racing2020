@@ -17,9 +17,11 @@ namespace Racing.ViewModel
         private int _numberOfNewRacers = 20;
         private RelayCommand _openOverviewRacerPersonsCommand;
         private RelayCommand _startRaceCommand;
+        private RelayCommand _startSeasonCommand;
 
         public RelayCommand OpenOverviewRacerPersonsCommand => _openOverviewRacerPersonsCommand ??= new RelayCommand(OpenOverviewRacerPersons);
         public RelayCommand StartRaceCommand => _startRaceCommand ??= new RelayCommand(StartRace);
+        public RelayCommand StartSeasonCommand => _startSeasonCommand ??= new RelayCommand(StartSeason);
 
         public IList<RacerPerson> RacerList
         {
@@ -51,6 +53,12 @@ namespace Racing.ViewModel
         private void StartRace()
         {
             MessengerInstance.Send(new OpenRacePageMessage());
+            MessengerInstance.Send(new OverviewRacerPersonsMessage(RacerList));
+        }
+
+        private void StartSeason()
+        {
+            MessengerInstance.Send(new OpenSeasonOverviewPageMessage());
             MessengerInstance.Send(new OverviewRacerPersonsMessage(RacerList));
         }
     }

@@ -8,6 +8,7 @@ namespace Racing.Repositories
         {
             builder.RegisterType<FirstNamesRepository>().AsImplementedInterfaces();
             builder.RegisterType<LastNamesRepository>().AsImplementedInterfaces();
+            builder.RegisterType<RaceRepository>().AsImplementedInterfaces();
         }
     }
 }

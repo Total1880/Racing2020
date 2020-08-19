@@ -18,6 +18,8 @@
                     Command="{Binding OpenOverviewRacerPersonsCommand}"/>
             <Button Content="Start a race"
                     Command="{Binding StartRaceCommand}"/>
+            <Button Content="Start a season"
+                    Command="{Binding StartSeasonCommand}"/>
         </StackPanel>
         <Frame Grid.Column="1" 
                x:Name="HomePageFrame"

@@ -29,6 +29,20 @@ namespace Racing.Repositories.RestClient
             return JsonConvert.DeserializeObject<IList<T>>(json);
         }
 
+        public async Task<IList<T>> GetData<T>(string endpoint)
+        {
+            var result = await _instance.GetAsync(endpoint);
+
+            if (!result.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException($"error: {result.StatusCode}");
+            }
+
+            var json = await result.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<IList<T>>(json);
+        }
+
         public void Dispose()
         {
             _instance?.Dispose();

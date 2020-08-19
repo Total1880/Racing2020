@@ -14,8 +14,8 @@ namespace Racing.Pages
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            var ANTD = new AddNamesToDatabase.MainWindow();
-            ANTD.Show();
+            //var ANTD = new AddNamesToDatabase.MainWindow();
+            //ANTD.Show();
         }
     }
 }
