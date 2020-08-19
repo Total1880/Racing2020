@@ -86,6 +86,8 @@ namespace AddNamesToDatabase.ViewModel
             {
                 _raceService.CreateRace(newRace);
             }
+
+            _ = GetRaces();
         }
 
         private void EditRace()

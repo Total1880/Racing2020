@@ -10,6 +10,51 @@
       DataContext="{Binding SeasonOverviewPage, Source={StaticResource Locator}}">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0"
+               Grid.Column="0"
+               Content="Next race: "/>
+        <Label Grid.Row="0"
+               Grid.Column="1"
+               Content="{Binding NextRaceName}"/>
+        <Label Grid.Row="1"
+               Grid.Column="0"
+               Content="Length: "/>
+        <Label Grid.Row="1"
+               Grid.Column="1"
+               Content="{Binding RaceLength}"/>
+        <Button Grid.Row="0"
+                Grid.Column="2"
+                Content="Next race"
+                Command="{Binding NextRaceCommand}"/>
+        <ListView Grid.Row="2" 
+                  Grid.ColumnSpan="3"
+                  ItemsSource="{Binding RacerPersonList}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Racer Name">
+                    <GridViewColumn Width="150"
+                                    DisplayMemberBinding="{Binding FirstName}">
+                        <GridViewColumnHeader Content="First Name"/>
+                    </GridViewColumn>
+                    <GridViewColumn Width="150"
+                                    DisplayMemberBinding="{Binding LastName}">
+                        <GridViewColumnHeader Content="Last Name"/>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50"
+                                    DisplayMemberBinding="{Binding Ability}">
+                        <GridViewColumnHeader Content="Ability"/>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>
