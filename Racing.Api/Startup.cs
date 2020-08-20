@@ -44,6 +44,10 @@ namespace Racing.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Racing2020 API", Version = "v1" });
             });
+
+            //tip: Je kan ook het atribuut JsonIgnore boven Race in RacePoint zetten
+            services.AddControllersWithViews().AddNewtonsoftJson(options => 
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

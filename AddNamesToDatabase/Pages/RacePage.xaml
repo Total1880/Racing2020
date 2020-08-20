@@ -12,13 +12,14 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
+            <RowDefinition Height="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="New Race: "
                        Width="75"/>
@@ -40,7 +41,7 @@
                           DisplayMemberPath="Name"/>
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="1"
+        <StackPanel Grid.Row="0"
                     Grid.Column="1">
             <Button Content="Save new race"
                     Command="{Binding AddRaceCommand}"/>
@@ -48,6 +49,22 @@
                     Command="{Binding EditRaceCommand}"/>
             <Button Content="Delete race"
                     Command="{Binding DeleteRaceCommand}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" 
+                    Orientation="Horizontal">
+            <Label Content="Position: "/>
+            <ComboBox Width="40"
+                      ItemsSource="{Binding RacePointList}"
+                      SelectedItem="{Binding SelectedRacePoint}"
+                      DisplayMemberPath="Position"/>
+            <TextBox Text="{Binding SelectedRacePoint.Point}"
+                     Width="40"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="1">
+            <Button Content="Reset points"
+                    Command="{Binding NewRacePointListCommand}"/>
         </StackPanel>
     </Grid>
 </Page>

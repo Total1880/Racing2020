@@ -3,7 +3,9 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Racing.Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AddNamesToDatabase.ViewModel
@@ -11,6 +13,7 @@ namespace AddNamesToDatabase.ViewModel
     public class RacePageViewModel : ViewModelBase
     {
         private readonly IRaceService _raceService;
+        private readonly ISettingService _settingService;
         private string _raceName;
         private int _raceLength;
         private ObservableCollection<Race> _raceList;
@@ -18,6 +21,9 @@ namespace AddNamesToDatabase.ViewModel
         private RelayCommand _addRaceCommand;
         private RelayCommand _editRaceCommand;
         private RelayCommand _deleteRaceCommand;
+        private RelayCommand _newRacePointListCommand;
+        private IList<RacePoint> _racePointList;
+        private RacePoint _selectedRacePoint;
 
         public string RaceName
         {
@@ -59,18 +65,42 @@ namespace AddNamesToDatabase.ViewModel
                     _selectedRace = value;
                     RaceName = value.Name;
                     RaceLength = value.Length;
+                    RacePointList = value.RacePointList;
                 }
+            }
+        }
+
+        public IList<RacePoint> RacePointList
+        {
+            get => _racePointList.OrderBy(p => p.Position).ToList();
+            set
+            {
+                _racePointList = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public RacePoint SelectedRacePoint
+        {
+            get => _selectedRacePoint;
+            set
+            {
+                _selectedRacePoint = value;
+                RaisePropertyChanged();
             }
         }
 
         public RelayCommand AddRaceCommand => _addRaceCommand ??= new RelayCommand(AddRace);
         public RelayCommand EditRaceCommand => _editRaceCommand ??= new RelayCommand(EditRace);
         public RelayCommand DeleteRaceCommand => _deleteRaceCommand ??= new RelayCommand(DeleteRace);
+        public RelayCommand NewRacePointListCommand => _newRacePointListCommand ??= new RelayCommand(NewRacePointListSync);
 
-        public RacePageViewModel(IRaceService raceService)
+        public RacePageViewModel(IRaceService raceService, ISettingService settingService)
         {
             _raceService = raceService;
+            _settingService = settingService;
             _ = GetRaces();
+            _ = NewRacePointList();
         }
 
         public async Task GetRaces()
@@ -80,7 +110,7 @@ namespace AddNamesToDatabase.ViewModel
 
         private void AddRace()
         {
-            var newRace = new Race { Name = RaceName, Length = RaceLength };
+            var newRace = new Race { Name = RaceName, Length = RaceLength, RacePointList = RacePointList };
 
             if (newRace.Length > 10 && newRace.Length <= 1000)
             {
@@ -96,6 +126,7 @@ namespace AddNamesToDatabase.ViewModel
             {
                 SelectedRace.Name = RaceName;
                 SelectedRace.Length = RaceLength;
+                SelectedRace.RacePointList = RacePointList;
 
                 _raceService.EditRace(SelectedRace);
 
@@ -111,6 +142,33 @@ namespace AddNamesToDatabase.ViewModel
 
                 _ = GetRaces();
             }
+        }
+
+        private void NewRacePointListSync()
+        {
+            _ = NewRacePointList();
+        }
+
+        private async Task NewRacePointList()
+        {
+            var newRacePointList = new List<RacePoint>();
+
+            var settings = await _settingService.GetSettings();
+
+            var maxRacePeople = int.Parse(settings
+                .Where(s => s.Description == SettingsNames.GeneratedRacerPeople)
+                .FirstOrDefault()
+                .Value);
+
+            for (int i = 0; i < maxRacePeople; i++)
+            {
+                var newRacePoint = new RacePoint();
+                newRacePoint.Position = i + 1;
+                newRacePoint.Point = 0;
+                newRacePointList.Add(newRacePoint);
+            }
+
+            RacePointList = newRacePointList;
         }
     }
 }
