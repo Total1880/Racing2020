@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Racing.Messages.WindowOpener;
+using System;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Racing.Pages
 {
@@ -18,9 +10,19 @@ namespace Racing.Pages
     /// </summary>
     public partial class SeasonOverviewPage : Page
     {
+        private RaceResultPage _raceResultPage;
+
+        public RaceResultPage RaceResultPage => _raceResultPage ??= new RaceResultPage();
+
         public SeasonOverviewPage()
         {
             InitializeComponent();
+            Messenger.Default.Register<OpenRaceResultPageMessage>(this, OpenRaceResultPage);
+        }
+
+        private void OpenRaceResultPage(OpenRaceResultPageMessage obj)
+        {
+            SeasonOverviewFrame.Navigate(RaceResultPage);
         }
     }
 }

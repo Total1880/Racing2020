@@ -57,14 +57,20 @@ namespace Racing.ViewModel
 
         private void StartRace()
         {
-            MessengerInstance.Send(new OpenRacePageMessage());
-            MessengerInstance.Send(new OverviewRacerPersonsMessage(RacerList));
+            if (RacerList != null)
+            {
+                MessengerInstance.Send(new OpenRacePageMessage());
+                MessengerInstance.Send(new OverviewRacerPersonsMessage(RacerList));
+            }
         }
 
         private void StartSeason()
         {
-            MessengerInstance.Send(new OpenSeasonOverviewPageMessage());
-            MessengerInstance.Send(new OverviewRacerPersonsMessage(RacerList));
+            if (RacerList != null)
+            {
+                MessengerInstance.Send(new OpenSeasonOverviewPageMessage());
+                MessengerInstance.Send(new OverviewRacerPersonsMessage(RacerList));
+            }
         }
     }
 }

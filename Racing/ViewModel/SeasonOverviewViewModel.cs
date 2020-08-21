@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Racing.Messages;
+using Racing.Messages.WindowOpener;
 using Racing.Model;
 using Racing.Services.Interfaces;
 using System;
@@ -86,9 +87,11 @@ namespace Racing.ViewModel
 
         private void NextRace()
         {
-            _raceEngineService.Go(RacerPersonList, RaceLength);
-            RacerPersonList.Clear();
-            RacerPersonList = _raceEngineService.GetFinishRanking();
+            //moet op vm raceresultpage berekend worden
+            // ni vergeten  hier op te ruimen
+            //_raceEngineService.Go(RacerPersonList, RaceLength);
+            //RacerPersonList.Clear();
+            //RacerPersonList = _raceEngineService.GetFinishRanking();
 
             if (_seasonRaceNumber + 1 < RaceList.Count)
             {
@@ -99,6 +102,9 @@ namespace Racing.ViewModel
                 _seasonRaceNumber = 0;
             }
             _ = GetRaces();
+
+            MessengerInstance.Send(new OpenRaceResultPageMessage());
+            MessengerInstance.Send(new RaceResultPageMessage(RacerPersonList, RaceLength));
         }
     }
 }

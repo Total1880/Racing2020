@@ -24,6 +24,7 @@ namespace Racing
             builder.RegisterType<OverviewRacerPersonsViewModel>().SingleInstance();
             builder.RegisterType<RacePageViewModel>().SingleInstance();
             builder.RegisterType<SeasonOverviewViewModel>().SingleInstance();
+            builder.RegisterType<RaceResultPageViewModel>().SingleInstance();
 
             _container = builder.Build();
         }
@@ -33,5 +34,6 @@ namespace Racing
         public OverviewRacerPersonsViewModel OverviewRacerPersons => _container.Resolve<OverviewRacerPersonsViewModel>();
         public RacePageViewModel RacePage => _container.Resolve<RacePageViewModel>();
         public SeasonOverviewViewModel SeasonOverviewPage => _container.Resolve<SeasonOverviewViewModel>();
+        public RaceResultPageViewModel RaceResultPage => _container.Resolve<RaceResultPageViewModel>();
     }
 }

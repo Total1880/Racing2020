@@ -36,25 +36,9 @@
                 Grid.Column="2"
                 Content="Next race"
                 Command="{Binding NextRaceCommand}"/>
-        <ListView Grid.Row="2" 
-                  Grid.ColumnSpan="3"
-                  ItemsSource="{Binding RacerPersonList}">
-            <ListView.View>
-                <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Racer Name">
-                    <GridViewColumn Width="150"
-                                    DisplayMemberBinding="{Binding FirstName}">
-                        <GridViewColumnHeader Content="First Name"/>
-                    </GridViewColumn>
-                    <GridViewColumn Width="150"
-                                    DisplayMemberBinding="{Binding LastName}">
-                        <GridViewColumnHeader Content="Last Name"/>
-                    </GridViewColumn>
-                    <GridViewColumn Width="50"
-                                    DisplayMemberBinding="{Binding Ability}">
-                        <GridViewColumnHeader Content="Ability"/>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Frame Grid.Row="2"
+               Grid.ColumnSpan="3"
+               Name="SeasonOverviewFrame"
+               NavigationUIVisibility="Hidden"/>
     </Grid>
 </Page>
