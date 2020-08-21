@@ -36,6 +36,10 @@
                 Grid.Column="2"
                 Content="Next race"
                 Command="{Binding NextRaceCommand}"/>
+        <ComboBox Grid.Row="1"
+                  Grid.Column="2"
+                  ItemsSource="{Binding Menu}"
+                  SelectedItem="{Binding ChosenMenuItem , Mode=TwoWay}"/>
         <Frame Grid.Row="2"
                Grid.ColumnSpan="3"
                Name="SeasonOverviewFrame"

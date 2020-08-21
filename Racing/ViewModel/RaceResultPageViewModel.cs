@@ -29,12 +29,13 @@ namespace Racing.ViewModel
 
         private void GetRaceResult(RaceResultPageMessage obj)
         {
-            _raceEngineService.Go(obj.RacerPersonList, obj.RaceLength);
+            _raceEngineService.Go(obj.RacerPersonList, obj.Race.Length);
 
             if (RacerPersonList != null)
                 RacerPersonList.Clear();
 
             RacerPersonList = _raceEngineService.GetFinishRanking();
+            MessengerInstance.Send(new UpdateSeasonRankingMessage(RacerPersonList, obj.Race));
         }
     }
 }

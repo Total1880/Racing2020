@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace Racing.Messages
 {
-    class RaceResultPageMessage
+    public class UpdateSeasonRankingMessage
     {
         public IList<RacerPerson> RacerPersonList { get; set; }
         public Race Race { get; set; }
 
-        public RaceResultPageMessage(IList<RacerPerson> racerPersonList, Race race)
+        public UpdateSeasonRankingMessage(IList<RacerPerson> racerPersonList, Race race)
         {
             RacerPersonList = racerPersonList;
             Race = race;

@@ -32,6 +32,7 @@ namespace Racing.Services
                 newRacerPerson.LastName = lastNames[index].LastName;
                 newRacerPerson.Nation = lastNames[index].Nation;
                 newRacerPerson.Ability = _random.Next(1, 20);
+                newRacerPerson.RacerPersonId = index;
 
                 generatedRacerPeople.Add(newRacerPerson);
 

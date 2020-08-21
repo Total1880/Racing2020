@@ -11,18 +11,29 @@ namespace Racing.Pages
     public partial class SeasonOverviewPage : Page
     {
         private RaceResultPage _raceResultPage;
+        private SeasonRankingPage _seasonRankingPage;
 
         public RaceResultPage RaceResultPage => _raceResultPage ??= new RaceResultPage();
+        public SeasonRankingPage SeasonRankingPage => _seasonRankingPage ??= new SeasonRankingPage();
 
         public SeasonOverviewPage()
         {
+            _raceResultPage = new RaceResultPage();
+            _seasonRankingPage = new SeasonRankingPage();
+
             InitializeComponent();
             Messenger.Default.Register<OpenRaceResultPageMessage>(this, OpenRaceResultPage);
+            Messenger.Default.Register<OpenSeasonRankingPageMessage>(this, OpenSeasonRankingPage);
         }
 
         private void OpenRaceResultPage(OpenRaceResultPageMessage obj)
         {
             SeasonOverviewFrame.Navigate(RaceResultPage);
+        }
+
+        private void OpenSeasonRankingPage(OpenSeasonRankingPageMessage obj)
+        {
+            SeasonOverviewFrame.Navigate(SeasonRankingPage);
         }
     }
 }

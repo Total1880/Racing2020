@@ -4,7 +4,6 @@ using Racing.Messages;
 using Racing.Messages.WindowOpener;
 using Racing.Model;
 using Racing.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -14,13 +13,15 @@ namespace Racing.ViewModel
     public class SeasonOverviewViewModel : ViewModelBase
     {
         private IRaceService _raceService;
-        private IRaceEngineService _raceEngineService;
         private ObservableCollection<Race> _raceList;
+        private ObservableCollection<string> _menu;
         private string _nextRaceName;
+        private string _chosenMenuItem;
         private int _raceLength;
         private int _seasonRaceNumber;
         private IList<RacerPerson> _racerPersonList;
         private RelayCommand _nextRaceCommand;
+        private RelayCommand _menuChoiceCommand;
 
         public ObservableCollection<Race> RaceList
         {
@@ -28,6 +29,16 @@ namespace Racing.ViewModel
             set
             {
                 _raceList = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public ObservableCollection<string> Menu
+        {
+            get => _menu;
+            set
+            {
+                _menu = value;
                 RaisePropertyChanged();
             }
         }
@@ -40,6 +51,20 @@ namespace Racing.ViewModel
                 _nextRaceName = value;
                 RaisePropertyChanged();
             } 
+        }
+
+        public string ChosenMenuItem
+        {
+            get => _chosenMenuItem;
+            set
+            {
+                if (value != null)
+                {
+                    _chosenMenuItem = value;
+                    MenuChoice();
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         public int RaceLength
@@ -63,14 +88,14 @@ namespace Racing.ViewModel
         }
 
         public RelayCommand NextRaceCommand => _nextRaceCommand ??= new RelayCommand(NextRace);
+        public RelayCommand MenuChoiceCommand => _menuChoiceCommand ??= new RelayCommand(MenuChoice);
 
-        public SeasonOverviewViewModel(IRaceService raceService, IRaceEngineService raceEngineService)
+        public SeasonOverviewViewModel(IRaceService raceService)
         {
             _raceService = raceService;
-            _raceEngineService = raceEngineService;
             _ = GetRaces();
             MessengerInstance.Register<OverviewRacerPersonsMessage>(this, OnOpenSeasonOverviewPage);
-
+            Menu = new ObservableCollection<string>{SeasonMenu.LatestResult, SeasonMenu.Ranking};
         }
 
         private async Task GetRaces()
@@ -87,11 +112,8 @@ namespace Racing.ViewModel
 
         private void NextRace()
         {
-            //moet op vm raceresultpage berekend worden
-            // ni vergeten  hier op te ruimen
-            //_raceEngineService.Go(RacerPersonList, RaceLength);
-            //RacerPersonList.Clear();
-            //RacerPersonList = _raceEngineService.GetFinishRanking();
+            MessengerInstance.Send(new OpenRaceResultPageMessage());
+            MessengerInstance.Send(new RaceResultPageMessage(RacerPersonList, RaceList[_seasonRaceNumber]));
 
             if (_seasonRaceNumber + 1 < RaceList.Count)
             {
@@ -103,8 +125,22 @@ namespace Racing.ViewModel
             }
             _ = GetRaces();
 
-            MessengerInstance.Send(new OpenRaceResultPageMessage());
-            MessengerInstance.Send(new RaceResultPageMessage(RacerPersonList, RaceLength));
+            ChosenMenuItem = SeasonMenu.LatestResult;
+        }
+
+        public void MenuChoice()
+        {
+            switch (ChosenMenuItem)
+            {
+                case SeasonMenu.LatestResult:
+                    MessengerInstance.Send(new OpenRaceResultPageMessage());
+                    break;
+                case SeasonMenu.Ranking:
+                    MessengerInstance.Send(new OpenSeasonRankingPageMessage());
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

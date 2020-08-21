@@ -11,6 +11,7 @@ namespace Racing.Services
 
             builder.RegisterType<RacerPersonService>().AsImplementedInterfaces();
             builder.RegisterType<RaceEngineService>().AsImplementedInterfaces();
+            builder.RegisterType<SeasonEngineService>().AsImplementedInterfaces();
             builder.RegisterType<RaceService>().AsImplementedInterfaces();
             builder.RegisterType<SettingService>().AsImplementedInterfaces();
         }
