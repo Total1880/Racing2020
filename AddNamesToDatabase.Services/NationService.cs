@@ -30,9 +30,9 @@ namespace AddNamesToDatabase.Services
             return _nationRepository.Update(nation);
         }
 
-        public Task<IList<Nation>> GetNations()
+        public async Task<IList<Nation>> GetNations()
         {
-            return _nationRepository.Get();
+            return await _nationRepository.Get();
         }
     }
 }

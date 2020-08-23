@@ -23,6 +23,7 @@ namespace AddNamesToDatabase
             builder.RegisterType<NationPageViewModel>().SingleInstance();
             builder.RegisterType<RacePageViewModel>().SingleInstance();
             builder.RegisterType<SettingPageViewModel>().SingleInstance();
+            builder.RegisterType<TeamPageViewModel>().SingleInstance();
 
             _container = builder.Build();
         }
@@ -31,5 +32,6 @@ namespace AddNamesToDatabase
         public NationPageViewModel NationPage => _container.Resolve<NationPageViewModel>();
         public RacePageViewModel RacePage => _container.Resolve<RacePageViewModel>();
         public SettingPageViewModel SettingPage => _container.Resolve<SettingPageViewModel>();
+        public TeamPageViewModel TeamPage => _container.Resolve<TeamPageViewModel>();
     }
 }

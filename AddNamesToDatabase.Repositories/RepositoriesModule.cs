@@ -11,6 +11,7 @@ namespace AddNamesToDatabase.Repositories
             builder.RegisterType<LastNameRepository>().AsImplementedInterfaces();
             builder.RegisterType<RaceRepository>().AsImplementedInterfaces();
             builder.RegisterType<SettingRepository>().AsImplementedInterfaces();
+            builder.RegisterType<TeamRepository>().AsImplementedInterfaces();
         }
     }
 }

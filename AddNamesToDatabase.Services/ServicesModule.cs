@@ -14,6 +14,7 @@ namespace AddNamesToDatabase.Services
             builder.RegisterType<NameService>().AsImplementedInterfaces();
             builder.RegisterType<RaceService>().AsImplementedInterfaces();
             builder.RegisterType<SettingService>().AsImplementedInterfaces();
+            builder.RegisterType<TeamService>().AsImplementedInterfaces();
         }
     }
 }

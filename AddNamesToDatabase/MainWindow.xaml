@@ -14,7 +14,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
@@ -25,6 +25,7 @@
             <Button Content="Nation editor" Click="Button_Click_New_Nation"/>
             <Button Content="Race editor" Click="Button_Click_New_Race"/>
             <Button Content="Setting editor" Click="Button_Click_Setting"/>
+            <Button Content="Team editor" Click="Button_Click_Team"/>
         </StackPanel>
         <Frame Grid.Row="0"
                Grid.Column="1"
