@@ -38,9 +38,12 @@ namespace Racing.Services
 
             for (int i = 0; i < racerPersonList.Count; i++)
             {
-                RacerSeasonRankingList.Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Points =
-                    RacerSeasonRankingList.Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Points +
-                    race.RacePointList.Where(p => p.Position == i + 1).FirstOrDefault().Point;
+                if (race.RacePointList.Any(p => p.Position == i + 1))
+                {
+                    RacerSeasonRankingList.Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Points =
+    RacerSeasonRankingList.Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Points +
+    race.RacePointList.Where(p => p.Position == i + 1).FirstOrDefault().Point;
+                }
 
                 RacerSeasonRankingList.Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Positions =
                     RacerSeasonRankingList.Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Positions + (i + 1);
@@ -55,6 +58,7 @@ namespace Racing.Services
             foreach (var racerSeason in RacerSeasonRankingList)
             {
                 racerSeason.Points = 0;
+                racerSeason.Positions = 0;
             }
         }
     }
