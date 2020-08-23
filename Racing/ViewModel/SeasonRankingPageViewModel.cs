@@ -34,7 +34,7 @@ namespace Racing.ViewModel
         private void UpdateSeasonRanking(UpdateSeasonRankingMessage obj)
         {
             _seasonEngineService.UpdateRanking(obj.RacerPersonList, obj.Race);
-            RacerSeasonRankingList = _seasonEngineService.RacerSeasonRankingList.OrderByDescending(r => r.Points).ToList();
+            RacerSeasonRankingList = _seasonEngineService.RacerSeasonRankingList.OrderByDescending(r => r.Points).ThenBy(r => r.Positions).ToList();
         }
 
         private void ResetSeasonRanking(ResetSeasonMessage obj)
