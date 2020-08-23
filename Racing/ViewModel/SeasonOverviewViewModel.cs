@@ -95,7 +95,7 @@ namespace Racing.ViewModel
             _raceService = raceService;
             _ = GetRaces();
             MessengerInstance.Register<OverviewRacerPersonsMessage>(this, OnOpenSeasonOverviewPage);
-            Menu = new ObservableCollection<string>{SeasonMenu.LatestResult, SeasonMenu.Ranking};
+            Menu = new ObservableCollection<string>{SeasonMenu.LatestResult, SeasonMenu.Ranking, SeasonMenu.NextRaceInfo};
         }
 
         private async Task GetRaces()
@@ -112,6 +112,11 @@ namespace Racing.ViewModel
 
         private void NextRace()
         {
+            if (_seasonRaceNumber == 0)
+            {
+                MessengerInstance.Send(new ResetSeasonMessage());
+            }
+
             MessengerInstance.Send(new OpenRaceResultPageMessage());
             MessengerInstance.Send(new RaceResultPageMessage(RacerPersonList, RaceList[_seasonRaceNumber]));
 
@@ -137,6 +142,10 @@ namespace Racing.ViewModel
                     break;
                 case SeasonMenu.Ranking:
                     MessengerInstance.Send(new OpenSeasonRankingPageMessage());
+                    break;
+                case SeasonMenu.NextRaceInfo:
+                    MessengerInstance.Send(new OpenNextRaceInfoPageMessage());
+                    MessengerInstance.Send(new NextRaceInfoMessage(RaceList[_seasonRaceNumber]));
                     break;
                 default:
                     break;

@@ -7,5 +7,6 @@ namespace Racing.Services.Interfaces
     {
         IList<RacerSeasonRanking> RacerSeasonRankingList { get; set; }
         void UpdateRanking(IList<RacerPerson> racerPersonList, Race race);
+        void ResetRanking();
     }
 }

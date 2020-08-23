@@ -64,7 +64,6 @@ namespace Racing.Api.Repositories
                 context.Attach(item);
                 context.Entry(item).State = EntityState.Modified;
                 var copyRacePointList = new List<RacePoint>(item.RacePointList);
-                //copyRacePointList = copyRacePointList.OrderBy(x => x.Position).ToList();
                 var race = context.RaceList.Include(r => r.RacePointList).Where(r => r.RaceId == item.RaceId).FirstOrDefault();
 
                 foreach (var racePoint in copyRacePointList)

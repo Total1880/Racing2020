@@ -2,6 +2,7 @@
 using Racing.Messages;
 using Racing.Model;
 using Racing.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,6 +27,7 @@ namespace Racing.ViewModel
         {
             _seasonEngineService = seasonEngineService;
             MessengerInstance.Register<UpdateSeasonRankingMessage>(this, UpdateSeasonRanking);
+            MessengerInstance.Register<ResetSeasonMessage>(this, ResetSeasonRanking);
             RacerSeasonRankingList = new List<RacerSeasonRanking>();
         }
 
@@ -33,6 +35,11 @@ namespace Racing.ViewModel
         {
             _seasonEngineService.UpdateRanking(obj.RacerPersonList, obj.Race);
             RacerSeasonRankingList = _seasonEngineService.RacerSeasonRankingList.OrderByDescending(r => r.Points).ToList();
+        }
+
+        private void ResetSeasonRanking(ResetSeasonMessage obj)
+        {
+            _seasonEngineService.ResetRanking();
         }
     }
 }

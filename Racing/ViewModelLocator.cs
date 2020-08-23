@@ -26,6 +26,7 @@ namespace Racing
             builder.RegisterType<SeasonOverviewViewModel>().SingleInstance();
             builder.RegisterType<RaceResultPageViewModel>().SingleInstance();
             builder.RegisterType<SeasonRankingPageViewModel>().SingleInstance();
+            builder.RegisterType<NextRaceInfoPageViewModel>().SingleInstance();
 
             _container = builder.Build();
         }
@@ -37,5 +38,6 @@ namespace Racing
         public SeasonOverviewViewModel SeasonOverviewPage => _container.Resolve<SeasonOverviewViewModel>();
         public RaceResultPageViewModel RaceResultPage => _container.Resolve<RaceResultPageViewModel>();
         public SeasonRankingPageViewModel SeasonRankingPage => _container.Resolve<SeasonRankingPageViewModel>();
+        public NextRaceInfoPageViewModel NextRaceInfoPage => _container.Resolve<NextRaceInfoPageViewModel>();
     }
 }

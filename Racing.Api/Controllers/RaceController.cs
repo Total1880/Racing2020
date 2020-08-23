@@ -39,10 +39,10 @@ namespace Racing.Api.Controllers
             {
                 return Ok(_raceService.GetRaces());
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                return BadRequest();
+                return BadRequest(e);
             }
         }
 

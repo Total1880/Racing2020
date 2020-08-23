@@ -42,5 +42,16 @@ namespace Racing.Services
                     race.RacePointList.Where(p => p.Position == i + 1).FirstOrDefault().Point;
             }
         }
+
+        public void ResetRanking()
+        {
+            if (RacerSeasonRankingList == null)
+                return;
+
+            foreach (var racerSeason in RacerSeasonRankingList)
+            {
+                racerSeason.Points = 0;
+            }
+        }
     }
 }
