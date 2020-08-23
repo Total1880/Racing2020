@@ -35,6 +35,9 @@ namespace Racing.Api
             services.AddScoped<IRaceService, RaceService>();
             services.AddScoped<IRepository<Race>, RaceRepository>();
 
+            services.AddScoped<ITeamService, TeamService>();
+            services.AddScoped<IRepository<Team>, TeamRepository>();
+
             services.AddScoped<ISettingService, SettingService>();
             services.AddScoped<IRepository<Setting>, SettingRepository>();
 
