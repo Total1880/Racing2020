@@ -7,5 +7,6 @@
         public string LastName { get; set; }
         public Nation Nation { get; set; }
         public int Ability { get; set; }
+        public Team Team { get; set; }
     }
 }
