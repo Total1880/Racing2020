@@ -16,14 +16,22 @@
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
         <ListView ItemsSource="{Binding TeamList}"
-                  DisplayMemberPath="Name"/>
+                  DisplayMemberPath="Name"
+                  SelectedItem="{Binding SelectedTeam}"/>
         <StackPanel Grid.Column="1">
-            <TextBox/>
+            <TextBox Height="25"
+                     Text="{Binding TeamName}"/>
         </StackPanel>
         <StackPanel Grid.Column="2">
-            <Button Content="Add new team"/>
-            <Button Content="Edit team"/>
-            <Button Content="Delete team"/>
+            <Button Content="Add new team"
+                    Height="25"
+                    Command="{Binding AddTeamCommand}"/>
+            <Button Content="Edit team"
+                    Height="25"
+                    Command="{Binding EditTeamCommand}"/>
+            <Button Content="Delete team"
+                    Height="25"
+                    Command="{Binding DeleteTeamCommand}"/>
         </StackPanel>
     </Grid>
 </Page>
