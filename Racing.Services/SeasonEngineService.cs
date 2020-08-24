@@ -24,6 +24,7 @@ namespace Racing.Services
                 newRacerSeasonRanking.Points = 0;
                 newRacerSeasonRanking.Positions = 0;
                 newRacerSeasonRanking.RacerPersonId = racerPerson.RacerPersonId;
+                newRacerSeasonRanking.Team = racerPerson.Team;
 
                 RacerSeasonRankingList.Add(newRacerSeasonRanking);
             }

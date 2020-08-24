@@ -21,6 +21,10 @@
                                     DisplayMemberBinding="{Binding LastName}">
                         <GridViewColumnHeader Content="Last Name"/>
                     </GridViewColumn>
+                    <GridViewColumn Width="150"
+                                    DisplayMemberBinding="{Binding Team.Name}">
+                        <GridViewColumnHeader Content="Team"/>
+                    </GridViewColumn>
                     <GridViewColumn Width="50"
                                     DisplayMemberBinding="{Binding Ability}">
                         <GridViewColumnHeader Content="Ability"/>
