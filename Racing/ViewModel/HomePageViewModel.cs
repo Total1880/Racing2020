@@ -44,9 +44,10 @@ namespace Racing.ViewModel
 
         private async Task GenerateNewGame()
         {
-            var setting = await _settingService.GetSettingByDescription(SettingsNames.GeneratedRacerPeople);
-            _numberOfNewRacers = int.Parse(setting.Value);
-            RacerList = await _racerPersonService.GenerateRacerPeople(_numberOfNewRacers);
+            var settingNumberOfNewRacers = await _settingService.GetSettingByDescription(SettingsNames.GeneratedRacerPeople);
+            var settingNumberOfNewTeams = await _settingService.GetSettingByDescription(SettingsNames.GeneratedTeams);
+
+            RacerList = await _racerPersonService.GenerateRacerPeople(int.Parse(settingNumberOfNewRacers.Value), int.Parse(settingNumberOfNewTeams.Value));
         }
 
         private void OpenOverviewRacerPersons()
