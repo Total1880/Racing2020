@@ -15,7 +15,7 @@
                 <Style TargetType="{x:Type ListViewItem}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Jersey}"
-                                     Value="1">
+                                     Value="Yellow">
                             <Setter Property="Background"
                                     Value="Yellow"/>
                         </DataTrigger>

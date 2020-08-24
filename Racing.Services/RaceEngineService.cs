@@ -35,7 +35,8 @@ namespace Racing.Services
                     RacerPersonId = racerPerson.RacerPersonId,
                     Team = racerPerson.Team,
                     Age = racerPerson.Age,
-                    PotentialAbility = racerPerson.PotentialAbility
+                    PotentialAbility = racerPerson.PotentialAbility,
+                    Jersey = racerPerson.Jersey
                 };
 
                 _racerList.Add(newRacer);
@@ -88,6 +89,7 @@ namespace Racing.Services
                 newRacerPerson.Nation = racer.Nation;
                 newRacerPerson.RacerPersonId = racer.RacerPersonId;
                 newRacerPerson.Team = racer.Team;
+                newRacerPerson.Jersey = racer.Jersey;
 
                 ranking.Add(newRacerPerson);
             }

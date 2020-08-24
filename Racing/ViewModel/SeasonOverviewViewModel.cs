@@ -4,8 +4,10 @@ using Racing.Messages;
 using Racing.Messages.WindowOpener;
 using Racing.Model;
 using Racing.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -122,6 +124,7 @@ namespace Racing.ViewModel
             _racerPersonService = racerPersonService;
             _ = GetRaces();
             MessengerInstance.Register<OverviewRacerPersonsMessage>(this, OnOpenSeasonOverviewPage);
+            MessengerInstance.Register<UpdateJerseyMessage>(this, UpdateJersey);
             Menu = new ObservableCollection<string>{SeasonMenu.LatestResult, SeasonMenu.Ranking, SeasonMenu.NextRaceInfo};
             EndOfSeason = Visibility.Hidden;
             NextRaceBool = true;
@@ -137,6 +140,19 @@ namespace Racing.ViewModel
         private void OnOpenSeasonOverviewPage(OverviewRacerPersonsMessage obj)
         {
             RacerPersonList = obj.RacerList;
+        }
+
+        private void UpdateJersey(UpdateJerseyMessage obj)
+        {
+            foreach (var item in RacerPersonList)
+            {
+                if (item.RacerPersonId != obj.YellowId)
+                {
+                    item.Jersey = string.Empty;
+                }
+            }
+            RacerPersonList.Where(r => r.RacerPersonId == obj.YellowId).FirstOrDefault().Jersey = "Yellow";
+            RacerPersonList.Where(r => r.RacerPersonId != obj.YellowId).FirstOrDefault().Jersey = string.Empty;
         }
 
         private void NextRace()

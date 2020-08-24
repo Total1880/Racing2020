@@ -44,7 +44,7 @@ namespace Racing.Services
                     FirstName = name.FirstName,
                     LastName = lastNames[index].LastName,
                     Nation = lastNames[index].Nation,
-                    Ability = _random.Next(1, 100),
+                    Ability = _random.Next(10, 100),
                     Age = _random.Next(_minAge, _maxAge),
                     RacerPersonId = index
                 };
@@ -97,12 +97,13 @@ namespace Racing.Services
                     racerPerson.Ability = racerPerson.PotentialAbility;
                 }
 
-                if (racerPerson.Ability <= 0)
+                if (racerPerson.Ability < 10)
                 {
-                    racerPerson.Ability = 1;
+                    racerPerson.Ability = 10;
                 }
 
                 racerPerson.Age++;
+                racerPerson.Jersey = string.Empty;
                 updateRacerPeople.Add(racerPerson);
             }
 

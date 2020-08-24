@@ -47,6 +47,7 @@ namespace Racing.ViewModel
             _seasonEngineService.UpdateRanking(obj.RacerPersonList, obj.Race);
             RacerSeasonRankingList = _seasonEngineService.RacerSeasonRankingList.OrderByDescending(r => r.Points).ThenBy(r => r.Positions).ToList();
             TeamSeasonRankingList = _seasonEngineService.TeamSeasonRankingList.OrderByDescending(t => t.Points).ThenBy(t => t.Positions).ToList();
+            MessengerInstance.Send(new UpdateJerseyMessage(RacerSeasonRankingList[0].RacerPersonId));
         }
 
         private void ResetSeasonRanking(ResetSeasonMessage obj)
