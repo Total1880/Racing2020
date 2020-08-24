@@ -12,6 +12,7 @@ namespace Racing.ViewModel
     {
         private ISeasonEngineService _seasonEngineService;
         private IList<RacerSeasonRanking> _racerSeasonRankingList;
+        private IList<TeamSeasonRanking> _teamSeasonRankings;
 
         public IList<RacerSeasonRanking> RacerSeasonRankingList
         {
@@ -19,6 +20,16 @@ namespace Racing.ViewModel
             set
             {
                 _racerSeasonRankingList = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public IList<TeamSeasonRanking> TeamSeasonRankingList
+        {
+            get => _teamSeasonRankings;
+            set
+            {
+                _teamSeasonRankings = value;
                 RaisePropertyChanged();
             }
         }
@@ -35,6 +46,7 @@ namespace Racing.ViewModel
         {
             _seasonEngineService.UpdateRanking(obj.RacerPersonList, obj.Race);
             RacerSeasonRankingList = _seasonEngineService.RacerSeasonRankingList.OrderByDescending(r => r.Points).ThenBy(r => r.Positions).ToList();
+            TeamSeasonRankingList = _seasonEngineService.TeamSeasonRankingList.OrderByDescending(t => t.Points).ThenBy(t => t.Positions).ToList();
         }
 
         private void ResetSeasonRanking(ResetSeasonMessage obj)

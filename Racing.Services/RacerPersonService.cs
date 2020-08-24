@@ -40,9 +40,12 @@ namespace Racing.Services
                 RacerPerson newRacerPerson = new RacerPerson { FirstName = name.FirstName };
                 newRacerPerson.LastName = lastNames[index].LastName;
                 newRacerPerson.Nation = lastNames[index].Nation;
-                newRacerPerson.Ability = _random.Next(1, 20);
+                newRacerPerson.Ability = _random.Next(1, 100);
                 newRacerPerson.RacerPersonId = index;
-                newRacerPerson.Team = teams[teamIndex];
+                if (teams[teamIndex] != null)
+                {
+                    newRacerPerson.Team = teams[teamIndex];
+                }
 
                 generatedRacerPeople.Add(newRacerPerson);
 

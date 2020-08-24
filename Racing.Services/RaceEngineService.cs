@@ -26,14 +26,17 @@ namespace Racing.Services
 
             foreach (var racerPerson in racerPersonList)
             {
-                Racer newRacer = new Racer();
-
-                newRacer.FirstName = racerPerson.FirstName;
-                newRacer.LastName = racerPerson.LastName;
-                newRacer.Ability = racerPerson.Ability;
-                newRacer.Nation = racerPerson.Nation;
-                newRacer.RacerPersonId = racerPerson.RacerPersonId;
-                newRacer.Team = racerPerson.Team;
+                Racer newRacer = new Racer
+                {
+                    FirstName = racerPerson.FirstName,
+                    LastName = racerPerson.LastName,
+                    Ability = racerPerson.Ability,
+                    Nation = racerPerson.Nation,
+                    RacerPersonId = racerPerson.RacerPersonId,
+                    Team = racerPerson.Team,
+                    Age = racerPerson.Age,
+                    PotentialAbility = racerPerson.PotentialAbility
+                };
 
                 _racerList.Add(newRacer);
             }
@@ -56,7 +59,7 @@ namespace Racing.Services
                 {
                     if (racer.RacePosition < _raceLength)
                     {
-                        racer.RacePosition += _random.Next(1, racer.Ability);
+                        racer.RacePosition += (float)_random.Next(1, racer.Ability)/10;
                     }
                     else
                     {

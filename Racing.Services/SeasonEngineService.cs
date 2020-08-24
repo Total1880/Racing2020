@@ -1,5 +1,6 @@
 ﻿using Racing.Model;
 using Racing.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,25 +9,39 @@ namespace Racing.Services
     public class SeasonEngineService : ISeasonEngineService
     {
         public IList<RacerSeasonRanking> RacerSeasonRankingList { get; set; }
+        public IList<TeamSeasonRanking> TeamSeasonRankingList { get; set; }
 
         private void Convert(IList<RacerPerson> racerPersonList)
         {
             RacerSeasonRankingList = new List<RacerSeasonRanking>();
+            TeamSeasonRankingList = new List<TeamSeasonRanking>();
 
             foreach (var racerPerson in racerPersonList)
             {
-                var newRacerSeasonRanking = new RacerSeasonRanking();
-
-                newRacerSeasonRanking.Ability = racerPerson.Ability;
-                newRacerSeasonRanking.FirstName = racerPerson.FirstName;
-                newRacerSeasonRanking.LastName = racerPerson.LastName;
-                newRacerSeasonRanking.Nation = racerPerson.Nation;
-                newRacerSeasonRanking.Points = 0;
-                newRacerSeasonRanking.Positions = 0;
-                newRacerSeasonRanking.RacerPersonId = racerPerson.RacerPersonId;
-                newRacerSeasonRanking.Team = racerPerson.Team;
+                var newRacerSeasonRanking = new RacerSeasonRanking
+                {
+                    Ability = racerPerson.Ability,
+                    FirstName = racerPerson.FirstName,
+                    LastName = racerPerson.LastName,
+                    Nation = racerPerson.Nation,
+                    RacerPersonId = racerPerson.RacerPersonId,
+                    Team = racerPerson.Team,
+                    PotentialAbility = racerPerson.PotentialAbility,
+                    Age = racerPerson.Age
+                };
 
                 RacerSeasonRankingList.Add(newRacerSeasonRanking);
+
+                if (!TeamSeasonRankingList.Any(t => t.TeamId == newRacerSeasonRanking.Team.TeamId))
+                {
+                    var newTeamSeasonRanking = new TeamSeasonRanking
+                    {
+                        Name = newRacerSeasonRanking.Team.Name,
+                        TeamId = newRacerSeasonRanking.Team.TeamId
+                    };
+
+                    TeamSeasonRankingList.Add(newTeamSeasonRanking);
+                }
             }
         }
 
@@ -48,6 +63,12 @@ namespace Racing.Services
 
                 RacerSeasonRankingList.Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Positions =
                     RacerSeasonRankingList.Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Positions + (i + 1);
+            }
+
+            foreach (var team in TeamSeasonRankingList)
+            {
+                team.Points = RacerSeasonRankingList.Where(r => r.Team.TeamId == team.TeamId).Sum(r => r.Points);
+                team.Positions = RacerSeasonRankingList.Where(r => r.Team.TeamId == team.TeamId).Sum(r => r.Positions);
             }
         }
 

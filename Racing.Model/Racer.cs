@@ -2,6 +2,6 @@
 {
     public class Racer : RacerPerson
     {
-        public int RacePosition { get; set; }
+        public float RacePosition { get; set; }
     }
 }
