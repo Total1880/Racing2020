@@ -7,21 +7,26 @@ using Racing.Services.Interfaces;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Racing.ViewModel
 {
     public class SeasonOverviewViewModel : ViewModelBase
     {
         private IRaceService _raceService;
+        private IRacerPersonService _racerPersonService;
         private ObservableCollection<Race> _raceList;
         private ObservableCollection<string> _menu;
         private string _nextRaceName;
         private string _chosenMenuItem;
         private int _raceLength;
         private int _seasonRaceNumber;
+        private bool _nextRaceBool;
+        private Visibility _endOfSeason;
         private IList<RacerPerson> _racerPersonList;
         private RelayCommand _nextRaceCommand;
         private RelayCommand _menuChoiceCommand;
+        private RelayCommand _nextSeasonCommand;
 
         public ObservableCollection<Race> RaceList
         {
@@ -77,6 +82,26 @@ namespace Racing.ViewModel
             }
         }
 
+        public bool NextRaceBool
+        {
+            get => _nextRaceBool;
+            set
+            {
+                _nextRaceBool = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public Visibility EndOfSeason
+        {
+            get => _endOfSeason;
+            set
+            {
+                _endOfSeason = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public IList<RacerPerson> RacerPersonList
         {
             get => _racerPersonList;
@@ -89,13 +114,17 @@ namespace Racing.ViewModel
 
         public RelayCommand NextRaceCommand => _nextRaceCommand ??= new RelayCommand(NextRace);
         public RelayCommand MenuChoiceCommand => _menuChoiceCommand ??= new RelayCommand(MenuChoice);
+        public RelayCommand NextSeasonCommand => _nextSeasonCommand ??= new RelayCommand(NextSeason);
 
-        public SeasonOverviewViewModel(IRaceService raceService)
+        public SeasonOverviewViewModel(IRaceService raceService, IRacerPersonService racerPersonService)
         {
             _raceService = raceService;
+            _racerPersonService = racerPersonService;
             _ = GetRaces();
             MessengerInstance.Register<OverviewRacerPersonsMessage>(this, OnOpenSeasonOverviewPage);
             Menu = new ObservableCollection<string>{SeasonMenu.LatestResult, SeasonMenu.Ranking, SeasonMenu.NextRaceInfo};
+            EndOfSeason = Visibility.Hidden;
+            NextRaceBool = true;
         }
 
         private async Task GetRaces()
@@ -127,10 +156,20 @@ namespace Racing.ViewModel
             else
             {
                 _seasonRaceNumber = 0;
+                EndOfSeason = Visibility.Visible;
+                NextRaceBool = false;
             }
             _ = GetRaces();
 
             ChosenMenuItem = SeasonMenu.LatestResult;
+        }
+
+        private void NextSeason()
+        {
+            MessengerInstance.Send(new ResetSeasonMessage());
+            EndOfSeason = Visibility.Hidden;
+            NextRaceBool = true;
+            RacerPersonList = _racerPersonService.SeasonUpdateRacerPeople(RacerPersonList);
         }
 
         public void MenuChoice()

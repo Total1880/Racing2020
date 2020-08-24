@@ -11,6 +11,17 @@
 
     <Grid>
         <ListView ItemsSource="{Binding RacerPersonList}">
+            <ListView.Resources>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Jersey}"
+                                     Value="1">
+                            <Setter Property="Background"
+                                    Value="Yellow"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
             <ListView.View>
                 <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Racer Name">
                     <GridViewColumn Width="150"

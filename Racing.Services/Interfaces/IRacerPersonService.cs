@@ -7,5 +7,6 @@ namespace Racing.Services.Interfaces
     public interface IRacerPersonService
     {
         Task<IList<RacerPerson>> GenerateRacerPeople(int numberOfPeople, int numberOfTeams);
+        IList<RacerPerson> SeasonUpdateRacerPeople(IList<RacerPerson> racerPeople);
     }
 }

@@ -10,5 +10,6 @@
         public int PotentialAbility { get; set; }
         public int Age { get; set; }
         public Team Team { get; set; }
+        public string Jersey { get; set; }
     }
 }

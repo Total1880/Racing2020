@@ -13,6 +13,8 @@ namespace Racing.Services
         private INamesRepository<LastNames> _lastNamesRepository;
         private IRepository<Team> _teamRepository;
         private readonly Random _random = new Random();
+        private int _minAge = 18;
+        private int _maxAge = 40;
 
         public RacerPersonService(INamesRepository<FirstNames> firstNamesRepository, INamesRepository<LastNames> lastNamesRepository, IRepository<Team> teamRepository)
         {
@@ -37,11 +39,17 @@ namespace Racing.Services
 
             foreach (var name in firstNames)
             {
-                RacerPerson newRacerPerson = new RacerPerson { FirstName = name.FirstName };
-                newRacerPerson.LastName = lastNames[index].LastName;
-                newRacerPerson.Nation = lastNames[index].Nation;
-                newRacerPerson.Ability = _random.Next(1, 100);
-                newRacerPerson.RacerPersonId = index;
+                RacerPerson newRacerPerson = new RacerPerson
+                {
+                    FirstName = name.FirstName,
+                    LastName = lastNames[index].LastName,
+                    Nation = lastNames[index].Nation,
+                    Ability = _random.Next(1, 100),
+                    Age = _random.Next(_minAge, _maxAge),
+                    RacerPersonId = index
+                };
+                newRacerPerson.PotentialAbility = _random.Next(newRacerPerson.Ability, 100);
+
                 if (teams[teamIndex] != null)
                 {
                     newRacerPerson.Team = teams[teamIndex];
@@ -59,6 +67,46 @@ namespace Racing.Services
             }
 
             return generatedRacerPeople;
+        }
+
+        public IList<RacerPerson> SeasonUpdateRacerPeople(IList<RacerPerson> racerPeople)
+        {
+            var updateRacerPeople = new List<RacerPerson>();
+
+            foreach (var racerPerson in racerPeople)
+            {
+                if (racerPerson.Age < 20)
+                {
+                    racerPerson.Ability += _random.Next(1, 10);
+                }
+                else if(racerPerson.Age < 30)
+                {
+                    racerPerson.Ability += _random.Next(1, 5);
+                }
+                else if (racerPerson.Age < 40)
+                {
+                    racerPerson.Ability -= _random.Next(1, 5);
+                }
+                else
+                {
+                    racerPerson.Ability -= _random.Next(1, 10);
+                }
+
+                if (racerPerson.Ability > racerPerson.PotentialAbility)
+                {
+                    racerPerson.Ability = racerPerson.PotentialAbility;
+                }
+
+                if (racerPerson.Ability <= 0)
+                {
+                    racerPerson.Ability = 1;
+                }
+
+                racerPerson.Age++;
+                updateRacerPeople.Add(racerPerson);
+            }
+
+            return updateRacerPeople;
         }
     }
 }

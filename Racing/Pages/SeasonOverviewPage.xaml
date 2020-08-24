@@ -35,7 +35,13 @@
         <Button Grid.Row="0"
                 Grid.Column="2"
                 Content="Next race"
-                Command="{Binding NextRaceCommand}"/>
+                Command="{Binding NextRaceCommand}"
+                IsEnabled="{Binding NextRaceBool}"/>
+        <Button Grid.Row="0"
+                Grid.Column="2"
+                Content="Next season"
+                Command="{Binding NextSeasonCommand}"
+                Visibility="{Binding EndOfSeason}"/>
         <ComboBox Grid.Row="1"
                   Grid.Column="2"
                   ItemsSource="{Binding Menu}"
