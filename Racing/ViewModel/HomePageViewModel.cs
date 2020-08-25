@@ -14,8 +14,9 @@ namespace Racing.ViewModel
     {
         private IRacerPersonService _racerPersonService;
         private ISettingService _settingService;
+        private IDivisionInterface _divisionInterface;
         private IList<RacerPerson> _racerList;
-        private int _numberOfNewRacers = 20;
+        private IList<Division> _divisionList;
         private RelayCommand _openOverviewRacerPersonsCommand;
         private RelayCommand _startRaceCommand;
         private RelayCommand _startSeasonCommand;
@@ -34,20 +35,34 @@ namespace Racing.ViewModel
             }
         }
 
-        public HomePageViewModel(IRacerPersonService racerPersonService, ISettingService settingService)
+        public IList<Division> DivisionList
+        {
+            get => _divisionList;
+            set
+            {
+                _divisionList = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public HomePageViewModel(IRacerPersonService racerPersonService, ISettingService settingService, IDivisionInterface divisionInterface)
         {
             _racerPersonService = racerPersonService;
             _settingService = settingService;
+            _divisionInterface = divisionInterface;
 
             _ = GenerateNewGame();
         }
 
         private async Task GenerateNewGame()
         {
-            var settingNumberOfNewRacers = await _settingService.GetSettingByDescription(SettingsNames.GeneratedRacerPeople);
+            var settingNumberOfNewRacersPerTeam = await _settingService.GetSettingByDescription(SettingsNames.GeneratedRacerPeoplePerTeam);
             var settingNumberOfNewTeams = await _settingService.GetSettingByDescription(SettingsNames.GeneratedTeams);
+            var settingNumberOfDivisions = await _settingService.GetSettingByDescription(SettingsNames.NumberOfDivisions);
 
-            RacerList = await _racerPersonService.GenerateRacerPeople(int.Parse(settingNumberOfNewRacers.Value), int.Parse(settingNumberOfNewTeams.Value));
+            DivisionList = await _divisionInterface.GenerateDivisions(int.Parse(settingNumberOfDivisions.Value), int.Parse(settingNumberOfNewTeams.Value), int.Parse(settingNumberOfNewRacersPerTeam.Value));
+
+            //RacerList = await _racerPersonService.GenerateRacerPeople(int.Parse(settingNumberOfNewRacers.Value), int.Parse(settingNumberOfNewTeams.Value));
         }
 
         private void OpenOverviewRacerPersons()
