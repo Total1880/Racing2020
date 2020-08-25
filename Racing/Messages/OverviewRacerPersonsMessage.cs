@@ -5,11 +5,11 @@ namespace Racing.Messages
 {
     class OverviewRacerPersonsMessage
     {
-        public IList<RacerPerson> RacerList;
+        public IList<Division> DivisionList;
 
-        public OverviewRacerPersonsMessage(IList<RacerPerson> racerList)
+        public OverviewRacerPersonsMessage(IList<Division> divisionList)
         {
-            RacerList = racerList;
+            DivisionList = divisionList;
         }
     }
 }

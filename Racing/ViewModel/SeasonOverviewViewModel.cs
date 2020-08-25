@@ -139,7 +139,7 @@ namespace Racing.ViewModel
 
         private void OnOpenSeasonOverviewPage(OverviewRacerPersonsMessage obj)
         {
-            RacerPersonList = obj.RacerList;
+            //RacerPersonList = obj.RacerList;
         }
 
         private void UpdateJersey(UpdateJerseyMessage obj)

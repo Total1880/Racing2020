@@ -10,7 +10,16 @@
       DataContext="{Binding OverviewRacerPersons, Source={StaticResource Locator}}">
 
     <Grid>
-        <ListView ItemsSource="{Binding RacerPersonList}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ComboBox Grid.Row="0"
+                  ItemsSource="{Binding DivisionList}"
+                  SelectedItem="{Binding SelectedDivision}"
+                  DisplayMemberPath="Name"/>
+        <ListView Grid.Row="1" 
+                  ItemsSource="{Binding RacerPersonList}">
             <ListView.View>
                 <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Racer Name">
                     <GridViewColumn Width="150"

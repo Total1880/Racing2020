@@ -59,7 +59,7 @@ namespace Racing.ViewModel
 
         private void OnOpenRacePage(OverviewRacerPersonsMessage obj)
         {
-            RacerPersonList = obj.RacerList;
+            //RacerPersonList = obj.RacerList;
         }
 
         private void StartRace()

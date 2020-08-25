@@ -68,7 +68,7 @@ namespace Racing.ViewModel
         private void OpenOverviewRacerPersons()
         {
             MessengerInstance.Send(new OpenOverviewRacerPersonsMessage());
-            MessengerInstance.Send(new OverviewRacerPersonsMessage(RacerList));
+            MessengerInstance.Send(new OverviewRacerPersonsMessage(DivisionList));
         }
 
         private void StartRace()
@@ -76,7 +76,7 @@ namespace Racing.ViewModel
             if (RacerList != null)
             {
                 MessengerInstance.Send(new OpenRacePageMessage());
-                MessengerInstance.Send(new OverviewRacerPersonsMessage(RacerList));
+                MessengerInstance.Send(new OverviewRacerPersonsMessage(DivisionList));
             }
         }
 
@@ -85,7 +85,7 @@ namespace Racing.ViewModel
             if (RacerList != null)
             {
                 MessengerInstance.Send(new OpenSeasonOverviewPageMessage());
-                MessengerInstance.Send(new OverviewRacerPersonsMessage(RacerList));
+                MessengerInstance.Send(new OverviewRacerPersonsMessage(DivisionList));
             }
         }
     }

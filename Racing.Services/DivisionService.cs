@@ -24,6 +24,7 @@ namespace Racing.Services
                 {
                     DivisionId = i,
                     Name = "Division " + i,
+                    Tier = i,
                     TeamList = await _teamService.GenerateTeams(numberOfNewRacersPerTeam, numberOfNewTeams)
                 };
 
