@@ -4,7 +4,6 @@ using Racing.Messages;
 using Racing.Messages.WindowOpener;
 using Racing.Model;
 using Racing.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,7 +11,6 @@ namespace Racing.ViewModel
 {
     public class HomePageViewModel : ViewModelBase
     {
-        private IRacerPersonService _racerPersonService;
         private ISettingService _settingService;
         private IDivisionInterface _divisionInterface;
         private IList<RacerPerson> _racerList;
@@ -45,9 +43,8 @@ namespace Racing.ViewModel
             }
         }
 
-        public HomePageViewModel(IRacerPersonService racerPersonService, ISettingService settingService, IDivisionInterface divisionInterface)
+        public HomePageViewModel(ISettingService settingService, IDivisionInterface divisionInterface)
         {
-            _racerPersonService = racerPersonService;
             _settingService = settingService;
             _divisionInterface = divisionInterface;
 
@@ -61,8 +58,6 @@ namespace Racing.ViewModel
             var settingNumberOfDivisions = await _settingService.GetSettingByDescription(SettingsNames.NumberOfDivisions);
 
             DivisionList = await _divisionInterface.GenerateDivisions(int.Parse(settingNumberOfDivisions.Value), int.Parse(settingNumberOfNewTeams.Value), int.Parse(settingNumberOfNewRacersPerTeam.Value));
-
-            //RacerList = await _racerPersonService.GenerateRacerPeople(int.Parse(settingNumberOfNewRacers.Value), int.Parse(settingNumberOfNewTeams.Value));
         }
 
         private void OpenOverviewRacerPersons()
@@ -82,7 +77,7 @@ namespace Racing.ViewModel
 
         private void StartSeason()
         {
-            if (RacerList != null)
+            if (DivisionList != null)
             {
                 MessengerInstance.Send(new OpenSeasonOverviewPageMessage());
                 MessengerInstance.Send(new OverviewRacerPersonsMessage(DivisionList));

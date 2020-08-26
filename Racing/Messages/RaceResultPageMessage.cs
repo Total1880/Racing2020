@@ -5,13 +5,15 @@ namespace Racing.Messages
 {
     class RaceResultPageMessage
     {
-        public IList<RacerPerson> RacerPersonList { get; set; }
+        public IList<Team> TeamList { get; set; }
         public Race Race { get; set; }
+        public int DivisionId { get; set; }
 
-        public RaceResultPageMessage(IList<RacerPerson> racerPersonList, Race race)
+        public RaceResultPageMessage(IList<Team> teamList, Race race, int divisionId)
         {
-            RacerPersonList = racerPersonList;
+            TeamList = teamList;
             Race = race;
+            DivisionId = divisionId;
         }
     }
 }

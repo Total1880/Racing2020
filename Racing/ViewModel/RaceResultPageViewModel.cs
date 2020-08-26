@@ -2,7 +2,6 @@
 using Racing.Messages;
 using Racing.Model;
 using Racing.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace Racing.ViewModel
@@ -31,13 +30,18 @@ namespace Racing.ViewModel
 
         private void GetRaceResult(RaceResultPageMessage obj)
         {
-            _raceEngineService.Go(obj.RacerPersonList, obj.Race.Length);
+            var newRacerPersonList = new List<RacerPerson>();
+            foreach (var team in obj.TeamList)
+            {
+                newRacerPersonList.AddRange(team.RacerPeople);
+            }
+            _raceEngineService.Go(newRacerPersonList, obj.Race.Length);
 
             if (RacerPersonList != null)
                 RacerPersonList.Clear();
 
             RacerPersonList = _raceEngineService.GetFinishRanking();
-            MessengerInstance.Send(new UpdateSeasonRankingMessage(RacerPersonList, obj.Race));
+            MessengerInstance.Send(new UpdateSeasonRankingMessage(RacerPersonList, obj.Race, obj.DivisionId));
         }
 
         private void ResetRanking(ResetSeasonMessage obj)

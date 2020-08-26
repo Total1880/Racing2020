@@ -7,11 +7,13 @@ namespace Racing.Messages
     {
         public IList<RacerPerson> RacerPersonList { get; set; }
         public Race Race { get; set; }
+        public int DivisionId { get; set; }
 
-        public UpdateSeasonRankingMessage(IList<RacerPerson> racerPersonList, Race race)
+        public UpdateSeasonRankingMessage(IList<RacerPerson> racerPersonList, Race race, int divisionId)
         {
             RacerPersonList = racerPersonList;
             Race = race;
+            DivisionId = divisionId;
         }
     }
 }
