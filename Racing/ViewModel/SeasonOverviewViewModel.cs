@@ -192,7 +192,7 @@ namespace Racing.ViewModel
 
         private void NextSeason()
         {
-            MessengerInstance.Send(new ResetSeasonMessage());
+            MessengerInstance.Send(new ResetSeasonMessage(_divisionList));
             EndOfSeason = Visibility.Hidden;
             NextRaceBool = true;
 

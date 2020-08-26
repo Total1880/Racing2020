@@ -52,6 +52,7 @@ namespace Racing.ViewModel
 
         private void ResetSeasonRanking(ResetSeasonMessage obj)
         {
+            _seasonEngineService.PromotionsAndRelegations(obj.DivisionList);
             _seasonEngineService.ResetRanking();
             RacerSeasonRankingList = new List<RacerSeasonRanking>();
             TeamSeasonRankingList = new List<TeamSeasonRanking>();

@@ -91,5 +91,27 @@ namespace Racing.Services
             DivisionRacerSeasonRankingList = new Dictionary<int, IList<RacerSeasonRanking>>();
             DivisionTeamSeasonRankingList = new Dictionary<int, IList<TeamSeasonRanking>>();
         }
+
+        public void PromotionsAndRelegations(IList<Division> divisionList)
+        {
+            foreach (var division in divisionList)
+            {
+                if (division != divisionList[0])
+                {
+                    divisionList
+                        .Where(d => d.Tier == division.Tier - 1)
+                        .FirstOrDefault().TeamList.Add(division.TeamList.Where(t => t.TeamId == DivisionTeamSeasonRankingList[division.DivisionId][0].TeamId).FirstOrDefault());
+                    division.TeamList.Remove(division.TeamList.Where(t => t.TeamId == DivisionTeamSeasonRankingList[division.DivisionId][0].TeamId).FirstOrDefault());
+                }
+
+                if (division != divisionList[divisionList.Count - 1])
+                {
+                    divisionList
+                        .Where(d => d.Tier == division.Tier + 1)
+                        .FirstOrDefault().TeamList.Add(division.TeamList.Where(t => t.TeamId == DivisionTeamSeasonRankingList[division.DivisionId].LastOrDefault().TeamId).FirstOrDefault());
+                    division.TeamList.Remove(division.TeamList.Where(t => t.TeamId == DivisionTeamSeasonRankingList[division.DivisionId].LastOrDefault().TeamId).FirstOrDefault());
+                }
+            }
+        }
     }
 }

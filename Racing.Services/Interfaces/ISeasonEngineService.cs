@@ -9,5 +9,6 @@ namespace Racing.Services.Interfaces
         IDictionary<int, IList<TeamSeasonRanking>> DivisionTeamSeasonRankingList { get; set; }
         void UpdateRanking(IList<RacerPerson> racerPersonList, Race race, int divisionId);
         void ResetRanking();
+        void PromotionsAndRelegations(IList<Division> divisionList);
     }
 }
