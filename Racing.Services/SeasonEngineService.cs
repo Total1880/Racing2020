@@ -23,21 +23,21 @@ namespace Racing.Services
             var TeamSeasonRankingList = new List<TeamSeasonRanking>();
 
             foreach (var racerPerson in racerPersonList)
-            { 
-                var newRacerSeasonRanking = new RacerSeasonRanking
             {
-                Ability = racerPerson.Ability,
-                FirstName = racerPerson.FirstName,
-                LastName = racerPerson.LastName,
-                Nation = racerPerson.Nation,
-                RacerPersonId = racerPerson.RacerPersonId,
-                Team = racerPerson.Team,
-                PotentialAbility = racerPerson.PotentialAbility,
-                Age = racerPerson.Age,
-                DivisionId = divisionId
-            };
+                var newRacerSeasonRanking = new RacerSeasonRanking
+                {
+                    Ability = racerPerson.Ability,
+                    FirstName = racerPerson.FirstName,
+                    LastName = racerPerson.LastName,
+                    Nation = racerPerson.Nation,
+                    RacerPersonId = racerPerson.RacerPersonId,
+                    Team = racerPerson.Team,
+                    PotentialAbility = racerPerson.PotentialAbility,
+                    Age = racerPerson.Age,
+                    DivisionId = divisionId
+                };
 
-            RacerSeasonRankingList.Add(newRacerSeasonRanking);
+                RacerSeasonRankingList.Add(newRacerSeasonRanking);
 
                 if (!TeamSeasonRankingList.Any(t => t.TeamId == newRacerSeasonRanking.Team.TeamId))
                 {
@@ -84,6 +84,9 @@ namespace Racing.Services
                 team.Points = DivisionRacerSeasonRankingList[divisionId].Where(r => r.Team.TeamId == team.TeamId).Sum(r => r.Points);
                 team.Positions = DivisionRacerSeasonRankingList[divisionId].Where(r => r.Team.TeamId == team.TeamId).Sum(r => r.Positions);
             }
+
+            DivisionRacerSeasonRankingList[divisionId] = DivisionRacerSeasonRankingList[divisionId].Where(r => r.DivisionId == divisionId).OrderByDescending(r => r.Points).ThenBy(r => r.Positions).ToList();
+            DivisionTeamSeasonRankingList[divisionId] = DivisionTeamSeasonRankingList[divisionId].Where(r => r.DivisionId == divisionId).OrderByDescending(t => t.Points).ThenBy(t => t.Positions).ToList();
         }
 
         public void ResetRanking()
@@ -96,7 +99,7 @@ namespace Racing.Services
         {
             foreach (var division in divisionList)
             {
-                if (division != divisionList[0])
+                if (division.Tier > 1)
                 {
                     divisionList
                         .Where(d => d.Tier == division.Tier - 1)
@@ -104,7 +107,7 @@ namespace Racing.Services
                     division.TeamList.Remove(division.TeamList.Where(t => t.TeamId == DivisionTeamSeasonRankingList[division.DivisionId][0].TeamId).FirstOrDefault());
                 }
 
-                if (division != divisionList[divisionList.Count - 1])
+                if (division.Tier != divisionList.Max(d => d.Tier))
                 {
                     divisionList
                         .Where(d => d.Tier == division.Tier + 1)

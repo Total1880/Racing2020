@@ -40,6 +40,10 @@
                                     DisplayMemberBinding="{Binding Ability}">
                         <GridViewColumnHeader Content="Ability"/>
                     </GridViewColumn>
+                    <GridViewColumn Width="50"
+                                    DisplayMemberBinding="{Binding Age}">
+                        <GridViewColumnHeader Content="Age"/>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -4,6 +4,7 @@ using Racing.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 
 namespace Racing.Services
 {
@@ -13,8 +14,9 @@ namespace Racing.Services
         private INamesRepository<LastNames> _lastNamesRepository;
         private IRepository<Team> _teamRepository;
         private readonly Random _random = new Random();
-        private int _minAge = 18;
+        private int _minAge = 16;
         private int _maxAge = 40;
+        private int _idCounter = 0;
 
         public RacerPersonService(INamesRepository<FirstNames> firstNamesRepository, INamesRepository<LastNames> lastNamesRepository, IRepository<Team> teamRepository)
         {
@@ -34,8 +36,8 @@ namespace Racing.Services
             var lastNames = await _lastNamesRepository.GenerateNames(numberOfPeople);
             var teams = await _teamRepository.Get();
             var generatedRacerPeople = new List<RacerPerson>();
-            int index = 0;
             int teamIndex = 0;
+            int index = 0;
 
             foreach (var name in firstNames)
             {
@@ -46,7 +48,7 @@ namespace Racing.Services
                     Nation = lastNames[index].Nation,
                     Ability = _random.Next(10, 100),
                     Age = _random.Next(_minAge, _maxAge),
-                    RacerPersonId = index
+                    RacerPersonId = _idCounter
                 };
                 newRacerPerson.PotentialAbility = _random.Next(newRacerPerson.Ability, 100);
 
@@ -59,6 +61,7 @@ namespace Racing.Services
 
                 teamIndex++;
                 index++;
+                _idCounter++;
 
                 if (teamIndex >= numberOfTeams)
                 {
@@ -79,7 +82,7 @@ namespace Racing.Services
                 {
                     racerPerson.Ability += _random.Next(1, 10);
                 }
-                else if(racerPerson.Age < 30)
+                else if (racerPerson.Age < 30)
                 {
                     racerPerson.Ability += _random.Next(1, 5);
                 }
@@ -89,7 +92,19 @@ namespace Racing.Services
                 }
                 else
                 {
-                    racerPerson.Ability -= _random.Next(1, 10);
+                    var list = new List<RacerPerson>();
+                    var task = Task.Run(async () => { list = (List<RacerPerson>)await GenerateRacerPeople(1, 1); });
+                    task.Wait();
+
+                    var newRacerPerson = list.SingleOrDefault();
+                    newRacerPerson.Team = racerPerson.Team;
+                    newRacerPerson.Age = _minAge;
+                    if (newRacerPerson.Ability > 50)
+                    {
+                        newRacerPerson.Ability = 50;
+                    }
+                    updateRacerPeople.Add(newRacerPerson);
+                    continue;
                 }
 
                 if (racerPerson.Ability > racerPerson.PotentialAbility)

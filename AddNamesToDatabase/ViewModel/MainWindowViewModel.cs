@@ -67,7 +67,7 @@ namespace AddNamesToDatabase.ViewModel
                 using var reader = ExcelReaderFactory.CreateReader(stream);
 
                 var dataSetNames = reader.AsDataSet();
-                var table = dataSetNames.Tables["names"];
+                var table = dataSetNames.Tables["Names"];
                 var headerFirstNames = "FirstName";
                 var headerLastNames = "LastName";
                 if (table == null)

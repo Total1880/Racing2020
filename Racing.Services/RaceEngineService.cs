@@ -86,6 +86,7 @@ namespace Racing.Services
                 newRacerPerson.FirstName = racer.FirstName;
                 newRacerPerson.LastName = racer.LastName;
                 newRacerPerson.Ability = racer.Ability;
+                newRacerPerson.Age = racer.Age;
                 newRacerPerson.Nation = racer.Nation;
                 newRacerPerson.RacerPersonId = racer.RacerPersonId;
                 newRacerPerson.Team = racer.Team;
