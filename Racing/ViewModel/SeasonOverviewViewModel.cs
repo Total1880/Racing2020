@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using Racing.Messages;
 using Racing.Messages.WindowOpener;
 using Racing.Model;
@@ -20,12 +21,12 @@ namespace Racing.ViewModel
         private ObservableCollection<string> _menu;
         private string _nextRaceName;
         private string _chosenMenuItem;
+        private Division _chosenDivision;
         private int _raceLength;
         private int _seasonRaceNumber;
-        private int _divisionIndex;
         private bool _nextRaceBool;
         private Visibility _endOfSeason;
-        private IList<RacerPerson> _racerPersonList;
+        //private IList<RacerPerson> _racerPersonList;
         private IList<Division> _divisionList;
         private RelayCommand _nextRaceCommand;
         private RelayCommand _menuChoiceCommand;
@@ -75,6 +76,21 @@ namespace Racing.ViewModel
             }
         }
 
+        public Division ChosenDivision
+        {
+            get => _chosenDivision;
+            set
+            {
+                if (value != null)
+                {
+                    _chosenDivision = value;
+                    RaisePropertyChanged();
+                    MessengerInstance.Send(new RaceResultPageMessage(value.DivisionId));
+                    MessengerInstance.Send(new UpdateSeasonRankingMessage(value.DivisionId));
+                }
+            }
+        }
+
         public int RaceLength
         {
             get => _raceLength;
@@ -105,12 +121,22 @@ namespace Racing.ViewModel
             }
         }
 
-        public IList<RacerPerson> RacerPersonList
+        //public IList<RacerPerson> RacerPersonListfdsf
+        //{
+        //    get => _racerPersonList;
+        //    set
+        //    {
+        //        _racerPersonList = value;
+        //        RaisePropertyChanged();
+        //    }
+        //}
+
+        public IList<Division> DivisionList
         {
-            get => _racerPersonList;
+            get => _divisionList;
             set
             {
-                _racerPersonList = value;
+                _divisionList = value;
                 RaisePropertyChanged();
             }
         }
@@ -129,7 +155,6 @@ namespace Racing.ViewModel
             Menu = new ObservableCollection<string> { SeasonMenu.LatestResult, SeasonMenu.Ranking, SeasonMenu.NextRaceInfo };
             EndOfSeason = Visibility.Hidden;
             NextRaceBool = true;
-            _divisionIndex = 0;
         }
 
         private async Task GetRaces()
@@ -141,12 +166,12 @@ namespace Racing.ViewModel
 
         private void OnOpenSeasonOverviewPage(OverviewRacerPersonsMessage obj)
         {
-            _divisionList = obj.DivisionList;
+            DivisionList = obj.DivisionList;
         }
 
         private void UpdateJersey(UpdateJerseyMessage obj)
         {
-            foreach (var team in _divisionList[_divisionIndex].TeamList)
+            foreach (var team in DivisionList.Where(d => d.DivisionId == obj.DivisionId).FirstOrDefault().TeamList)
             {
                 foreach (var racerPeople in team.RacerPeople)
                 {
@@ -160,43 +185,47 @@ namespace Racing.ViewModel
                     team.RacerPeople.Where(r => r.RacerPersonId == obj.YellowId).FirstOrDefault().Jersey = "Yellow";
                 }
             }
+
         }
 
         private void NextRace()
         {
             MessengerInstance.Send(new OpenRaceResultPageMessage());
 
-            MessengerInstance.Send(new RaceResultPageMessage(_divisionList[_divisionIndex].TeamList, RaceList[_seasonRaceNumber], _divisionList[_divisionIndex].DivisionId));
-
-            _divisionIndex++;
-
-            if (_divisionIndex >= _divisionList.Count)
+            foreach (var division in DivisionList)
             {
-                _divisionIndex = 0;
-
-                if (_seasonRaceNumber + 1 < RaceList.Count)
-                {
-                    _seasonRaceNumber++;
-                }
-                else
-                {
-                    _seasonRaceNumber = 0;
-                    EndOfSeason = Visibility.Visible;
-                    NextRaceBool = false;
-                }
+                MessengerInstance.Send(new RaceResultPageMessage(division.TeamList, RaceList[_seasonRaceNumber], division.DivisionId));
             }
+
+            if (_seasonRaceNumber + 1 < RaceList.Count)
+            {
+                _seasonRaceNumber++;
+            }
+            else
+            {
+                _seasonRaceNumber = 0;
+                EndOfSeason = Visibility.Visible;
+                NextRaceBool = false;
+            }
+
             _ = GetRaces();
 
             ChosenMenuItem = SeasonMenu.LatestResult;
+
+            if (ChosenDivision != null)
+            {
+                MessengerInstance.Send(new RaceResultPageMessage(ChosenDivision.DivisionId));
+                MessengerInstance.Send(new UpdateSeasonRankingMessage(ChosenDivision.DivisionId));
+            }
         }
 
         private void NextSeason()
         {
-            MessengerInstance.Send(new ResetSeasonMessage(_divisionList));
+            MessengerInstance.Send(new ResetSeasonMessage(DivisionList));
             EndOfSeason = Visibility.Hidden;
             NextRaceBool = true;
 
-            foreach (var division in _divisionList)
+            foreach (var division in DivisionList)
             {
                 foreach (var team in division.TeamList)
                 {

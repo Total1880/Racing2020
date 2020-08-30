@@ -18,6 +18,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0"
@@ -46,7 +47,12 @@
                   Grid.Column="2"
                   ItemsSource="{Binding Menu}"
                   SelectedItem="{Binding ChosenMenuItem , Mode=TwoWay}"/>
-        <Frame Grid.Row="2"
+        <ComboBox Grid.Row="2"
+                  Grid.Column="0"
+                  ItemsSource="{Binding DivisionList}"
+                  SelectedItem="{Binding ChosenDivision}"
+                  DisplayMemberPath="Name"/>
+        <Frame Grid.Row="3"
                Grid.ColumnSpan="3"
                Name="SeasonOverviewFrame"
                NavigationUIVisibility="Hidden"/>

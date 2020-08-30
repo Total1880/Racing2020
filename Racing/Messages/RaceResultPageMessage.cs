@@ -15,5 +15,9 @@ namespace Racing.Messages
             Race = race;
             DivisionId = divisionId;
         }
+        public RaceResultPageMessage(int divisionId)
+        {
+            DivisionId = divisionId;
+        }
     }
 }

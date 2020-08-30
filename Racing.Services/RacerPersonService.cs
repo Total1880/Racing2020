@@ -112,7 +112,9 @@ namespace Racing.Services
                     {
                         newRacerPerson.Ability = 50;
                     }
+                    newRacerPerson.RacerPersonId = _idCounter;
                     updateRacerPeople.Add(newRacerPerson);
+                    _idCounter++;
                     continue;
                 }
 
