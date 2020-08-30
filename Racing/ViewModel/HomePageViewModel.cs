@@ -11,8 +11,9 @@ namespace Racing.ViewModel
 {
     public class HomePageViewModel : ViewModelBase
     {
-        private ISettingService _settingService;
-        private IDivisionInterface _divisionInterface;
+        private readonly ISettingService _settingService;
+        private readonly IDivisionInterface _divisionInterface;
+        private readonly IRacerPersonService _racerPersonService;
         private IList<RacerPerson> _racerList;
         private IList<Division> _divisionList;
         private RelayCommand _openOverviewRacerPersonsCommand;
@@ -43,11 +44,11 @@ namespace Racing.ViewModel
             }
         }
 
-        public HomePageViewModel(ISettingService settingService, IDivisionInterface divisionInterface)
+        public HomePageViewModel(ISettingService settingService, IDivisionInterface divisionInterface, IRacerPersonService racerPersonService)
         {
             _settingService = settingService;
             _divisionInterface = divisionInterface;
-
+            _racerPersonService = racerPersonService;
             _ = GenerateNewGame();
         }
 
@@ -58,6 +59,14 @@ namespace Racing.ViewModel
             var settingNumberOfDivisions = await _settingService.GetSettingByDescription(SettingsNames.NumberOfDivisions);
 
             DivisionList = await _divisionInterface.GenerateDivisions(int.Parse(settingNumberOfDivisions.Value), int.Parse(settingNumberOfNewTeams.Value), int.Parse(settingNumberOfNewRacersPerTeam.Value));
+
+            foreach (var division in DivisionList)
+            {
+                foreach (var team in division.TeamList)
+                {
+                    team.RacerPeople = _racerPersonService.GenerateUniqueId(team.RacerPeople);
+                }
+            }
         }
 
         private void OpenOverviewRacerPersons()

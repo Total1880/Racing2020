@@ -8,5 +8,6 @@ namespace Racing.Services.Interfaces
     {
         Task<IList<RacerPerson>> GenerateRacerPeople(int numberOfPeople, int numberOfTeams);
         IList<RacerPerson> SeasonUpdateRacerPeople(IList<RacerPerson> racerPeople);
+        IList<RacerPerson> GenerateUniqueId(IList<RacerPerson> racerPeople);
     }
 }

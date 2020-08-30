@@ -47,8 +47,7 @@ namespace Racing.Services
                     LastName = lastNames[index].LastName,
                     Nation = lastNames[index].Nation,
                     Ability = _random.Next(10, 100),
-                    Age = _random.Next(_minAge, _maxAge),
-                    RacerPersonId = _idCounter
+                    Age = _random.Next(_minAge, _maxAge)
                 };
                 newRacerPerson.PotentialAbility = _random.Next(newRacerPerson.Ability, 100);
 
@@ -61,7 +60,6 @@ namespace Racing.Services
 
                 teamIndex++;
                 index++;
-                _idCounter++;
 
                 if (teamIndex >= numberOfTeams)
                 {
@@ -70,6 +68,17 @@ namespace Racing.Services
             }
 
             return generatedRacerPeople;
+        }
+
+        public IList<RacerPerson> GenerateUniqueId(IList<RacerPerson> racerPeople)
+        {
+            foreach (var racerPerson in racerPeople)
+            {
+                racerPerson.RacerPersonId = _idCounter;
+                _idCounter++;
+            }
+
+            return racerPeople;
         }
 
         public IList<RacerPerson> SeasonUpdateRacerPeople(IList<RacerPerson> racerPeople)
