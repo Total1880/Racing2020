@@ -15,7 +15,7 @@ namespace AddNamesToDatabase.Repositories
         }
         public bool Create(Setting item)
         {
-            throw new System.NotImplementedException();
+            return _client.CreateData(Endpoints.Setting, item);
         }
 
         public bool Delete(int id)

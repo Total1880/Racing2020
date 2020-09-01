@@ -8,5 +8,6 @@ namespace AddNamesToDatabase.Services.Interfaces
     {
         bool EditSetting(Setting setting);
         Task<IList<Setting>> GetSettings();
+        bool AddSetting(Setting setting);
     }
 }
