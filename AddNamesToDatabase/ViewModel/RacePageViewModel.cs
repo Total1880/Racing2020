@@ -101,6 +101,7 @@ namespace AddNamesToDatabase.ViewModel
             _settingService = settingService;
             _ = GetRaces();
             _ = NewRacePointList();
+            RacePointList = new List<RacePoint>();
         }
 
         public async Task GetRaces()
