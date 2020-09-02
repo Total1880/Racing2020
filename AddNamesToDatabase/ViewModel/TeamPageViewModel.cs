@@ -75,6 +75,7 @@ namespace AddNamesToDatabase.ViewModel
                 _teamService.CreateTeam(newTeam);
                 _ = GetTeams();
             }
+            TeamName = string.Empty;
         }
 
         private void EditTeam()

@@ -16,6 +16,7 @@ namespace Racing.Services
             builder.RegisterType<SettingService>().AsImplementedInterfaces();
             builder.RegisterType<DivisionService>().AsImplementedInterfaces();
             builder.RegisterType<TeamService>().AsImplementedInterfaces();
+            builder.RegisterType<SaveGameDivisionService>().AsImplementedInterfaces();
         }
     }
 }

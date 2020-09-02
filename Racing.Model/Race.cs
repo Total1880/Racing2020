@@ -7,7 +7,6 @@ namespace Racing.Model
     {
         public int RaceId { get; set; }
         public string Name { get; set; }
-        [Required, MinLength(100), MaxLength(10000)]
         public int Length { get; set; }
         public IList<RacePoint> RacePointList { get; set; }
     }
