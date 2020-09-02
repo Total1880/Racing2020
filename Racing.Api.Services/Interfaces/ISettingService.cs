@@ -8,5 +8,6 @@ namespace Racing.Api.Services.Interfaces
         bool EditSetting(Setting setting);
         IList<Setting> GetSettings();
         Setting GetSettingByDescription(string description);
+        bool AddSetting(Setting setting);
     }
 }

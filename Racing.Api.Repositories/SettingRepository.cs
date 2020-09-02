@@ -10,7 +10,20 @@ namespace Racing.Api.Repositories
     {
         public bool Create(Setting item)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                using var context = new RacingContext();
+                if (!context.SettingList.Any(s => s.Description == item.Description))
+                {
+                    context.SettingList.Add(item);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool Delete(int id)

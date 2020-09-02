@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Command;
 using Racing.Model;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AddNamesToDatabase.ViewModel
@@ -59,6 +60,20 @@ namespace AddNamesToDatabase.ViewModel
 
         private async Task GetSettings()
         {
+            SettingList = new ObservableCollection<Setting>(await _settingService.GetSettings());
+
+            var settingListCheck = new SettingsNames();
+
+            foreach (var item in settingListCheck.GetType().GetFields())
+            {
+                if (SettingList.Any(s => s.Description == item.Name))
+                {
+                    continue;
+                }
+
+                _settingService.AddSetting(new Setting { Description = item.Name, Value = "1" });
+            }
+
             SettingList = new ObservableCollection<Setting>(await _settingService.GetSettings());
         }
 

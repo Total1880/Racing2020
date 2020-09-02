@@ -16,6 +16,18 @@ namespace Racing.Api.Controllers
         {
             _settingService = settingService;
         }
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult CreateRace(Setting setting)
+        {
+            if (_settingService.AddSetting(setting))
+            {
+                return Created(string.Empty, setting);
+            }
+
+            return BadRequest();
+        }
 
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]

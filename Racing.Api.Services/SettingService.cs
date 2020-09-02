@@ -16,6 +16,11 @@ namespace Racing.Api.Services
             _settingRepository = settingRepository;
         }
 
+        public bool AddSetting(Setting setting)
+        {
+            return _settingRepository.Create(setting);
+        }
+
         public bool EditSetting(Setting setting)
         {
             return _settingRepository.Update(setting);
