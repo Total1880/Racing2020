@@ -39,13 +39,13 @@ namespace Racing.ViewModel
         public TeamOverviewPageViewModel(ISaveGameDivisionService saveGameDivisionService)
         {
             _saveGameDivisionService = saveGameDivisionService;
-            _divisions = _saveGameDivisionService.GetDivisions();
 
             MessengerInstance.Register<UpdateSeasonRankingMessage>(this, SelectDivision);
         }
 
         private void SelectDivision(UpdateSeasonRankingMessage obj)
         {
+            _divisions = _saveGameDivisionService.GetDivisions();
             Teams = new ObservableCollection<Team>(_divisions.Where(d => d.DivisionId == obj.DivisionId).FirstOrDefault().TeamList);
         }
     }

@@ -159,6 +159,7 @@ namespace Racing.ViewModel
         private void OnOpenSeasonOverviewPage(OverviewRacerPersonsMessage obj)
         {
             DivisionList = obj.DivisionList;
+            _saveGameDivisionService.SaveDivisions(DivisionList);
         }
 
         private void UpdateJersey(UpdateJerseyMessage obj)
