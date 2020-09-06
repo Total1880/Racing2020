@@ -13,10 +13,12 @@ namespace Racing.Pages
         private RaceResultPage _raceResultPage;
         private SeasonRankingPage _seasonRankingPage;
         private NextRaceInfoPage _nextRaceInfoPage;
+        //private TeamOverviewPage _teamOverviewPage;
 
         public RaceResultPage RaceResultPage => _raceResultPage ??= new RaceResultPage();
         public SeasonRankingPage SeasonRankingPage => _seasonRankingPage ??= new SeasonRankingPage();
         public NextRaceInfoPage NextRaceInfoPage => _nextRaceInfoPage ??= new NextRaceInfoPage();
+        //public TeamOverviewPage TeamOverviewPage => _teamOverviewPage ??= new TeamOverviewPage();
 
         public SeasonOverviewPage()
         {
@@ -27,6 +29,7 @@ namespace Racing.Pages
             Messenger.Default.Register<OpenRaceResultPageMessage>(this, OpenRaceResultPage);
             Messenger.Default.Register<OpenSeasonRankingPageMessage>(this, OpenSeasonRankingPage);
             Messenger.Default.Register<OpenNextRaceInfoPageMessage>(this, OpenNextRaceInfoPage);
+            Messenger.Default.Register<OpenTeamOverviewMessage>(this, OpenTeamOverviewPage);
         }
 
         private void OpenRaceResultPage(OpenRaceResultPageMessage obj)
@@ -42,6 +45,11 @@ namespace Racing.Pages
         private void OpenNextRaceInfoPage(OpenNextRaceInfoPageMessage obj)
         {
             SeasonOverviewFrame.Navigate(NextRaceInfoPage);
+        }
+
+        private void OpenTeamOverviewPage(OpenTeamOverviewMessage obj)
+        {
+            SeasonOverviewFrame.Navigate(new TeamOverviewPage());
         }
     }
 }

@@ -14,16 +14,43 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ListView>
-            
+        <ListView ItemsSource="{Binding Teams}"
+                  SelectedItem="{Binding SelectedTeam}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Teams">
+                    <GridViewColumn Width="120"
+                                    DisplayMemberBinding="{Binding Name}">
+                        <GridViewColumnHeader Content="Team name"/>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
         </ListView>
         <StackPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Team: "/>
-                <Label Content="Name"/>
+                <Label Content="{Binding SelectedTeam.Name}"/>
             </StackPanel>
-            <ListView>
-                <!--List of cyclist-->
+            <ListView ItemsSource="{Binding SelectedTeam.RacerPeople}">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Racerpeople">
+                        <GridViewColumn Width="120"
+                                        DisplayMemberBinding="{Binding LastName}">
+                            <GridViewColumnHeader Content="Last name"/>
+                        </GridViewColumn>
+                        <GridViewColumn Width="120"
+                                        DisplayMemberBinding="{Binding FirstName}">
+                            <GridViewColumnHeader Content="First name"/>
+                        </GridViewColumn>
+                        <GridViewColumn Width="50"
+                                    DisplayMemberBinding="{Binding Ability}">
+                            <GridViewColumnHeader Content="Ability"/>
+                        </GridViewColumn>
+                        <GridViewColumn Width="50"
+                                    DisplayMemberBinding="{Binding Age}">
+                            <GridViewColumnHeader Content="Age"/>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
             </ListView>
         </StackPanel>
     </Grid>
