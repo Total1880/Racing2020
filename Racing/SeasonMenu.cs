@@ -5,5 +5,6 @@
         public const string Ranking = "Ranking";
         public const string LatestResult = "Latest Result";
         public const string NextRaceInfo = "Next Race info";
+        public const string TeamOverview = "Team Overview";
     }
 }

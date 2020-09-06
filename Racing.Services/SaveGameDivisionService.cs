@@ -15,7 +15,20 @@ namespace Racing.Services
         }
         public IList<Division> GetDivisions()
         {
-            return _saveGameDivisionRepository.Load();
+            var divisions = _saveGameDivisionRepository.Load();
+
+            foreach (var division in divisions)
+            {
+                foreach (var team in division.TeamList)
+                {
+                    foreach (var racerPerson in team.RacerPeople)
+                    {
+                        racerPerson.Team = team;
+                    }
+                }
+            }
+
+            return divisions;
         }
 
         public bool SaveDivisions(IList<Division> divisions)

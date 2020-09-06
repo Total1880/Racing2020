@@ -18,7 +18,70 @@ namespace Racing.Repositories
         public IList<Division> Load()
         {
             // to get nation, use the id and nationcontroller
-            throw new System.NotImplementedException();
+            var divisions = new List<Division>();
+            var fileString = File.ReadAllText(Path.Combine(path, file));
+
+            if (string.IsNullOrWhiteSpace(fileString))
+            {
+                return divisions;
+            }
+
+            using (var stringReader = new StringReader(fileString))
+            {
+                using (var xmlReader = XmlReader.Create(stringReader, new XmlReaderSettings() { IgnoreWhitespace = true }))
+                {
+                    xmlReader.MoveToContent();
+                    xmlReader.ReadStartElement(nameof(divisions));
+
+                    do
+                    {
+                        var readDivision = new Division();
+
+                        readDivision.DivisionId = int.Parse(xmlReader.GetAttribute(nameof(Division.DivisionId)));
+                        readDivision.Tier = int.Parse(xmlReader.GetAttribute(nameof(Division.Tier)));
+                        readDivision.Name = xmlReader.GetAttribute(nameof(Division.Name));
+
+                        readDivision.TeamList = new List<Team>();
+
+                        xmlReader.ReadStartElement(nameof(Division));
+
+                        do
+                        {
+                            var readTeam = new Team();
+
+                            readTeam.TeamId = int.Parse(xmlReader.GetAttribute(nameof(Team.TeamId)));
+                            readTeam.Name = xmlReader.GetAttribute(nameof(Team.Name));
+
+                            readTeam.RacerPeople = new List<RacerPerson>();
+
+                            xmlReader.ReadStartElement(nameof(Team));
+
+
+                            do
+                            {
+                                var readRacerPerson = new RacerPerson();
+
+
+                                readRacerPerson.RacerPersonId = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.RacerPersonId)));
+                                readRacerPerson.FirstName = xmlReader.GetAttribute(nameof(RacerPerson.FirstName));
+                                readRacerPerson.LastName = xmlReader.GetAttribute(nameof(RacerPerson.LastName));
+                                readRacerPerson.Nation = new Nation { NationId = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.Nation.NationId)))};
+                                readRacerPerson.Ability = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.Ability)));
+                                readRacerPerson.PotentialAbility = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.PotentialAbility)));
+                                readRacerPerson.Age = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.Age)));
+
+                                readTeam.RacerPeople.Add(readRacerPerson);
+                            } while (xmlReader.ReadToNextSibling(nameof(RacerPerson)));
+
+                            readDivision.TeamList.Add(readTeam);
+                        } while (xmlReader.ReadToNextSibling(nameof(Team)));
+
+                        divisions.Add(readDivision);
+                    } while (xmlReader.ReadToNextSibling(nameof(Division)));
+                }
+            }
+
+            return divisions;
         }
 
         public bool Save(IList<Division> divisions)
@@ -31,28 +94,28 @@ namespace Racing.Repositories
 
                 foreach (var division in divisions)
                 {
-                    writer.WriteStartElement(nameof(division));
-                    writer.WriteAttributeString(nameof(division.DivisionId), division.DivisionId.ToString());
-                    writer.WriteAttributeString(nameof(division.Tier), division.Tier.ToString());
-                    writer.WriteAttributeString(nameof(division.Name), division.Name);
+                    writer.WriteStartElement(nameof(Division));
+                    writer.WriteAttributeString(nameof(Division.DivisionId), division.DivisionId.ToString());
+                    writer.WriteAttributeString(nameof(Division.Tier), division.Tier.ToString());
+                    writer.WriteAttributeString(nameof(Division.Name), division.Name);
 
                     foreach (var team in division.TeamList)
                     {
-                        writer.WriteStartElement(nameof(team));
-                        writer.WriteAttributeString(nameof(team.TeamId), team.TeamId.ToString());
+                        writer.WriteStartElement(nameof(Team));
+                        writer.WriteAttributeString(nameof(Team.TeamId), team.TeamId.ToString());
                         //isn't Id enough?
-                        writer.WriteAttributeString(nameof(team.Name), team.Name);
+                        writer.WriteAttributeString(nameof(Team.Name), team.Name);
 
                         foreach (var racerPerson in team.RacerPeople)
                         {
-                            writer.WriteStartElement(nameof(racerPerson));
-                            writer.WriteAttributeString(nameof(racerPerson.RacerPersonId), racerPerson.RacerPersonId.ToString());
-                            writer.WriteAttributeString(nameof(racerPerson.FirstName), racerPerson.FirstName);
-                            writer.WriteAttributeString(nameof(racerPerson.LastName), racerPerson.LastName);
-                            writer.WriteAttributeString(nameof(racerPerson.Nation.NationId), racerPerson.Nation.NationId.ToString());
-                            writer.WriteAttributeString(nameof(racerPerson.Ability), racerPerson.Ability.ToString());
-                            writer.WriteAttributeString(nameof(racerPerson.PotentialAbility), racerPerson.PotentialAbility.ToString());
-                            writer.WriteAttributeString(nameof(racerPerson.Age), racerPerson.Age.ToString());
+                            writer.WriteStartElement(nameof(RacerPerson));
+                            writer.WriteAttributeString(nameof(RacerPerson.RacerPersonId), racerPerson.RacerPersonId.ToString());
+                            writer.WriteAttributeString(nameof(RacerPerson.FirstName), racerPerson.FirstName);
+                            writer.WriteAttributeString(nameof(RacerPerson.LastName), racerPerson.LastName);
+                            writer.WriteAttributeString(nameof(RacerPerson.Nation.NationId), racerPerson.Nation.NationId.ToString());
+                            writer.WriteAttributeString(nameof(RacerPerson.Ability), racerPerson.Ability.ToString());
+                            writer.WriteAttributeString(nameof(RacerPerson.PotentialAbility), racerPerson.PotentialAbility.ToString());
+                            writer.WriteAttributeString(nameof(RacerPerson.Age), racerPerson.Age.ToString());
                             writer.WriteEndElement();
                         }
                         writer.WriteEndElement();

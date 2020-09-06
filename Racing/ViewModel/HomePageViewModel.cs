@@ -4,6 +4,7 @@ using Racing.Messages;
 using Racing.Messages.WindowOpener;
 using Racing.Model;
 using Racing.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -49,7 +50,20 @@ namespace Racing.ViewModel
             _settingService = settingService;
             _divisionInterface = divisionInterface;
             _racerPersonService = racerPersonService;
+
+            MessengerInstance.Register<NewGameMessage>(this, NewGame);
+            MessengerInstance.Register<ContinueGameMessage>(this, ContinueGame);
+        }
+
+
+        private void NewGame(NewGameMessage obj)
+        {
             _ = GenerateNewGame();
+        }
+
+        private void ContinueGame(ContinueGameMessage obj)
+        {
+            DivisionList = obj.Divisions;
         }
 
         private async Task GenerateNewGame()

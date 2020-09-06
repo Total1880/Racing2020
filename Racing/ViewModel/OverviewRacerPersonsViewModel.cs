@@ -45,6 +45,7 @@ namespace Racing.ViewModel
                     {
                         foreach (var racerPerson in team.RacerPeople)
                         {
+                            racerPerson.Team = team;
                             RacerPersonList.Add(racerPerson);
                         }
                     }
