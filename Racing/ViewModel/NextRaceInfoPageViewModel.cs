@@ -43,7 +43,7 @@ namespace Racing.ViewModel
             {
                 _raceInfoBuilder.Append($"Position: {_nextRace.RacePointList[counter].Position} \tPoints: {_nextRace.RacePointList[counter].Point}\n");
                 counter++;
-            } while (_nextRace.RacePointList[counter] != null && _nextRace.RacePointList[counter].Point > 0);
+            } while (counter < _nextRace.RacePointList.Count && _nextRace.RacePointList[counter].Point > 0);
 
             NextRaceInfo = _raceInfoBuilder.ToString();
         }
