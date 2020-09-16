@@ -33,6 +33,12 @@
                          Text="{Binding RaceLength}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
+                <Label Content="Prize money per point: "
+                       Width="75"/>
+                <TextBox Width="75"
+                         Text="{Binding PrizeMoneyForOnePoint}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
                 <Label Content="Edit Race: "
                        Width="75"/>
                 <ComboBox Width="275"
