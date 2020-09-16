@@ -1,4 +1,5 @@
 ﻿using Racing.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -62,7 +63,7 @@ namespace Racing.Repositories
                                 var readRacerPerson = new RacerPerson();
 
 
-                                readRacerPerson.RacerPersonId = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.RacerPersonId)));
+                                readRacerPerson.RacerPersonId = Guid.Parse(xmlReader.GetAttribute(nameof(RacerPerson.RacerPersonId)));
                                 readRacerPerson.FirstName = xmlReader.GetAttribute(nameof(RacerPerson.FirstName));
                                 readRacerPerson.LastName = xmlReader.GetAttribute(nameof(RacerPerson.LastName));
                                 readRacerPerson.Nation = new Nation { NationId = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.Nation.NationId)))};

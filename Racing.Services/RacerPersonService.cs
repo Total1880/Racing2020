@@ -74,7 +74,7 @@ namespace Racing.Services
         {
             foreach (var racerPerson in racerPeople)
             {
-                racerPerson.RacerPersonId = _idCounter;
+                racerPerson.RacerPersonId = Guid.NewGuid();
                 _idCounter++;
             }
 
@@ -112,7 +112,7 @@ namespace Racing.Services
                     {
                         newRacerPerson.Ability = 50;
                     }
-                    newRacerPerson.RacerPersonId = _idCounter;
+                    newRacerPerson.RacerPersonId = Guid.NewGuid();
                     updateRacerPeople.Add(newRacerPerson);
                     _idCounter++;
                     continue;

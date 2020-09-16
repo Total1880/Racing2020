@@ -32,11 +32,6 @@ namespace Racing.Api.Repositories
             {
                 using var context = new RacingContext();
 
-                if (context.RacerPersonList.Any(p => p.Team.TeamId == id))
-                {
-                    return false;
-                }
-
                 context.TeamList.Remove(context.TeamList.Find(id));
                 context.SaveChanges();
 

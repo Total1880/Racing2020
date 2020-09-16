@@ -1,11 +1,13 @@
-﻿namespace Racing.Messages
+﻿using System;
+
+namespace Racing.Messages
 {
     class UpdateJerseyMessage
     {
-        public int YellowId;
+        public Guid YellowId;
         public int DivisionId;
 
-        public UpdateJerseyMessage(int yellowId, int divisionId)
+        public UpdateJerseyMessage(Guid yellowId, int divisionId)
         {
             YellowId = yellowId;
             DivisionId = divisionId;

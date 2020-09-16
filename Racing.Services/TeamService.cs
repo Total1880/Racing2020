@@ -56,7 +56,7 @@ namespace Racing.Services
                         Nation = lastNames[index].Nation,
                         Ability = _random.Next(10, 100),
                         Age = _random.Next(_minAge, _maxAge),
-                        RacerPersonId = index + (teamIndex * numberOfPeoplePerTeam)
+                        RacerPersonId = Guid.NewGuid()
                     };
                     newRacerPerson.PotentialAbility = _random.Next(newRacerPerson.Ability, 100);
 

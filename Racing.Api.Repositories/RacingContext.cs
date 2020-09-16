@@ -5,7 +5,6 @@ namespace Racing.Api.Repositories
 {
     public class RacingContext : DbContext
     {
-        public DbSet<RacerPerson> RacerPersonList { get; set; }
         public DbSet<Nation> NationList { get; set; }
         public DbSet<FirstNames> FirstNamesList { get; set; }
         public DbSet<LastNames> LastNamesList { get; set; }
