@@ -16,7 +16,6 @@ namespace Racing.Services
         private readonly Random _random = new Random();
         private int _minAge = 16;
         private int _maxAge = 40;
-        private int _idCounter = 0;
 
         public RacerPersonService(INamesRepository<FirstNames> firstNamesRepository, INamesRepository<LastNames> lastNamesRepository, IRepository<Team> teamRepository)
         {
@@ -75,7 +74,6 @@ namespace Racing.Services
             foreach (var racerPerson in racerPeople)
             {
                 racerPerson.RacerPersonId = Guid.NewGuid();
-                _idCounter++;
             }
 
             return racerPeople;
@@ -114,7 +112,6 @@ namespace Racing.Services
                     }
                     newRacerPerson.RacerPersonId = Guid.NewGuid();
                     updateRacerPeople.Add(newRacerPerson);
-                    _idCounter++;
                     continue;
                 }
 
