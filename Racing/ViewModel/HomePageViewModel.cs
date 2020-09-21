@@ -4,6 +4,7 @@ using Racing.Messages;
 using Racing.Messages.WindowOpener;
 using Racing.Model;
 using Racing.Services.Interfaces;
+using Racing.Settings;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

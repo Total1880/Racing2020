@@ -19,7 +19,7 @@ namespace Racing.Api.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IActionResult CreateRace(Setting setting)
+        public IActionResult CreateSetting(Setting setting)
         {
             if (_settingService.AddSetting(setting))
             {

@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Racing.Model\Racing.Model.csproj" />
     <ProjectReference Include="..\Racing.Repositories\Racing.Repositories.csproj" />
+    <ProjectReference Include="..\Racing.Settings\Racing.Settings.csproj" />
   </ItemGroup>
 
 </Project>

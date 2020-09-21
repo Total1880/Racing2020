@@ -61,19 +61,19 @@ namespace Racing.ViewModel
 
         private void UpdateSeasonRankingWithRace(UpdateSeasonRankingMessage obj)
         {
-            _seasonEngineService.UpdateRanking(obj.RacerPersonList, obj.Race, obj.DivisionId);
-            _rankingPerDivisionPerRacer[obj.DivisionId] = new List<RacerSeasonRanking>();
-            _rankingPerDivisionPerTeam[obj.DivisionId] = new List<TeamSeasonRanking>();
+            _seasonEngineService.UpdateRanking(obj.RacerPersonList, obj.Race, obj.Division);
+            _rankingPerDivisionPerRacer[obj.Division.DivisionId] = new List<RacerSeasonRanking>();
+            _rankingPerDivisionPerTeam[obj.Division.DivisionId] = new List<TeamSeasonRanking>();
             RacerSeasonRankingList = new List<RacerSeasonRanking>();
             TeamSeasonRankingList = new List<TeamSeasonRanking>();
 
-            if (_rankingPerDivisionPerRacer.Any(d => d.Key == obj.DivisionId))
-                RacerSeasonRankingList = _seasonEngineService.DivisionRacerSeasonRankingList[obj.DivisionId];
+            if (_rankingPerDivisionPerRacer.Any(d => d.Key == obj.Division.DivisionId))
+                RacerSeasonRankingList = _seasonEngineService.DivisionRacerSeasonRankingList[obj.Division.DivisionId];
 
-            if (_rankingPerDivisionPerTeam.Any(d => d.Key == obj.DivisionId))
-                TeamSeasonRankingList = _seasonEngineService.DivisionTeamSeasonRankingList[obj.DivisionId];
+            if (_rankingPerDivisionPerTeam.Any(d => d.Key == obj.Division.DivisionId))
+                TeamSeasonRankingList = _seasonEngineService.DivisionTeamSeasonRankingList[obj.Division.DivisionId];
 
-            MessengerInstance.Send(new UpdateJerseyMessage(RacerSeasonRankingList[0].RacerPersonId, obj.DivisionId));
+            MessengerInstance.Send(new UpdateJerseyMessage(RacerSeasonRankingList[0].RacerPersonId, obj.Division.DivisionId));
         }
 
         private void UpdateSeasonRankingOnlyDivision(UpdateSeasonRankingMessage obj)
@@ -81,14 +81,14 @@ namespace Racing.ViewModel
             RacerSeasonRankingList = new List<RacerSeasonRanking>();
             TeamSeasonRankingList = new List<TeamSeasonRanking>();
 
-            if (_seasonEngineService.DivisionRacerSeasonRankingList.Any(d => d.Key == obj.DivisionId))
+            if (_seasonEngineService.DivisionRacerSeasonRankingList.Any(d => d.Key == obj.Division.DivisionId))
             {
-                RacerSeasonRankingList = _seasonEngineService.DivisionRacerSeasonRankingList[obj.DivisionId];
+                RacerSeasonRankingList = _seasonEngineService.DivisionRacerSeasonRankingList[obj.Division.DivisionId];
             }
 
-            if (_seasonEngineService.DivisionTeamSeasonRankingList.Any(d => d.Key == obj.DivisionId))
+            if (_seasonEngineService.DivisionTeamSeasonRankingList.Any(d => d.Key == obj.Division.DivisionId))
             {
-                TeamSeasonRankingList = _seasonEngineService.DivisionTeamSeasonRankingList[obj.DivisionId];
+                TeamSeasonRankingList = _seasonEngineService.DivisionTeamSeasonRankingList[obj.Division.DivisionId];
             }
         }
 

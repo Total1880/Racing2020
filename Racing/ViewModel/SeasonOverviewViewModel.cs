@@ -5,6 +5,7 @@ using Racing.Messages;
 using Racing.Messages.WindowOpener;
 using Racing.Model;
 using Racing.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -15,9 +16,10 @@ namespace Racing.ViewModel
 {
     public class SeasonOverviewViewModel : ViewModelBase
     {
-        private IRaceService _raceService;
-        private IRacerPersonService _racerPersonService;
+        private readonly IRaceService _raceService;
+        private readonly IRacerPersonService _racerPersonService;
         private readonly ISaveGameDivisionService _saveGameDivisionService;
+        private readonly ISeasonEngineService _seasonEngineService;
         private ObservableCollection<Race> _raceList;
         private ObservableCollection<string> _menu;
         private string _nextRaceName;
@@ -85,8 +87,8 @@ namespace Racing.ViewModel
                 {
                     _chosenDivision = value;
                     RaisePropertyChanged();
-                    MessengerInstance.Send(new RaceResultPageMessage(value.DivisionId));
-                    MessengerInstance.Send(new UpdateSeasonRankingMessage(value.DivisionId));
+                    MessengerInstance.Send(new RaceResultPageMessage(value));
+                    MessengerInstance.Send(new UpdateSeasonRankingMessage(value));
                     
                 }
             }
@@ -136,17 +138,31 @@ namespace Racing.ViewModel
         public RelayCommand MenuChoiceCommand => _menuChoiceCommand ??= new RelayCommand(MenuChoice);
         public RelayCommand NextSeasonCommand => _nextSeasonCommand ??= new RelayCommand(NextSeason);
 
-        public SeasonOverviewViewModel(IRaceService raceService, IRacerPersonService racerPersonService, ISaveGameDivisionService saveGameDivisionService)
+        public SeasonOverviewViewModel(IRaceService raceService, IRacerPersonService racerPersonService, ISaveGameDivisionService saveGameDivisionService, ISeasonEngineService seasonEngineService)
         {
             _raceService = raceService;
             _racerPersonService = racerPersonService;
             _saveGameDivisionService = saveGameDivisionService;
+            _seasonEngineService = seasonEngineService;
             _ = GetRaces();
             MessengerInstance.Register<OverviewRacerPersonsMessage>(this, OnOpenSeasonOverviewPage);
             MessengerInstance.Register<UpdateJerseyMessage>(this, UpdateJersey);
+            MessengerInstance.Register<UpdateSeasonRankingMessage>(this, UpdateFinance);
             Menu = new ObservableCollection<string> { SeasonMenu.LatestResult, SeasonMenu.Ranking, SeasonMenu.NextRaceInfo, SeasonMenu.TeamOverview };
             EndOfSeason = Visibility.Hidden;
             NextRaceBool = true;
+        }
+
+        private void UpdateFinance(UpdateSeasonRankingMessage obj)
+        {
+            if (obj.Race == null)
+            {
+                return;
+            }
+
+            var teams = DivisionList.Where(d => d.DivisionId == obj.Division.DivisionId).FirstOrDefault().TeamList;
+
+            teams = _seasonEngineService.UpdateFinances(teams, obj.RacerPersonList, obj.Race, obj.Division.Tier);
         }
 
         private async Task GetRaces()
@@ -187,7 +203,7 @@ namespace Racing.ViewModel
 
             foreach (var division in DivisionList)
             {
-                MessengerInstance.Send(new RaceResultPageMessage(division.TeamList, RaceList[_seasonRaceNumber], division.DivisionId));
+                MessengerInstance.Send(new RaceResultPageMessage(division.TeamList, RaceList[_seasonRaceNumber], division));
             }
 
             if (_seasonRaceNumber + 1 < RaceList.Count)
@@ -207,8 +223,8 @@ namespace Racing.ViewModel
 
             if (ChosenDivision != null)
             {
-                MessengerInstance.Send(new RaceResultPageMessage(ChosenDivision.DivisionId));
-                MessengerInstance.Send(new UpdateSeasonRankingMessage(ChosenDivision.DivisionId));
+                MessengerInstance.Send(new RaceResultPageMessage(ChosenDivision));
+                MessengerInstance.Send(new UpdateSeasonRankingMessage(ChosenDivision));
             }
         }
 
@@ -247,11 +263,11 @@ namespace Racing.ViewModel
                     MessengerInstance.Send(new OpenTeamOverviewMessage());
                     if (ChosenDivision != null)
                     {
-                        MessengerInstance.Send(new UpdateSeasonRankingMessage(ChosenDivision.DivisionId));
+                        MessengerInstance.Send(new UpdateSeasonRankingMessage(ChosenDivision));
                     }
                     else
                     {
-                        MessengerInstance.Send(new UpdateSeasonRankingMessage(DivisionList[0].DivisionId));
+                        MessengerInstance.Send(new UpdateSeasonRankingMessage(DivisionList[0]));
                     }
 
                     break;

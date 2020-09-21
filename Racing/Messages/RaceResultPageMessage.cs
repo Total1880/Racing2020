@@ -7,17 +7,17 @@ namespace Racing.Messages
     {
         public IList<Team> TeamList { get; set; }
         public Race Race { get; set; }
-        public int DivisionId { get; set; }
+        public Division Division { get; set; }
 
-        public RaceResultPageMessage(IList<Team> teamList, Race race, int divisionId)
+        public RaceResultPageMessage(IList<Team> teamList, Race race, Division division)
         {
             TeamList = teamList;
             Race = race;
-            DivisionId = divisionId;
+            Division = division;
         }
-        public RaceResultPageMessage(int divisionId)
+        public RaceResultPageMessage(Division division)
         {
-            DivisionId = divisionId;
+            Division = division;
         }
     }
 }

@@ -52,6 +52,7 @@ namespace Racing.Repositories
 
                             readTeam.TeamId = int.Parse(xmlReader.GetAttribute(nameof(Team.TeamId)));
                             readTeam.Name = xmlReader.GetAttribute(nameof(Team.Name));
+                            readTeam.Budget = int.Parse(xmlReader.GetAttribute(nameof(Team.Budget)));
 
                             readTeam.RacerPeople = new List<RacerPerson>();
 
@@ -106,6 +107,7 @@ namespace Racing.Repositories
                         writer.WriteAttributeString(nameof(Team.TeamId), team.TeamId.ToString());
                         //isn't Id enough?
                         writer.WriteAttributeString(nameof(Team.Name), team.Name);
+                        writer.WriteAttributeString(nameof(Team.Budget), team.Budget.ToString());
 
                         foreach (var racerPerson in team.RacerPeople)
                         {

@@ -46,7 +46,7 @@ namespace Racing.ViewModel
         private void SelectDivision(UpdateSeasonRankingMessage obj)
         {
             _divisions = _saveGameDivisionService.GetDivisions();
-            Teams = new ObservableCollection<Team>(_divisions.Where(d => d.DivisionId == obj.DivisionId).FirstOrDefault().TeamList);
+            Teams = new ObservableCollection<Team>(_divisions.Where(d => d.DivisionId == obj.Division.DivisionId).FirstOrDefault().TeamList);
         }
     }
 }
