@@ -40,10 +40,10 @@ namespace Racing.ViewModel
         {
             _saveGameDivisionService = saveGameDivisionService;
 
-            MessengerInstance.Register<UpdateSeasonRankingMessage>(this, SelectDivision);
+            MessengerInstance.Register<UpdateSeasonAfterRaceMessage>(this, SelectDivision);
         }
 
-        private void SelectDivision(UpdateSeasonRankingMessage obj)
+        private void SelectDivision(UpdateSeasonAfterRaceMessage obj)
         {
             _divisions = _saveGameDivisionService.GetDivisions();
             Teams = new ObservableCollection<Team>(_divisions.Where(d => d.DivisionId == obj.Division.DivisionId).FirstOrDefault().TeamList);

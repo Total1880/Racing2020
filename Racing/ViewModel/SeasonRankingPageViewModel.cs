@@ -39,7 +39,7 @@ namespace Racing.ViewModel
         public SeasonRankingPageViewModel(ISeasonEngineService seasonEngineService)
         {
             _seasonEngineService = seasonEngineService;
-            MessengerInstance.Register<UpdateSeasonRankingMessage>(this, UpdateSeasonRanking);
+            MessengerInstance.Register<UpdateSeasonAfterRaceMessage>(this, UpdateSeasonRanking);
             MessengerInstance.Register<ResetSeasonMessage>(this, ResetSeasonRanking);
             RacerSeasonRankingList = new List<RacerSeasonRanking>();
             TeamSeasonRankingList = new List<TeamSeasonRanking>();
@@ -47,7 +47,7 @@ namespace Racing.ViewModel
             _rankingPerDivisionPerTeam = new Dictionary<int, IList<TeamSeasonRanking>>();
         }
 
-        private void UpdateSeasonRanking(UpdateSeasonRankingMessage obj)
+        private void UpdateSeasonRanking(UpdateSeasonAfterRaceMessage obj)
         {
             if (obj.Race != null)
             {
@@ -59,7 +59,7 @@ namespace Racing.ViewModel
             }
         }
 
-        private void UpdateSeasonRankingWithRace(UpdateSeasonRankingMessage obj)
+        private void UpdateSeasonRankingWithRace(UpdateSeasonAfterRaceMessage obj)
         {
             _seasonEngineService.UpdateRanking(obj.RacerPersonList, obj.Race, obj.Division);
             _rankingPerDivisionPerRacer[obj.Division.DivisionId] = new List<RacerSeasonRanking>();
@@ -76,7 +76,7 @@ namespace Racing.ViewModel
             MessengerInstance.Send(new UpdateJerseyMessage(RacerSeasonRankingList[0].RacerPersonId, obj.Division.DivisionId));
         }
 
-        private void UpdateSeasonRankingOnlyDivision(UpdateSeasonRankingMessage obj)
+        private void UpdateSeasonRankingOnlyDivision(UpdateSeasonAfterRaceMessage obj)
         {
             RacerSeasonRankingList = new List<RacerSeasonRanking>();
             TeamSeasonRankingList = new List<TeamSeasonRanking>();
