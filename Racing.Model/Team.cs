@@ -9,5 +9,7 @@ namespace Racing.Model
         public string Name { get; set; }
         [NotMapped]
         public IList<RacerPerson> RacerPeople { get; set; }
+        [NotMapped]
+        public int Budget { get; set; }
     }
 }

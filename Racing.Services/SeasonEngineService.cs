@@ -1,18 +1,26 @@
 ﻿using Racing.Model;
 using Racing.Services.Interfaces;
+using Racing.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Racing.Services
 {
     public class SeasonEngineService : ISeasonEngineService
     {
+        private readonly ISettingService _settingService;
+        private Setting factorSetting;
+
         public IDictionary<int, IList<RacerSeasonRanking>> DivisionRacerSeasonRankingList { get; set; }
         public IDictionary<int, IList<TeamSeasonRanking>> DivisionTeamSeasonRankingList { get; set; }
 
-        public SeasonEngineService()
+        public SeasonEngineService(ISettingService settingService)
         {
+            _settingService = settingService;
+            _ = GetSetting();
+
             DivisionRacerSeasonRankingList = new Dictionary<int, IList<RacerSeasonRanking>>();
             DivisionTeamSeasonRankingList = new Dictionary<int, IList<TeamSeasonRanking>>();
         }
@@ -57,12 +65,12 @@ namespace Racing.Services
         }
 
 
-        public void UpdateRanking(IList<RacerPerson> racerPersonList, Race race, int divisionId)
+        public void UpdateRanking(IList<RacerPerson> racerPersonList, Race race, Division division)
         {
 
-            if (!DivisionRacerSeasonRankingList.ContainsKey(divisionId))
+            if (!DivisionRacerSeasonRankingList.ContainsKey(division.DivisionId))
             {
-                Convert(racerPersonList, divisionId);
+                Convert(racerPersonList, division.DivisionId);
             }
 
             for (int i = 0; i < racerPersonList.Count; i++)
@@ -70,23 +78,25 @@ namespace Racing.Services
 
                 if (race.RacePointList.Any(p => p.Position == i + 1 && p.Point != 0))
                 {
-                    DivisionRacerSeasonRankingList[divisionId].Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Points =
-                        DivisionRacerSeasonRankingList[divisionId].Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Points +
-                        race.RacePointList.Where(p => p.Position == i + 1).FirstOrDefault().Point;
+                    var points = race.RacePointList.Where(p => p.Position == i + 1).FirstOrDefault().Point;
+
+                    DivisionRacerSeasonRankingList[division.DivisionId].Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Points =
+                        DivisionRacerSeasonRankingList[division.DivisionId].Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Points +
+                        points;
                 }
 
-                DivisionRacerSeasonRankingList[divisionId].Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Positions =
-                    DivisionRacerSeasonRankingList[divisionId].Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Positions + (i + 1);
+                DivisionRacerSeasonRankingList[division.DivisionId].Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Positions =
+                    DivisionRacerSeasonRankingList[division.DivisionId].Where(r => r.RacerPersonId == racerPersonList[i].RacerPersonId).FirstOrDefault().Positions + (i + 1);
             }
 
-            foreach (var team in DivisionTeamSeasonRankingList[divisionId])
+            foreach (var team in DivisionTeamSeasonRankingList[division.DivisionId])
             {
-                team.Points = DivisionRacerSeasonRankingList[divisionId].Where(r => r.Team.TeamId == team.TeamId).Sum(r => r.Points);
-                team.Positions = DivisionRacerSeasonRankingList[divisionId].Where(r => r.Team.TeamId == team.TeamId).Sum(r => r.Positions);
+                team.Points = DivisionRacerSeasonRankingList[division.DivisionId].Where(r => r.Team.TeamId == team.TeamId).Sum(r => r.Points);
+                team.Positions = DivisionRacerSeasonRankingList[division.DivisionId].Where(r => r.Team.TeamId == team.TeamId).Sum(r => r.Positions);
             }
 
-            DivisionRacerSeasonRankingList[divisionId] = DivisionRacerSeasonRankingList[divisionId].Where(r => r.DivisionId == divisionId).OrderByDescending(r => r.Points).ThenBy(r => r.Positions).ToList();
-            DivisionTeamSeasonRankingList[divisionId] = DivisionTeamSeasonRankingList[divisionId].Where(r => r.DivisionId == divisionId).OrderByDescending(t => t.Points).ThenBy(t => t.Positions).ToList();
+            DivisionRacerSeasonRankingList[division.DivisionId] = DivisionRacerSeasonRankingList[division.DivisionId].Where(r => r.DivisionId == division.DivisionId).OrderByDescending(r => r.Points).ThenBy(r => r.Positions).ToList();
+            DivisionTeamSeasonRankingList[division.DivisionId] = DivisionTeamSeasonRankingList[division.DivisionId].Where(r => r.DivisionId == division.DivisionId).OrderByDescending(t => t.Points).ThenBy(t => t.Positions).ToList();
         }
 
         public void ResetRanking()
@@ -115,6 +125,43 @@ namespace Racing.Services
                     division.TeamList.Remove(division.TeamList.Where(t => t.TeamId == DivisionTeamSeasonRankingList[division.DivisionId].LastOrDefault().TeamId).FirstOrDefault());
                 }
             }
+        }
+
+        public IList<Team> UpdateFinances(IList<Team> teams, IList<RacerPerson> racerPersonList, Race race, int divisionTier)
+        {
+            if (race == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < racerPersonList.Count; i++)
+            {
+                if (race.RacePointList.Any(p => p.Position == i + 1 && p.Point != 0))
+                {
+                    var points = race.RacePointList.Where(p => p.Position == i + 1).FirstOrDefault().Point;
+
+                    if (divisionTier == 1)
+                    {
+                        teams.Where(t => t.TeamId == racerPersonList[i].Team.TeamId).FirstOrDefault().Budget += (points * race.PrizeMoneyForOnePoint);
+
+                    }
+                    else
+                    {
+                        teams.Where(t => t.TeamId == racerPersonList[i].Team.TeamId).FirstOrDefault().Budget += (points * race.PrizeMoneyForOnePoint) / ((divisionTier - 1) * int.Parse(factorSetting.Value));
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return teams;
+        }
+
+        private async Task GetSetting()
+        {
+           factorSetting = await _settingService.GetSettingByDescription(SettingsNames.FactorPrizeMoenyPerDivisionTier);
         }
     }
 }

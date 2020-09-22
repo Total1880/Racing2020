@@ -22,6 +22,10 @@
                                     DisplayMemberBinding="{Binding Name}">
                         <GridViewColumnHeader Content="Team name"/>
                     </GridViewColumn>
+                    <GridViewColumn Width="120"
+                                    DisplayMemberBinding="{Binding Budget}">
+                        <GridViewColumnHeader Content="Budget"/>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

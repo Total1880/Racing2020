@@ -10,7 +10,7 @@ namespace Racing.ViewModel
 {
     public class RaceResultPageViewModel : ViewModelBase
     {
-        private IRaceEngineService _raceEngineService;
+        private readonly IRaceEngineService _raceEngineService;
         private IList<RacerPerson> _racerPersonList;
         private Dictionary<int, IList<RacerPerson>> _latestResultsPerDivision;
 
@@ -46,35 +46,35 @@ namespace Racing.ViewModel
 
         private void RunRaceResult(RaceResultPageMessage obj)
         {
-            if (_latestResultsPerDivision.Any(d => d.Key == obj.DivisionId))
-                _latestResultsPerDivision.Remove(obj.DivisionId);
+            if (_latestResultsPerDivision.Any(d => d.Key == obj.Division.DivisionId))
+                _latestResultsPerDivision.Remove(obj.Division.DivisionId);
 
-            _latestResultsPerDivision[obj.DivisionId] = new List<RacerPerson>();
+            _latestResultsPerDivision[obj.Division.DivisionId] = new List<RacerPerson>();
             foreach (var team in obj.TeamList)
             {
                 foreach (var racerPerson in team.RacerPeople)
                 {
-                    _latestResultsPerDivision[obj.DivisionId].Add(racerPerson);
+                    _latestResultsPerDivision[obj.Division.DivisionId].Add(racerPerson);
                 }
             }
 
-            _raceEngineService.Go(_latestResultsPerDivision[obj.DivisionId], obj.Race.Length);
+            _raceEngineService.Go(_latestResultsPerDivision[obj.Division.DivisionId], obj.Race.Length);
 
-            if (_latestResultsPerDivision[obj.DivisionId] != null)
-                _latestResultsPerDivision[obj.DivisionId].Clear();
+            if (_latestResultsPerDivision[obj.Division.DivisionId] != null)
+                _latestResultsPerDivision[obj.Division.DivisionId].Clear();
 
-            _latestResultsPerDivision[obj.DivisionId] = _raceEngineService.GetFinishRanking();
+            _latestResultsPerDivision[obj.Division.DivisionId] = _raceEngineService.GetFinishRanking();
 
-            MessengerInstance.Send(new UpdateSeasonRankingMessage(_latestResultsPerDivision[obj.DivisionId], obj.Race, obj.DivisionId));
+            MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(_latestResultsPerDivision[obj.Division.DivisionId], obj.Race, obj.Division ));
 
-            RacerPersonList = _latestResultsPerDivision[obj.DivisionId];
+            RacerPersonList = _latestResultsPerDivision[obj.Division.DivisionId];
         }
 
         private void ViewRaceResult(RaceResultPageMessage obj)
         {
-            if (_latestResultsPerDivision.ContainsKey(obj.DivisionId))
+            if (_latestResultsPerDivision.ContainsKey(obj.Division.DivisionId))
             {
-                RacerPersonList = _latestResultsPerDivision[obj.DivisionId];
+                RacerPersonList = _latestResultsPerDivision[obj.Division.DivisionId];
             }
         }
 

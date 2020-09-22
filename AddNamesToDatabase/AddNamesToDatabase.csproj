@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AddNamesToDatabase.Services\AddNamesToDatabase.Services.csproj" />
+    <ProjectReference Include="..\Racing.Settings\Racing.Settings.csproj" />
   </ItemGroup>
 
 </Project>

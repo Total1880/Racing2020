@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Racing.Model;
+using Racing.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,7 @@ namespace AddNamesToDatabase.ViewModel
         private readonly ISettingService _settingService;
         private string _raceName;
         private int _raceLength;
+        private int _prizeMoneyForOnePoint;
         private ObservableCollection<Race> _raceList;
         private Race _selectedRace;
         private RelayCommand _addRaceCommand;
@@ -45,6 +47,16 @@ namespace AddNamesToDatabase.ViewModel
             }
         }
 
+        public int PrizeMoneyForOnePoint
+        {
+            get => _prizeMoneyForOnePoint;
+            set
+            {
+                _prizeMoneyForOnePoint = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public ObservableCollection<Race> RaceList
         {
             get => _raceList;
@@ -66,6 +78,7 @@ namespace AddNamesToDatabase.ViewModel
                     RaceName = value.Name;
                     RaceLength = value.Length;
                     RacePointList = value.RacePointList;
+                    PrizeMoneyForOnePoint = value.PrizeMoneyForOnePoint;
                 }
             }
         }
@@ -111,11 +124,14 @@ namespace AddNamesToDatabase.ViewModel
 
         private void AddRace()
         {
-            var newRace = new Race { Name = RaceName, Length = RaceLength, RacePointList = RacePointList };
+            var newRace = new Race { Name = RaceName, Length = RaceLength, RacePointList = RacePointList, PrizeMoneyForOnePoint = PrizeMoneyForOnePoint };
 
             if (newRace.Length > 10 && newRace.Length <= 1000)
             {
-                _raceService.CreateRace(newRace);
+                if (_raceService.CreateRace(newRace))
+                {
+                    ResetPage();
+                }
             }
 
             _ = GetRaces();
@@ -128,9 +144,13 @@ namespace AddNamesToDatabase.ViewModel
                 SelectedRace.Name = RaceName;
                 SelectedRace.Length = RaceLength;
                 SelectedRace.RacePointList = RacePointList;
+                SelectedRace.PrizeMoneyForOnePoint = PrizeMoneyForOnePoint;
 
-                _raceService.EditRace(SelectedRace);
-
+                if (_raceService.EditRace(SelectedRace))
+                {
+                    ResetPage();
+                }
+               
                 _ = GetRaces();
             }
         }
@@ -170,6 +190,14 @@ namespace AddNamesToDatabase.ViewModel
             }
 
             RacePointList = newRacePointList;
+        }
+
+        private void ResetPage()
+        {
+            RaceName = string.Empty;
+            RaceLength = 0;
+            RacePointList = new List<RacePoint>();
+            PrizeMoneyForOnePoint = 0;
         }
     }
 }

@@ -58,6 +58,15 @@ namespace AddNamesToDatabase.ViewModel
 
         private void UploadList()
         {
+            if (Path[0] == '"')
+            {
+                Path = Path.Substring(1);
+            }
+
+            if (Path[Path.Length-1] == '"')
+            {
+                Path = Path.Substring(0, Path.Length - 1);
+            }
             if (File.Exists(Path) && SelectedNation != null)
             {
                 _firstNames = new List<FirstNames>();

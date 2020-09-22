@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Racing.Model\Racing.Model.csproj" />
     <ProjectReference Include="..\Racing.Services\Racing.Services.csproj" />
+    <ProjectReference Include="..\Racing.Settings\Racing.Settings.csproj" />
   </ItemGroup>
 
 </Project>
