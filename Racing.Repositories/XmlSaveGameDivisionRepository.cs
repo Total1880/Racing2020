@@ -71,8 +71,12 @@ namespace Racing.Repositories
                                 readRacerPerson.FirstName = xmlReader.GetAttribute(nameof(RacerPerson.FirstName));
                                 readRacerPerson.LastName = xmlReader.GetAttribute(nameof(RacerPerson.LastName));
                                 readRacerPerson.Nation = new Nation { NationId = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.Nation.NationId))) };
-                                readRacerPerson.Ability = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.Ability)));
-                                readRacerPerson.PotentialAbility = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.PotentialAbility)));
+                                readRacerPerson.FlatAbility = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.FlatAbility)));
+                                readRacerPerson.FlatPotentialAbility = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.FlatPotentialAbility)));
+                                readRacerPerson.ClimbingAbility = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.ClimbingAbility)));
+                                readRacerPerson.ClimbingPotentialAbility = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.ClimbingPotentialAbility)));
+                                readRacerPerson.DownhillAbility = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.DownhillAbility)));
+                                readRacerPerson.DownhillPotentialAbility = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.DownhillPotentialAbility)));
                                 readRacerPerson.Age = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.Age)));
 
                                 readTeam.RacerPeople.Add(readRacerPerson);
@@ -122,8 +126,12 @@ namespace Racing.Repositories
                             writer.WriteAttributeString(nameof(RacerPerson.FirstName), racerPerson.FirstName);
                             writer.WriteAttributeString(nameof(RacerPerson.LastName), racerPerson.LastName);
                             writer.WriteAttributeString(nameof(RacerPerson.Nation.NationId), racerPerson.Nation.NationId.ToString());
-                            writer.WriteAttributeString(nameof(RacerPerson.Ability), racerPerson.Ability.ToString());
-                            writer.WriteAttributeString(nameof(RacerPerson.PotentialAbility), racerPerson.PotentialAbility.ToString());
+                            writer.WriteAttributeString(nameof(RacerPerson.FlatAbility), racerPerson.FlatAbility.ToString());
+                            writer.WriteAttributeString(nameof(RacerPerson.FlatPotentialAbility), racerPerson.FlatPotentialAbility.ToString());
+                            writer.WriteAttributeString(nameof(RacerPerson.ClimbingAbility), racerPerson.ClimbingAbility.ToString());
+                            writer.WriteAttributeString(nameof(RacerPerson.ClimbingPotentialAbility), racerPerson.ClimbingPotentialAbility.ToString());
+                            writer.WriteAttributeString(nameof(RacerPerson.DownhillAbility), racerPerson.DownhillAbility.ToString());
+                            writer.WriteAttributeString(nameof(RacerPerson.DownhillPotentialAbility), racerPerson.DownhillPotentialAbility.ToString());
                             writer.WriteAttributeString(nameof(RacerPerson.Age), racerPerson.Age.ToString());
                             writer.WriteEndElement();
                         }

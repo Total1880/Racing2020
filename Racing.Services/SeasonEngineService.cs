@@ -34,13 +34,17 @@ namespace Racing.Services
             {
                 var newRacerSeasonRanking = new RacerSeasonRanking
                 {
-                    Ability = racerPerson.Ability,
+                    FlatAbility = racerPerson.FlatAbility,
+                    ClimbingAbility = racerPerson.ClimbingAbility,
+                    DownhillAbility = racerPerson.DownhillAbility,
                     FirstName = racerPerson.FirstName,
                     LastName = racerPerson.LastName,
                     Nation = racerPerson.Nation,
                     RacerPersonId = racerPerson.RacerPersonId,
                     Team = racerPerson.Team,
-                    PotentialAbility = racerPerson.PotentialAbility,
+                    FlatPotentialAbility = racerPerson.FlatPotentialAbility,
+                    ClimbingPotentialAbility = racerPerson.ClimbingPotentialAbility,
+                    DownhillPotentialAbility = racerPerson.DownhillPotentialAbility,
                     Age = racerPerson.Age,
                     DivisionId = divisionId
                 };

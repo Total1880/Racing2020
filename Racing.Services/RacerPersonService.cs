@@ -21,8 +21,8 @@ namespace Racing.Services
         private int _minRacerStatsFacilityInfluence;
 
         public RacerPersonService(
-            INamesRepository<FirstNames> firstNamesRepository, 
-            INamesRepository<LastNames> lastNamesRepository, 
+            INamesRepository<FirstNames> firstNamesRepository,
+            INamesRepository<LastNames> lastNamesRepository,
             IRepository<Team> teamRepository,
             ISettingService settingService)
         {
@@ -61,10 +61,14 @@ namespace Racing.Services
                     FirstName = name.FirstName,
                     LastName = lastNames[index].LastName,
                     Nation = lastNames[index].Nation,
-                    Ability = _random.Next(10, 100),
+                    FlatAbility = _random.Next(10, 100),
+                    ClimbingAbility = _random.Next(10, 100),
+                    DownhillAbility = _random.Next(10, 100),
                     Age = _random.Next(_minAge, _maxAge)
                 };
-                newRacerPerson.PotentialAbility = _random.Next(newRacerPerson.Ability, 100);
+                newRacerPerson.FlatPotentialAbility = _random.Next(newRacerPerson.FlatAbility, 100);
+                newRacerPerson.ClimbingPotentialAbility = _random.Next(newRacerPerson.ClimbingAbility, 100);
+                newRacerPerson.DownhillPotentialAbility = _random.Next(newRacerPerson.DownhillAbility, 100);
 
                 if (teams[teamIndex] != null)
                 {
@@ -103,15 +107,21 @@ namespace Racing.Services
             {
                 if (racerPerson.Age < 20)
                 {
-                    racerPerson.Ability += _random.Next(1, 10);
+                    racerPerson.FlatAbility += _random.Next(1, 10);
+                    racerPerson.ClimbingAbility += _random.Next(1, 10);
+                    racerPerson.DownhillAbility += _random.Next(1, 10);
                 }
                 else if (racerPerson.Age < 30)
                 {
-                    racerPerson.Ability += _random.Next(1, 5);
+                    racerPerson.FlatAbility += _random.Next(1, 5);
+                    racerPerson.ClimbingAbility += _random.Next(1, 5);
+                    racerPerson.DownhillAbility += _random.Next(1, 5);
                 }
                 else if (racerPerson.Age < 40)
                 {
-                    racerPerson.Ability -= _random.Next(1, 5);
+                    racerPerson.FlatAbility -= _random.Next(1, 5);
+                    racerPerson.ClimbingAbility -= _random.Next(1, 5);
+                    racerPerson.DownhillAbility -= _random.Next(1, 5);
                 }
                 else
                 {
@@ -122,34 +132,46 @@ namespace Racing.Services
                     var newRacerPerson = list.SingleOrDefault();
                     newRacerPerson.Team = racerPerson.Team;
                     newRacerPerson.Age = _minAge;
-                    newRacerPerson.PotentialAbility += newRacerPerson.Team.YouthFacility + _minRacerStatsFacilityInfluence;
+                    newRacerPerson.FlatPotentialAbility += newRacerPerson.Team.YouthFacility + _minRacerStatsFacilityInfluence;
+                    newRacerPerson.ClimbingPotentialAbility += newRacerPerson.Team.YouthFacility + _minRacerStatsFacilityInfluence;
+                    newRacerPerson.DownhillPotentialAbility += newRacerPerson.Team.YouthFacility + _minRacerStatsFacilityInfluence;
 
-                    if (newRacerPerson.PotentialAbility > 99)
-                    {
-                        newRacerPerson.PotentialAbility = 99;
-                    }
+                    if (newRacerPerson.FlatPotentialAbility > 99)
+                        newRacerPerson.FlatPotentialAbility = 99;
+                    if (newRacerPerson.ClimbingPotentialAbility > 99)
+                        newRacerPerson.ClimbingPotentialAbility = 99;
+                    if (newRacerPerson.DownhillPotentialAbility > 99)
+                        newRacerPerson.DownhillPotentialAbility = 99;
 
-                    if (newRacerPerson.Ability > 50)
-                    {
-                        newRacerPerson.Ability = 50;
-                    }
+                    if (newRacerPerson.FlatAbility > 50)
+                        newRacerPerson.FlatAbility = 50;
+                    if (newRacerPerson.ClimbingAbility > 50)
+                        newRacerPerson.ClimbingAbility = 50;
+                    if (newRacerPerson.DownhillAbility > 50)
+                        newRacerPerson.DownhillAbility = 50;
 
                     newRacerPerson.RacerPersonId = Guid.NewGuid();
                     updateRacerPeople.Add(newRacerPerson);
                     continue;
                 }
 
-                racerPerson.Ability += racerPerson.Team.TrainingFacility + _minRacerStatsFacilityInfluence;
+                racerPerson.FlatAbility += racerPerson.Team.TrainingFacility + _minRacerStatsFacilityInfluence;
+                racerPerson.ClimbingAbility += racerPerson.Team.TrainingFacility + _minRacerStatsFacilityInfluence;
+                racerPerson.DownhillAbility += racerPerson.Team.TrainingFacility + _minRacerStatsFacilityInfluence;
 
-                if (racerPerson.Ability > racerPerson.PotentialAbility)
-                {
-                    racerPerson.Ability = racerPerson.PotentialAbility;
-                }
+                if (racerPerson.FlatAbility > racerPerson.FlatPotentialAbility)
+                    racerPerson.FlatAbility = racerPerson.FlatPotentialAbility;
+                if (racerPerson.ClimbingAbility > racerPerson.ClimbingPotentialAbility)
+                    racerPerson.ClimbingAbility = racerPerson.ClimbingPotentialAbility; 
+                if (racerPerson.DownhillAbility > racerPerson.DownhillPotentialAbility)
+                    racerPerson.DownhillAbility = racerPerson.DownhillPotentialAbility;
 
-                if (racerPerson.Ability < 10)
-                {
-                    racerPerson.Ability = 10;
-                }
+                if (racerPerson.FlatAbility < 10)
+                    racerPerson.FlatAbility = 10;
+                if (racerPerson.ClimbingAbility < 10)
+                    racerPerson.ClimbingAbility = 10; 
+                if (racerPerson.DownhillAbility < 10)
+                    racerPerson.DownhillAbility = 10;
 
                 racerPerson.Age++;
                 racerPerson.Jersey = string.Empty;

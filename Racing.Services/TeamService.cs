@@ -54,11 +54,15 @@ namespace Racing.Services
                         FirstName = name.FirstName,
                         LastName = lastNames[index].LastName,
                         Nation = lastNames[index].Nation,
-                        Ability = _random.Next(10, 100),
+                        FlatAbility = _random.Next(10, 100),
+                        ClimbingAbility = _random.Next(10, 100),
+                        DownhillAbility = _random.Next(10, 100),
                         Age = _random.Next(_minAge, _maxAge),
                         RacerPersonId = Guid.NewGuid()
                     };
-                    newRacerPerson.PotentialAbility = _random.Next(newRacerPerson.Ability, 100);
+                    newRacerPerson.FlatPotentialAbility = _random.Next(newRacerPerson.FlatAbility, 100);
+                    newRacerPerson.ClimbingPotentialAbility = _random.Next(newRacerPerson.ClimbingAbility, 100);
+                    newRacerPerson.DownhillPotentialAbility = _random.Next(newRacerPerson.DownhillAbility, 100);
 
                     if (teams[teamIndex] != null)
                     {

@@ -54,8 +54,16 @@
                             <GridViewColumnHeader Content="First name"/>
                         </GridViewColumn>
                         <GridViewColumn Width="50"
-                                    DisplayMemberBinding="{Binding Ability}">
-                            <GridViewColumnHeader Content="Ability"/>
+                                    DisplayMemberBinding="{Binding FlatAbility}">
+                            <GridViewColumnHeader Content="Flat"/>
+                        </GridViewColumn>
+                        <GridViewColumn Width="50"
+                                    DisplayMemberBinding="{Binding ClimbingAbility}">
+                            <GridViewColumnHeader Content="Climbing"/>
+                        </GridViewColumn>
+                        <GridViewColumn Width="50"
+                                    DisplayMemberBinding="{Binding DownhillAbility}">
+                            <GridViewColumnHeader Content="Downhill"/>
                         </GridViewColumn>
                         <GridViewColumn Width="50"
                                     DisplayMemberBinding="{Binding Age}">

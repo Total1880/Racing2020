@@ -46,7 +46,7 @@
                         <GridViewColumnHeader Content="Last Name"/>
                     </GridViewColumn>
                     <GridViewColumn Width="50"
-                                    DisplayMemberBinding="{Binding Ability}">
+                                    DisplayMemberBinding="{Binding AverageAbility}">
                         <GridViewColumnHeader Content="Ability"/>
                     </GridViewColumn>
                 </GridView>

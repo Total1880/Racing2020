@@ -30,12 +30,16 @@ namespace Racing.Services
                 {
                     FirstName = racerPerson.FirstName,
                     LastName = racerPerson.LastName,
-                    Ability = racerPerson.Ability,
+                    FlatAbility = racerPerson.FlatAbility,
+                    ClimbingAbility = racerPerson.ClimbingAbility,
+                    DownhillAbility = racerPerson.DownhillAbility,
                     Nation = racerPerson.Nation,
                     RacerPersonId = racerPerson.RacerPersonId,
                     Team = racerPerson.Team,
                     Age = racerPerson.Age,
-                    PotentialAbility = racerPerson.PotentialAbility,
+                    FlatPotentialAbility = racerPerson.FlatPotentialAbility,
+                    ClimbingPotentialAbility = racerPerson.ClimbingPotentialAbility,
+                    DownhillPotentialAbility = racerPerson.DownhillPotentialAbility,
                     Jersey = racerPerson.Jersey
                 };
 
@@ -60,7 +64,7 @@ namespace Racing.Services
                 {
                     if (racer.RacePosition < _raceLength)
                     {
-                        racer.RacePosition += (float)_random.Next(1, racer.Ability)/10;
+                        racer.RacePosition += (float)_random.Next(1, racer.FlatAbility)/10;
                     }
                     else
                     {
@@ -85,7 +89,9 @@ namespace Racing.Services
 
                 newRacerPerson.FirstName = racer.FirstName;
                 newRacerPerson.LastName = racer.LastName;
-                newRacerPerson.Ability = racer.Ability;
+                newRacerPerson.FlatAbility = racer.FlatAbility;
+                newRacerPerson.ClimbingAbility = racer.ClimbingAbility;
+                newRacerPerson.DownhillAbility = racer.DownhillAbility;
                 newRacerPerson.Age = racer.Age;
                 newRacerPerson.Nation = racer.Nation;
                 newRacerPerson.RacerPersonId = racer.RacerPersonId;
