@@ -69,6 +69,16 @@ namespace Racing.Services
                     index++;
                 }
 
+                //add facilityUpgradePreference
+                if (_random.Next(1,3) % 2 == 0)
+                {
+                    teams[teamIndex].FacilityUpgradePreference = FacilityUpgradePreference.Training;
+                }
+                else
+                {
+                    teams[teamIndex].FacilityUpgradePreference = FacilityUpgradePreference.Youth;
+                }
+
                 teamIndex++;
             }
 

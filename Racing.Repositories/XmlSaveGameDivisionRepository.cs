@@ -53,6 +53,9 @@ namespace Racing.Repositories
                             readTeam.TeamId = int.Parse(xmlReader.GetAttribute(nameof(Team.TeamId)));
                             readTeam.Name = xmlReader.GetAttribute(nameof(Team.Name));
                             readTeam.Budget = int.Parse(xmlReader.GetAttribute(nameof(Team.Budget)));
+                            readTeam.TrainingFacility = int.Parse(xmlReader.GetAttribute(nameof(Team.TrainingFacility)));
+                            readTeam.YouthFacility = int.Parse(xmlReader.GetAttribute(nameof(Team.YouthFacility)));
+                            readTeam.FacilityUpgradePreference = (FacilityUpgradePreference)Enum.Parse(typeof(FacilityUpgradePreference), xmlReader.GetAttribute(nameof(Team.FacilityUpgradePreference)));
 
                             readTeam.RacerPeople = new List<RacerPerson>();
 
@@ -67,7 +70,7 @@ namespace Racing.Repositories
                                 readRacerPerson.RacerPersonId = Guid.Parse(xmlReader.GetAttribute(nameof(RacerPerson.RacerPersonId)));
                                 readRacerPerson.FirstName = xmlReader.GetAttribute(nameof(RacerPerson.FirstName));
                                 readRacerPerson.LastName = xmlReader.GetAttribute(nameof(RacerPerson.LastName));
-                                readRacerPerson.Nation = new Nation { NationId = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.Nation.NationId)))};
+                                readRacerPerson.Nation = new Nation { NationId = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.Nation.NationId))) };
                                 readRacerPerson.Ability = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.Ability)));
                                 readRacerPerson.PotentialAbility = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.PotentialAbility)));
                                 readRacerPerson.Age = int.Parse(xmlReader.GetAttribute(nameof(RacerPerson.Age)));
@@ -108,6 +111,9 @@ namespace Racing.Repositories
                         //isn't Id enough?
                         writer.WriteAttributeString(nameof(Team.Name), team.Name);
                         writer.WriteAttributeString(nameof(Team.Budget), team.Budget.ToString());
+                        writer.WriteAttributeString(nameof(Team.TrainingFacility), team.TrainingFacility.ToString());
+                        writer.WriteAttributeString(nameof(Team.YouthFacility), team.YouthFacility.ToString());
+                        writer.WriteAttributeString(nameof(Team.FacilityUpgradePreference), team.FacilityUpgradePreference.ToString());
 
                         foreach (var racerPerson in team.RacerPeople)
                         {

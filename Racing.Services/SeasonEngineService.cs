@@ -161,7 +161,7 @@ namespace Racing.Services
 
         private async Task GetSetting()
         {
-           factorSetting = await _settingService.GetSettingByDescription(SettingsNames.FactorPrizeMoenyPerDivisionTier);
+           factorSetting = await _settingService.GetSettingByDescription(SettingsNames.FactorPrizeMoneyPerDivisionTier);
         }
     }
 }

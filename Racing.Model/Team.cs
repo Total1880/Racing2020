@@ -11,5 +11,11 @@ namespace Racing.Model
         public IList<RacerPerson> RacerPeople { get; set; }
         [NotMapped]
         public int Budget { get; set; }
+        [NotMapped]
+        public int TrainingFacility { get; set; }
+        [NotMapped]
+        public int YouthFacility { get; set; }
+        [NotMapped]
+        public FacilityUpgradePreference FacilityUpgradePreference { get; set; }
     }
 }

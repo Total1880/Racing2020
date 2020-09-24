@@ -7,6 +7,9 @@
         public const string NumberOfDivisions = "NumberOfDivisions";
         public const string NumberOfTeamsPromoteRelegate = "NumberOfTeamsPromoteRelegate";
         public const string GeneratedRacerPeoplePerTeam = "GeneratedRacerPeoplePerTeam";
-        public const string FactorPrizeMoenyPerDivisionTier = "FactorPrizeMoenyPerDivisionTier";
+        public const string FactorPrizeMoneyPerDivisionTier = "FactorPrizeMoneyPerDivisionTier";
+        public const string FactorFacilityUpgrade = "FactorFacilityUpgrade";
+        public const string BasicPriceFacilityUpgrade = "BasicPriceFacilityUpgrade";
+        public const string YearsWhenFacilityDowngrade = "YearsWhenFacilityDowngrade";
     }
 }

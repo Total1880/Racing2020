@@ -20,6 +20,7 @@ namespace Racing.ViewModel
         private readonly IRacerPersonService _racerPersonService;
         private readonly ISaveGameDivisionService _saveGameDivisionService;
         private readonly ISeasonEngineService _seasonEngineService;
+        private readonly IFacilityUpgradeEngine _facilityUpgradeEngine;
         private ObservableCollection<Race> _raceList;
         private ObservableCollection<string> _menu;
         private string _nextRaceName;
@@ -138,12 +139,18 @@ namespace Racing.ViewModel
         public RelayCommand MenuChoiceCommand => _menuChoiceCommand ??= new RelayCommand(MenuChoice);
         public RelayCommand NextSeasonCommand => _nextSeasonCommand ??= new RelayCommand(NextSeason);
 
-        public SeasonOverviewViewModel(IRaceService raceService, IRacerPersonService racerPersonService, ISaveGameDivisionService saveGameDivisionService, ISeasonEngineService seasonEngineService)
+        public SeasonOverviewViewModel(
+            IRaceService raceService, 
+            IRacerPersonService racerPersonService, 
+            ISaveGameDivisionService saveGameDivisionService, 
+            ISeasonEngineService seasonEngineService,
+            IFacilityUpgradeEngine facilityUpgradeEngine)
         {
             _raceService = raceService;
             _racerPersonService = racerPersonService;
             _saveGameDivisionService = saveGameDivisionService;
             _seasonEngineService = seasonEngineService;
+            _facilityUpgradeEngine = facilityUpgradeEngine;
             _ = GetRaces();
             MessengerInstance.Register<OverviewRacerPersonsMessage>(this, OnOpenSeasonOverviewPage);
             MessengerInstance.Register<UpdateJerseyMessage>(this, UpdateJersey);
@@ -242,6 +249,8 @@ namespace Racing.ViewModel
                 }
             }
 
+            DivisionList = _facilityUpgradeEngine.Upgrade(DivisionList);
+            
             _saveGameDivisionService.SaveDivisions(DivisionList);
         }
 

@@ -26,6 +26,14 @@
                                     DisplayMemberBinding="{Binding Budget}">
                         <GridViewColumnHeader Content="Budget"/>
                     </GridViewColumn>
+                    <GridViewColumn Width="60"
+                                    DisplayMemberBinding="{Binding TrainingFacility}">
+                        <GridViewColumnHeader Content="Training"/>
+                    </GridViewColumn>
+                    <GridViewColumn Width="60"
+                                    DisplayMemberBinding="{Binding YouthFacility}">
+                        <GridViewColumnHeader Content="Youth"/>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
