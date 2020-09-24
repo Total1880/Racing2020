@@ -11,5 +11,6 @@
         public const string FactorFacilityUpgrade = "FactorFacilityUpgrade";
         public const string BasicPriceFacilityUpgrade = "BasicPriceFacilityUpgrade";
         public const string YearsWhenFacilityDowngrade = "YearsWhenFacilityDowngrade";
+        public const string MinRacerStatsFacilityInfluence = "MinRacerStatsFacilityInfluence";
     }
 }

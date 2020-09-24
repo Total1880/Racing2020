@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using Racing.Settings;
 
 namespace Racing.Services
 {
@@ -13,15 +14,30 @@ namespace Racing.Services
         private INamesRepository<FirstNames> _firstNamesRepository;
         private INamesRepository<LastNames> _lastNamesRepository;
         private IRepository<Team> _teamRepository;
+        private ISettingService _settingService;
         private readonly Random _random = new Random();
         private int _minAge = 16;
         private int _maxAge = 40;
+        private int _minRacerStatsFacilityInfluence;
 
-        public RacerPersonService(INamesRepository<FirstNames> firstNamesRepository, INamesRepository<LastNames> lastNamesRepository, IRepository<Team> teamRepository)
+        public RacerPersonService(
+            INamesRepository<FirstNames> firstNamesRepository, 
+            INamesRepository<LastNames> lastNamesRepository, 
+            IRepository<Team> teamRepository,
+            ISettingService settingService)
         {
             _firstNamesRepository = firstNamesRepository;
             _lastNamesRepository = lastNamesRepository;
             _teamRepository = teamRepository;
+            _settingService = settingService;
+
+            _ = GetSettings();
+        }
+
+        private async Task GetSettings()
+        {
+            var setting = await _settingService.GetSettingByDescription(SettingsNames.MinRacerStatsFacilityInfluence);
+            _minRacerStatsFacilityInfluence = int.Parse(setting.Value);
         }
 
         public async Task<IList<RacerPerson>> GenerateRacerPeople(int numberOfPeople, int numberOfTeams)
@@ -106,14 +122,24 @@ namespace Racing.Services
                     var newRacerPerson = list.SingleOrDefault();
                     newRacerPerson.Team = racerPerson.Team;
                     newRacerPerson.Age = _minAge;
+                    newRacerPerson.PotentialAbility += newRacerPerson.Team.YouthFacility + _minRacerStatsFacilityInfluence;
+
+                    if (newRacerPerson.PotentialAbility > 99)
+                    {
+                        newRacerPerson.PotentialAbility = 99;
+                    }
+
                     if (newRacerPerson.Ability > 50)
                     {
                         newRacerPerson.Ability = 50;
                     }
+
                     newRacerPerson.RacerPersonId = Guid.NewGuid();
                     updateRacerPeople.Add(newRacerPerson);
                     continue;
                 }
+
+                racerPerson.Ability += racerPerson.Team.TrainingFacility + _minRacerStatsFacilityInfluence;
 
                 if (racerPerson.Ability > racerPerson.PotentialAbility)
                 {
