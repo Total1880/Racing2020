@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Racing.Api.Repositories;
 
 namespace Racing.Api.Repositories.Migrations
 {
     [DbContext(typeof(RacingContext))]
-    partial class RacingContextModelSnapshot : ModelSnapshot
+    [Migration("20200924133625_AddPartsToRaces")]
+    partial class AddPartsToRaces
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

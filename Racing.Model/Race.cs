@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Racing.Model.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Racing.Model
@@ -10,5 +11,5 @@ namespace Racing.Model
         public int Length { get; set; }
         public int PrizeMoneyForOnePoint { get; set; }
         public IList<RacePoint> RacePointList { get; set; }
-    }
+}
 }

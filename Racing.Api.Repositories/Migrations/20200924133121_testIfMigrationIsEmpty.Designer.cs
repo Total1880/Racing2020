@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Racing.Api.Repositories;
 
 namespace Racing.Api.Repositories.Migrations
 {
     [DbContext(typeof(RacingContext))]
-    partial class RacingContextModelSnapshot : ModelSnapshot
+    [Migration("20200924133121_testIfMigrationIsEmpty")]
+    partial class testIfMigrationIsEmpty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,32 +97,6 @@ namespace Racing.Api.Repositories.Migrations
                     b.ToTable("RaceList");
                 });
 
-            modelBuilder.Entity("Racing.Model.RacePart", b =>
-                {
-                    b.Property<int>("RacePartId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("End")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Part")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RaceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Start")
-                        .HasColumnType("int");
-
-                    b.HasKey("RacePartId");
-
-                    b.HasIndex("RaceId");
-
-                    b.ToTable("RacePartList");
-                });
-
             modelBuilder.Entity("Racing.Model.RacePoint", b =>
                 {
                     b.Property<int>("RacePointId")
@@ -189,13 +165,6 @@ namespace Racing.Api.Repositories.Migrations
                     b.HasOne("Racing.Model.Nation", "Nation")
                         .WithMany()
                         .HasForeignKey("NationId");
-                });
-
-            modelBuilder.Entity("Racing.Model.RacePart", b =>
-                {
-                    b.HasOne("Racing.Model.Race", "Race")
-                        .WithMany()
-                        .HasForeignKey("RaceId");
                 });
 
             modelBuilder.Entity("Racing.Model.RacePoint", b =>
