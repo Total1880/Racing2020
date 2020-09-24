@@ -10,7 +10,11 @@
       DataContext="{Binding RaceResultPage, Source={StaticResource Locator}}">
 
     <Grid>
-        <ListView ItemsSource="{Binding RacerPersonList}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" ItemsSource="{Binding RacerPersonList}">
             <ListView.Resources>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Style.Triggers>
@@ -47,5 +51,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Label Grid.Column="1" Content="{Binding RaceInfo}"/>
     </Grid>
 </Page>

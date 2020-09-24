@@ -36,7 +36,7 @@ namespace Racing.Services
 
                     if (team.FacilityUpgradePreference == FacilityUpgradePreference.Training)
                     {
-                        if ((team.TrainingFacility - team.YouthFacility) == 3 || costTrainingFacilityUpgrade > team.Budget)
+                        if ((team.TrainingFacility - team.YouthFacility) >= 3 || costTrainingFacilityUpgrade > team.Budget)
                         {
                             team.YouthFacility++;
                             team.Budget -= costYouthFacilityUpgrade;
@@ -49,7 +49,7 @@ namespace Racing.Services
                     }
                     else if (team.FacilityUpgradePreference == FacilityUpgradePreference.Youth)
                     {
-                        if ((team.YouthFacility - team.TrainingFacility) == 3 || costYouthFacilityUpgrade > team.Budget)
+                        if ((team.YouthFacility - team.TrainingFacility) >= 3 || costYouthFacilityUpgrade > team.Budget)
                         {
                             team.TrainingFacility++;
                             team.Budget -= costTrainingFacilityUpgrade;
