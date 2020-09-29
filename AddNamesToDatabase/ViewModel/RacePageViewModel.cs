@@ -25,7 +25,9 @@ namespace AddNamesToDatabase.ViewModel
         private RelayCommand _deleteRaceCommand;
         private RelayCommand _newRacePointListCommand;
         private IList<RacePoint> _racePointList;
+        private IList<RacePart> _racePartList;
         private RacePoint _selectedRacePoint;
+        private RacePart _selectedRacePart;
 
         public string RaceName
         {
@@ -78,6 +80,7 @@ namespace AddNamesToDatabase.ViewModel
                     RaceName = value.Name;
                     RaceLength = value.Length;
                     RacePointList = value.RacePointList;
+                    RacePartList = value.RacePartList;
                     PrizeMoneyForOnePoint = value.PrizeMoneyForOnePoint;
                 }
             }
@@ -93,12 +96,37 @@ namespace AddNamesToDatabase.ViewModel
             }
         }
 
+        public IList<RacePart> RacePartList
+        {
+            get => _racePartList.OrderBy(p => p.Start).ToList();
+            set
+            {
+                _racePartList = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public RacePoint SelectedRacePoint
         {
             get => _selectedRacePoint;
             set
             {
                 _selectedRacePoint = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public RacePart SelectedRacePart
+        {
+            get => _selectedRacePart;
+            set
+            {
+                _selectedRacePart = value;
+
+                if (_selectedRacePart != null && !SelectedRace.RacePartList.Contains(_selectedRacePart))
+                {
+                    SelectedRace.RacePartList.Add(_selectedRacePart);
+                }
                 RaisePropertyChanged();
             }
         }
@@ -124,7 +152,7 @@ namespace AddNamesToDatabase.ViewModel
 
         private void AddRace()
         {
-            var newRace = new Race { Name = RaceName, Length = RaceLength, RacePointList = RacePointList, PrizeMoneyForOnePoint = PrizeMoneyForOnePoint };
+            var newRace = new Race { Name = RaceName, Length = RaceLength, RacePointList = RacePointList, PrizeMoneyForOnePoint = PrizeMoneyForOnePoint, RacePartList = RacePartList };
 
             if (newRace.Length > 10 && newRace.Length <= 1000)
             {
@@ -144,7 +172,10 @@ namespace AddNamesToDatabase.ViewModel
                 SelectedRace.Name = RaceName;
                 SelectedRace.Length = RaceLength;
                 SelectedRace.RacePointList = RacePointList;
+                SelectedRace.RacePartList = RacePartList;
                 SelectedRace.PrizeMoneyForOnePoint = PrizeMoneyForOnePoint;
+
+                CheckRaceParts(SelectedRace.RacePartList);
 
                 if (_raceService.EditRace(SelectedRace))
                 {
@@ -197,7 +228,31 @@ namespace AddNamesToDatabase.ViewModel
             RaceName = string.Empty;
             RaceLength = 0;
             RacePointList = new List<RacePoint>();
+            RacePartList = new List<RacePart>();
             PrizeMoneyForOnePoint = 0;
+        }
+
+        private void CheckRaceParts(IList<RacePart> racePartList)
+        {
+            racePartList = racePartList.OrderBy(r => r.Start).ToList();
+
+            for (int i = 0; i < racePartList.Count; i++)
+            {
+                if (i < racePartList.Count - 1 && racePartList[i].End >= racePartList[i + 1].Start)
+                {
+                    racePartList[i].End = racePartList[i + 1].Start - 1;
+                }
+
+                if (i > 0 && racePartList[i].Start <= racePartList[i - 1].End)
+                {
+                    racePartList[i].Start = racePartList[i - 1].End + 1;
+                }
+            }
+
+            if (RacePartList[RacePartList.Count - 1].End != SelectedRace.Length)
+            {
+                RacePartList[RacePartList.Count - 1].End = SelectedRace.Length;
+            }
         }
     }
 }

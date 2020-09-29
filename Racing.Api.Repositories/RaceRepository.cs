@@ -52,7 +52,7 @@ namespace Racing.Api.Repositories
         public IList<Race> Get()
         {
             using var context = new RacingContext();
-            return context.RaceList.Include(x => x.RacePointList).ToList();
+            return context.RaceList.Include(x => x.RacePointList).Include(x => x.RacePartList).ToList();
         }
 
         public bool Update(Race item)
@@ -88,6 +88,19 @@ namespace Racing.Api.Repositories
                 foreach (var racePoint in race.RacePointList.Where(p => p.Position > copyRacePointList.Max(p => p.Position)).ToList())
                 {
                     context.Entry(racePoint).State = EntityState.Deleted;
+                }
+
+                foreach (var racePart in race.RacePartList)
+                {
+                    if (racePart.RacePartId == 0)
+                    {
+                        context.Entry(racePart).State = EntityState.Added;
+
+                    }
+                    else
+                    {
+                        context.Entry(racePart).State = EntityState.Modified;
+                    }
                 }
 
                 context.SaveChanges();

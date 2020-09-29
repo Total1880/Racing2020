@@ -72,5 +72,16 @@
             <Button Content="Reset points"
                     Command="{Binding NewRacePointListCommand}"/>
         </StackPanel>
+        <StackPanel Grid.Row="2">
+            <DataGrid AutoGenerateColumns="False"
+                      ItemsSource="{Binding RacePartList, Mode=TwoWay}"
+                      SelectedItem="{Binding SelectedRacePart, Mode=TwoWay}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Start" Binding="{Binding Start}"/>
+                    <DataGridTextColumn Header="End" Binding="{Binding End}"/>
+                    <DataGridTextColumn Header="Part" Binding="{Binding Part}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
     </Grid>
 </Page>

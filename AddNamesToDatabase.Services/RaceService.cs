@@ -1,5 +1,6 @@
 ﻿using AddNamesToDatabase.Repositories;
 using Racing.Model;
+using Racing.Model.Enums;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,6 +17,8 @@ namespace AddNamesToDatabase.Services.Interfaces
 
         public bool CreateRace(Race race)
         {
+            CheckRaceParts(race);
+
             return _raceRepository.Create(race);
         }
 
@@ -26,12 +29,29 @@ namespace AddNamesToDatabase.Services.Interfaces
 
         public bool EditRace(Race race)
         {
+            CheckRaceParts(race);
+
             return _raceRepository.Update(race);
         }
 
         public Task<IList<Race>> GetRaces()
         {
             return _raceRepository.Get();
+        }
+
+        private void CheckRaceParts(Race race)
+        {
+            if (race.RacePartList == null || race.RacePartList.Count == 0)
+            {
+                var newRacePart = new RacePart();
+
+                newRacePart.Start = 1;
+                newRacePart.End = race.Length;
+                newRacePart.Part = RacePartEnum.Flat;
+
+                race.RacePartList = new List<RacePart>();
+                race.RacePartList.Add(newRacePart);
+            }
         }
     }
 }

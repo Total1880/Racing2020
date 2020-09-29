@@ -11,5 +11,6 @@ namespace Racing.Model
         public int Length { get; set; }
         public int PrizeMoneyForOnePoint { get; set; }
         public IList<RacePoint> RacePointList { get; set; }
+        public IList<RacePart> RacePartList { get; set; }
 }
 }
