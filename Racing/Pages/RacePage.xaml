@@ -6,35 +6,35 @@
       xmlns:local="clr-namespace:Racing.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Race"
+      Title="RacePage"
       DataContext="{Binding RacePage, Source={StaticResource Locator}}">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
             <RowDefinition/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0"
-               Grid.Column="0"
-               Content="The length of the race: "/>
-        <TextBox Grid.Row="0"
-                 Grid.Column="1"
-                 Text="{Binding RaceLength}"
-                 VerticalContentAlignment="Center"
-                 IsEnabled="{Binding InputBoxRaceLengthEnabled}"
-                 />
-        <Button Grid.Row="0"
-                Grid.Column="2"
-                Content="Validate"
-                Command="{Binding StartRaceCommand}"/>
-        <ListView Grid.Row="1" 
-                  Grid.ColumnSpan="3"
-                  ItemsSource="{Binding RacerPersonList}">
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Label Content="RaceInfo" MinWidth="300"/>
+            <Button Content="Go" Width="50"/>
+            <Button Content="1 step" Width="50"/>
+            <Button Content="Pause" Width="50"/>
+            <Button Content="Full race" Width="50"/>
+        </StackPanel>
+        <ListView Grid.Row="1">
+            <ListView.Resources>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Jersey}"
+                                     Value="Yellow">
+                            <Setter Property="Background"
+                                    Value="Yellow"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
             <ListView.View>
                 <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Racer Name">
                     <GridViewColumn Width="150"
@@ -45,12 +45,28 @@
                                     DisplayMemberBinding="{Binding LastName}">
                         <GridViewColumnHeader Content="Last Name"/>
                     </GridViewColumn>
+                    <GridViewColumn Width="150"
+                                    DisplayMemberBinding="{Binding Team.Name}">
+                        <GridViewColumnHeader Content="Team"/>
+                    </GridViewColumn>
                     <GridViewColumn Width="50"
                                     DisplayMemberBinding="{Binding AverageAbility}">
                         <GridViewColumnHeader Content="Ability"/>
                     </GridViewColumn>
+                    <GridViewColumn Width="50"
+                                    DisplayMemberBinding="{Binding Age}">
+                        <GridViewColumnHeader Content="Age"/>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50"
+                                    DisplayMemberBinding="{Binding Position}">
+                        <GridViewColumnHeader Content="Position"/>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Grid.Row="2" 
+                Content="Finish" 
+                Width="50"
+                HorizontalAlignment="Right"/>
     </Grid>
 </Page>

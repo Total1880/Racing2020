@@ -92,11 +92,7 @@ namespace Racing.ViewModel
 
         private void StartRace()
         {
-            if (RacerList != null)
-            {
-                MessengerInstance.Send(new OpenRacePageMessage());
-                MessengerInstance.Send(new OverviewRacerPersonsMessage(DivisionList));
-            }
+            //Nothing
         }
 
         private void StartSeason()
