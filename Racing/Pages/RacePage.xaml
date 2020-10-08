@@ -23,47 +23,79 @@
             <Button Content="Pause" Width="50"/>
             <Button Content="Full race" Width="50"/>
         </StackPanel>
-        <ListView Grid.Row="1">
-            <ListView.Resources>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Jersey}"
-                                     Value="Yellow">
-                            <Setter Property="Background"
-                                    Value="Yellow"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.Resources>
-            <ListView.View>
-                <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Racer Name">
-                    <GridViewColumn Width="150"
-                                    DisplayMemberBinding="{Binding FirstName}">
-                        <GridViewColumnHeader Content="First Name"/>
-                    </GridViewColumn>
-                    <GridViewColumn Width="150"
-                                    DisplayMemberBinding="{Binding LastName}">
-                        <GridViewColumnHeader Content="Last Name"/>
-                    </GridViewColumn>
-                    <GridViewColumn Width="150"
-                                    DisplayMemberBinding="{Binding Team.Name}">
-                        <GridViewColumnHeader Content="Team"/>
-                    </GridViewColumn>
-                    <GridViewColumn Width="50"
-                                    DisplayMemberBinding="{Binding AverageAbility}">
-                        <GridViewColumnHeader Content="Ability"/>
-                    </GridViewColumn>
-                    <GridViewColumn Width="50"
-                                    DisplayMemberBinding="{Binding Age}">
-                        <GridViewColumnHeader Content="Age"/>
-                    </GridViewColumn>
-                    <GridViewColumn Width="50"
-                                    DisplayMemberBinding="{Binding Position}">
-                        <GridViewColumnHeader Content="Position"/>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal">
+            <ListView>
+                <ListView.Resources>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Jersey}"
+                                         Value="Yellow">
+                                <Setter Property="Background"
+                                        Value="Yellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Racer Name">
+                        <GridViewColumn Width="150"
+                                        DisplayMemberBinding="{Binding FirstName}">
+                            <GridViewColumnHeader Content="First Name"/>
+                        </GridViewColumn>
+                        <GridViewColumn Width="150"
+                                        DisplayMemberBinding="{Binding LastName}">
+                            <GridViewColumnHeader Content="Last Name"/>
+                        </GridViewColumn>
+                        <GridViewColumn Width="150"
+                                        DisplayMemberBinding="{Binding Team.Name}">
+                            <GridViewColumnHeader Content="Team"/>
+                        </GridViewColumn>
+                        <GridViewColumn Width="50"
+                                        DisplayMemberBinding="{Binding AverageAbility}">
+                            <GridViewColumnHeader Content="Ability"/>
+                        </GridViewColumn>
+                        <GridViewColumn Width="50"
+                                        DisplayMemberBinding="{Binding Age}">
+                            <GridViewColumnHeader Content="Age"/>
+                        </GridViewColumn>
+                        <GridViewColumn Width="50"
+                                        DisplayMemberBinding="{Binding Position}">
+                            <GridViewColumnHeader Content="Position"/>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView>
+                <ListView.Resources>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Jersey}"
+                                         Value="Yellow">
+                                <Setter Property="Background"
+                                        Value="Yellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Racer Name">
+                        <GridViewColumn Width="150"
+                                        DisplayMemberBinding="{Binding FirstName}">
+                            <GridViewColumnHeader Content="First Name"/>
+                        </GridViewColumn>
+                        <GridViewColumn Width="150"
+                                        DisplayMemberBinding="{Binding LastName}">
+                            <GridViewColumnHeader Content="Last Name"/>
+                        </GridViewColumn>
+                        <GridViewColumn Width="150"
+                                        DisplayMemberBinding="{Binding Team.Name}">
+                            <GridViewColumnHeader Content="Team"/>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
         <Button Grid.Row="2" 
                 Content="Finish" 
                 Width="50"
