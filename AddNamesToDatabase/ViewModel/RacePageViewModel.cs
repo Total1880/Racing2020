@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Racing.Model;
+using Racing.Model.Enums;
 using Racing.Settings;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace AddNamesToDatabase.ViewModel
         private RelayCommand _newRacePointListCommand;
         private IList<RacePoint> _racePointList;
         private IList<RacePart> _racePartList;
+        private IList<RacePartEnum> _racePartEnumList;
         private RacePoint _selectedRacePoint;
         private RacePart _selectedRacePart;
 
@@ -106,6 +108,16 @@ namespace AddNamesToDatabase.ViewModel
             }
         }
 
+        public IList<RacePartEnum> RacePartEnumList
+        {
+            get => _racePartEnumList;
+            set
+            {
+                _racePartEnumList = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public RacePoint SelectedRacePoint
         {
             get => _selectedRacePoint;
@@ -143,6 +155,7 @@ namespace AddNamesToDatabase.ViewModel
             _ = GetRaces();
             _ = NewRacePointList();
             RacePointList = new List<RacePoint>();
+            RacePartEnumList = Enum.GetValues(typeof(RacePartEnum)).Cast<RacePartEnum>().ToList();
         }
 
         public async Task GetRaces()

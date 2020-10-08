@@ -79,9 +79,17 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Start" Binding="{Binding Start}"/>
                     <DataGridTextColumn Header="End" Binding="{Binding End}"/>
-                    <DataGridTextColumn Header="Part" Binding="{Binding Part}"/>
+                    <DataGridTextColumn Header="Part" Binding="{Binding Part}" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
+        </StackPanel>
+        <StackPanel Grid.Row="2"
+                    Grid.Column="2" >
+            <StackPanel Orientation="Horizontal">
+                <Label Content="selected part type: "/>
+                <ComboBox ItemsSource="{Binding RacePartEnumList}"
+                          SelectedItem="{Binding SelectedRacePart.Part}"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>
