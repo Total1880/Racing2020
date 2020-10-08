@@ -13,10 +13,10 @@ namespace Racing.Services
         private int _raceLength;
         private Random _random = new Random();
 
-        public void Go(IList<RacerPerson> racerPersonList, int raceLength)
+        public void Go(IList<RacerPerson> racerPersonList, Race race)
         {
             Convert(racerPersonList);
-            _raceLength = raceLength;
+            _raceLength = race.Length;
         }
 
         private void Convert(IList<RacerPerson> racerPersonList)
@@ -52,7 +52,7 @@ namespace Racing.Services
             _racerList = _racerList.OrderByDescending(r => r.RacePosition).ToList();
         }
 
-        private void Move()
+        public void Move()
         {
             do
             {
