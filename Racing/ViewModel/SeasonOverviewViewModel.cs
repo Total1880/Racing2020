@@ -206,33 +206,39 @@ namespace Racing.ViewModel
 
         private void NextRace()
         {
-            MessengerInstance.Send(new OpenRaceResultPageMessage());
-
             foreach (var division in DivisionList)
             {
-                MessengerInstance.Send(new RaceResultPageMessage(division.TeamList, RaceList[_seasonRaceNumber], division));
+                MessengerInstance.Send(new OpenRacePageMessage());
+                MessengerInstance.Send(new RaceSetupMessage(division, RaceList[_seasonRaceNumber]));
             }
+            
+            //MessengerInstance.Send(new OpenRaceResultPageMessage());
 
-            if (_seasonRaceNumber + 1 < RaceList.Count)
-            {
-                _seasonRaceNumber++;
-            }
-            else
-            {
-                _seasonRaceNumber = 0;
-                EndOfSeason = Visibility.Visible;
-                NextRaceBool = false;
-            }
+            //foreach (var division in DivisionList)
+            //{
+            //    MessengerInstance.Send(new RaceResultPageMessage(division.TeamList, RaceList[_seasonRaceNumber], division));
+            //}
 
-            _ = GetRaces();
+            //if (_seasonRaceNumber + 1 < RaceList.Count)
+            //{
+            //    _seasonRaceNumber++;
+            //}
+            //else
+            //{
+            //    _seasonRaceNumber = 0;
+            //    EndOfSeason = Visibility.Visible;
+            //    NextRaceBool = false;
+            //}
 
-            ChosenMenuItem = SeasonMenu.LatestResult;
+            //_ = GetRaces();
 
-            if (ChosenDivision != null)
-            {
-                MessengerInstance.Send(new RaceResultPageMessage(ChosenDivision));
-                MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(ChosenDivision));
-            }
+            //ChosenMenuItem = SeasonMenu.LatestResult;
+
+            //if (ChosenDivision != null)
+            //{
+            //    MessengerInstance.Send(new RaceResultPageMessage(ChosenDivision));
+            //    MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(ChosenDivision));
+            //}
         }
 
         private void NextSeason()

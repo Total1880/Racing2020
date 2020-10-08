@@ -72,7 +72,7 @@ namespace Racing.ViewModel
                 }
             }
 
-            _raceEngineService.Go(_latestResultsPerDivision[obj.Division.DivisionId], obj.Race.Length);
+            _raceEngineService.Go(_latestResultsPerDivision[obj.Division.DivisionId], obj.Race);
 
             if (_latestResultsPerDivision[obj.Division.DivisionId] != null)
                 _latestResultsPerDivision[obj.Division.DivisionId].Clear();

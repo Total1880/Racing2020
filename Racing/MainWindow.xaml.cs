@@ -17,6 +17,7 @@ namespace Racing
 
         public StartPage StartPage => _startPage ??= new StartPage();
         public HomePage HomePage => _homePage ??= new HomePage();
+        public RacePage RacePage => new RacePage();
         public SeasonOverviewPage SeasonOverviewPage => _seasonOverviewPage ??= new SeasonOverviewPage();
 
         public MainWindow()
@@ -25,6 +26,7 @@ namespace Racing
             MainFrame.NavigationService.Navigate(StartPage);
             Messenger.Default.Register<OpenHomePageMessage>(this, OpenHomePage);
             Messenger.Default.Register<OpenSeasonOverviewPageMessage>(this, OpenSeasonOverviewPage);
+            Messenger.Default.Register<OpenRacePageMessage>(this, OpenRacePage);
         }
 
         private void OpenHomePage(OpenHomePageMessage obj)
@@ -35,6 +37,11 @@ namespace Racing
         private void OpenSeasonOverviewPage(OpenSeasonOverviewPageMessage obj)
         {
             MainFrame.NavigationService.Navigate(SeasonOverviewPage);
+        }
+
+        private void OpenRacePage(OpenRacePageMessage obj)
+        {
+            MainFrame.NavigationService.Navigate(RacePage);
         }
     }
 }

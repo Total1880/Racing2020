@@ -54,6 +54,11 @@ namespace Racing.Services
                 if (racer.RacePosition < _race.Length)
                 {
                     var racePart = _race.RacePartList.Where(rp => racer.RacePosition >= rp.Start && racer.RacePosition <= rp.End).FirstOrDefault();
+
+                    if (racePart == null)
+                    {
+                        racePart = _race.RacePartList[0];
+                    }
                     switch (racePart.Part)
                     {
                         case RacePartEnum.Flat:
@@ -111,6 +116,11 @@ namespace Racing.Services
         private void Sort()
         {
             _racerList = _racerList.OrderByDescending(r => r.RacePosition).ToList();
+        }
+
+        public IList<Racer> GetRacerList()
+        {
+            return _racerList;
         }
     }
 }

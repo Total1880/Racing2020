@@ -103,5 +103,10 @@ namespace Racing.Services
 
             return ranking;
         }
+
+        public IList<Racer> GetRacerList()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

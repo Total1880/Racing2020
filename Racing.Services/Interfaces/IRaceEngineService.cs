@@ -7,6 +7,7 @@ namespace Racing.Services.Interfaces
     {
         void Go(IList<RacerPerson> racerPersonList, Race race);
         void Move();
+        IList<Racer> GetRacerList();
         IList<RacerPerson> GetFinishRanking();
     }
 }

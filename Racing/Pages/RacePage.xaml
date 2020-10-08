@@ -19,13 +19,15 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Label Content="RaceInfo" MinWidth="300"/>
             <Button Content="Go" Width="50"/>
-            <Button Content="1 step" Width="50"/>
+            <Button Content="1 step" 
+                    Width="50"
+                    Command="{Binding NextStepCommand}"/>
             <Button Content="Pause" Width="50"/>
             <Button Content="Full race" Width="50"/>
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Orientation="Horizontal">
-            <ListView>
+            <ListView ItemsSource="{Binding RacerList}">
                 <ListView.Resources>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>
@@ -60,7 +62,7 @@
                             <GridViewColumnHeader Content="Age"/>
                         </GridViewColumn>
                         <GridViewColumn Width="50"
-                                        DisplayMemberBinding="{Binding Position}">
+                                        DisplayMemberBinding="{Binding RacePosition}">
                             <GridViewColumnHeader Content="Position"/>
                         </GridViewColumn>
                     </GridView>
