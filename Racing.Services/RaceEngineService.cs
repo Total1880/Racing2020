@@ -108,5 +108,10 @@ namespace Racing.Services
         {
             throw new NotImplementedException();
         }
+
+        public bool RaceHasEnded()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,12 +18,22 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Label Content="RaceInfo" MinWidth="300"/>
-            <Button Content="Go" Width="50"/>
+            <Button Content="Go" 
+                    Width="50"
+                    Command="{Binding RunRaceCommand}"
+                    IsEnabled="{Binding GoButtonEnabled}"/>
             <Button Content="1 step" 
                     Width="50"
-                    Command="{Binding NextStepCommand}"/>
-            <Button Content="Pause" Width="50"/>
-            <Button Content="Full race" Width="50"/>
+                    Command="{Binding NextStepCommand}"
+                    IsEnabled="{Binding OneStepButtonEnabled}"/>
+            <Button Content="Pause" 
+                    Width="50"
+                    Command="{Binding PauseRaceCommand}"
+                    IsEnabled="{Binding PauseButtonEnabled}"/>
+            <Button Content="Full race" 
+                    Width="50"
+                    Command="{Binding FullRaceCommand}"
+                    IsEnabled="{Binding FullRaceButtonEnabled}"/>
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Orientation="Horizontal">
@@ -68,7 +78,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <ListView>
+            <ListView ItemsSource="{Binding FinishRanking}">
                 <ListView.Resources>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>
@@ -101,6 +111,8 @@
         <Button Grid.Row="2" 
                 Content="Finish" 
                 Width="50"
-                HorizontalAlignment="Right"/>
+                HorizontalAlignment="Right"
+                Command="{Binding FinishRaceCommand}"
+                IsEnabled="{Binding RaceHasFinished}"/>
     </Grid>
 </Page>

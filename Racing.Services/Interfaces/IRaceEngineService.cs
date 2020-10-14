@@ -9,5 +9,6 @@ namespace Racing.Services.Interfaces
         void Move();
         IList<Racer> GetRacerList();
         IList<RacerPerson> GetFinishRanking();
+        bool RaceHasEnded();
     }
 }

@@ -13,6 +13,7 @@ namespace Racing.Services
         private Race _race;
         private Queue<Racer> _finishingPositions;
         private Random _random = new Random();
+        private bool _raceHasEnded;
 
         public IList<RacerPerson> GetFinishRanking()
         {
@@ -42,6 +43,7 @@ namespace Racing.Services
         public void Go(IList<RacerPerson> racerPersonList, Race race)
         {
             Convert(racerPersonList);
+            _raceHasEnded = false;
             _race = race;
         }
 
@@ -80,6 +82,11 @@ namespace Racing.Services
                     if (!_finishingPositions.Contains(racer))
                     {
                         _finishingPositions.Enqueue(racer);
+                    }
+                    if (_finishingPositions.Count == _racerList.Count)
+                    {
+                        _raceHasEnded = true;
+                        return;
                     }
                 }
             }
@@ -121,6 +128,11 @@ namespace Racing.Services
         public IList<Racer> GetRacerList()
         {
             return _racerList;
+        }
+
+        public bool RaceHasEnded()
+        {
+            return _raceHasEnded;
         }
     }
 }
