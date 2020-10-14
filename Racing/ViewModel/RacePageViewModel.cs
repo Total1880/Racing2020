@@ -193,7 +193,9 @@ namespace Racing.ViewModel
         private void FinishRace()
         {
             MessengerInstance.Send(new OpenSeasonOverviewPageMessage());
+            MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(FinishRanking, _race, _division));
             FinishRanking.Clear();
+
         }
     }
 }

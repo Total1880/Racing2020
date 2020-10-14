@@ -28,6 +28,7 @@ namespace Racing.ViewModel
         private Division _chosenDivision;
         private int _raceLength;
         private int _seasonRaceNumber;
+        private int _divisionRaceNumber;
         private bool _nextRaceBool;
         private Visibility _endOfSeason;
         private IList<Division> _divisionList;
@@ -90,7 +91,7 @@ namespace Racing.ViewModel
                     RaisePropertyChanged();
                     MessengerInstance.Send(new RaceResultPageMessage(value));
                     MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(value));
-                    
+
                 }
             }
         }
@@ -140,9 +141,9 @@ namespace Racing.ViewModel
         public RelayCommand NextSeasonCommand => _nextSeasonCommand ??= new RelayCommand(NextSeason);
 
         public SeasonOverviewViewModel(
-            IRaceService raceService, 
-            IRacerPersonService racerPersonService, 
-            ISaveGameDivisionService saveGameDivisionService, 
+            IRaceService raceService,
+            IRacerPersonService racerPersonService,
+            ISaveGameDivisionService saveGameDivisionService,
             ISeasonEngineService seasonEngineService,
             IFacilityUpgradeEngine facilityUpgradeEngine)
         {
@@ -206,12 +207,24 @@ namespace Racing.ViewModel
 
         private void NextRace()
         {
-            foreach (var division in DivisionList)
+            MessengerInstance.Send(new OpenRacePageMessage());
+            MessengerInstance.Send(new RaceSetupMessage(DivisionList[_divisionRaceNumber], RaceList[_seasonRaceNumber]));
+
+            if (_divisionRaceNumber + 1 < DivisionList.Count)
             {
-                MessengerInstance.Send(new OpenRacePageMessage());
-                MessengerInstance.Send(new RaceSetupMessage(division, RaceList[_seasonRaceNumber]));
+                _divisionRaceNumber++;
             }
-            
+            else if (_seasonRaceNumber + 1 < RaceList.Count)
+            {
+                _seasonRaceNumber++;
+                _divisionRaceNumber = 0;
+            }
+            else
+            {
+                _seasonRaceNumber = 0;
+                EndOfSeason = Visibility.Visible;
+                NextRaceBool = false;
+            }
             //MessengerInstance.Send(new OpenRaceResultPageMessage());
 
             //foreach (var division in DivisionList)
@@ -219,18 +232,7 @@ namespace Racing.ViewModel
             //    MessengerInstance.Send(new RaceResultPageMessage(division.TeamList, RaceList[_seasonRaceNumber], division));
             //}
 
-            //if (_seasonRaceNumber + 1 < RaceList.Count)
-            //{
-            //    _seasonRaceNumber++;
-            //}
-            //else
-            //{
-            //    _seasonRaceNumber = 0;
-            //    EndOfSeason = Visibility.Visible;
-            //    NextRaceBool = false;
-            //}
-
-            //_ = GetRaces();
+            _ = GetRaces();
 
             //ChosenMenuItem = SeasonMenu.LatestResult;
 
@@ -256,7 +258,7 @@ namespace Racing.ViewModel
             }
 
             DivisionList = _facilityUpgradeEngine.Upgrade(DivisionList);
-            
+
             _saveGameDivisionService.SaveDivisions(DivisionList);
         }
 
