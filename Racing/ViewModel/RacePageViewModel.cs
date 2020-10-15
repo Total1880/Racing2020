@@ -4,10 +4,10 @@ using Racing.Messages;
 using Racing.Messages.WindowOpener;
 using Racing.Model;
 using Racing.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Racing.ViewModel
@@ -31,6 +31,8 @@ namespace Racing.ViewModel
         private bool _oneStepButtonEnabled;
         private bool _pauseButtonEnabled;
         private bool _fullRaceButtonEnabled;
+        private string _raceInfo;
+        private StringBuilder _raceInfoBuilder;
 
         public IList<RacerPerson> FinishRanking
         {
@@ -108,6 +110,16 @@ namespace Racing.ViewModel
             }
         }
 
+        public string RaceInfo
+        {
+            get => _raceInfo;
+            set
+            {
+                _raceInfo = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public RelayCommand NextStepCommand => _nextStepCommand ??= new RelayCommand(NextStep);
         public RelayCommand FullRaceCommand => _fullRaceCommand ??= new RelayCommand(FullRace);
         public RelayCommand RunRaceCommand => _runRaceCommand ??= new RelayCommand(RunRace);
@@ -130,7 +142,7 @@ namespace Racing.ViewModel
             OneStepButtonEnabled = true;
             PauseButtonEnabled = false;
             FullRaceButtonEnabled = true;
-
+            ShowRace();
 
             foreach (var team in _division.TeamList)
             {
@@ -195,7 +207,30 @@ namespace Racing.ViewModel
             MessengerInstance.Send(new OpenSeasonOverviewPageMessage());
             MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(FinishRanking, _race, _division));
             FinishRanking.Clear();
+            RaceHasFinished = false;
+        }
 
+        private void ShowRace()
+        {
+            _race.RacePointList = _race.RacePointList.OrderBy(p => p.Position).ToList();
+            _raceInfoBuilder = new StringBuilder();
+            _raceInfoBuilder.Append($"Name: {_race.Name}\n\n");
+            _raceInfoBuilder.Append($"Length: { _race.Length}\n\n");
+
+            int counter = 0;
+
+            foreach (var part in _race.RacePartList)
+            {
+                _raceInfoBuilder.Append($"{part.Start} - {part.End}: {part.Part}\n");
+            }
+
+            do
+            {
+                _raceInfoBuilder.Append($"Position: {_race.RacePointList[counter].Position} \tPoints: {_race.RacePointList[counter].Point}\n");
+                counter++;
+            } while (counter < _race.RacePointList.Count && _race.RacePointList[counter].Point > 0);
+
+            RaceInfo = _raceInfoBuilder.ToString();
         }
     }
 }

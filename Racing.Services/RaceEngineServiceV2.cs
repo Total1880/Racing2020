@@ -64,13 +64,13 @@ namespace Racing.Services
                     switch (racePart.Part)
                     {
                         case RacePartEnum.Flat:
-                            racer.RacePosition += (float)_random.Next(1, racer.FlatAbility) / 10;
+                            racer.RacePosition += (float)_random.Next(1, racer.FlatAbility) / 9;
                             break;
                         case RacePartEnum.Uphill:
-                            racer.RacePosition += (float)_random.Next(1, racer.ClimbingAbility) / 10;
+                            racer.RacePosition += (float)(_random.Next(1, racer.ClimbingAbility) / 9) * 3;
                             break;
                         case RacePartEnum.Downhill:
-                            racer.RacePosition += (float)_random.Next(1, racer.DownhillAbility) / 10;
+                            racer.RacePosition += (float)(_random.Next(1, racer.DownhillAbility) / 9) * 2;
                             break;
                         default:
                             racer.RacePosition += 1;
@@ -83,11 +83,19 @@ namespace Racing.Services
                     {
                         _finishingPositions.Enqueue(racer);
                     }
-                    if (_finishingPositions.Count == _racerList.Count)
-                    {
-                        _raceHasEnded = true;
-                        return;
-                    }
+                }
+            }
+
+            foreach (var finisher in _finishingPositions)
+            {
+                if (_racerList.Contains(finisher))
+                {
+                    _racerList.Remove(finisher);
+                }
+                if (_racerList.Count == 0)
+                {
+                    _raceHasEnded = true;
+                    return;
                 }
             }
         }

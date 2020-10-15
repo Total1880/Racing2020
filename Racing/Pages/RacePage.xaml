@@ -107,6 +107,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+            <Label Content="{Binding RaceInfo}"/>
         </StackPanel>
         <Button Grid.Row="2" 
                 Content="Finish" 
