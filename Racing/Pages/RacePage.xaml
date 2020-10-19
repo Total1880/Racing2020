@@ -17,7 +17,6 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Label Content="RaceInfo" MinWidth="300"/>
             <Button Content="Go" 
                     Width="50"
                     Command="{Binding RunRaceCommand}"
