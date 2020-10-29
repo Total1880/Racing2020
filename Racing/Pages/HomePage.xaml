@@ -20,6 +20,8 @@
                     Command="{Binding StartRaceCommand}"/>
             <Button Content="Start a season"
                     Command="{Binding StartSeasonCommand}"/>
+            <Button Content="View settings"
+                    Command="{Binding ViewSettingsCommand}"/>
         </StackPanel>
         <Frame Grid.Column="1" 
                x:Name="HomePageFrame"

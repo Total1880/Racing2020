@@ -30,7 +30,7 @@ namespace Racing.ViewModel
         private int _raceLength;
         private int _seasonRaceNumber;
         private int _divisionRaceNumber;
-        private int _playerTeamId = 10;
+        private int _playerTeamId;
         private bool _nextRaceBool;
         private Visibility _endOfSeason;
         private IList<Division> _divisionList;
@@ -188,7 +188,7 @@ namespace Racing.ViewModel
         {
             DivisionList = obj.DivisionList;
             _saveGameDivisionService.SaveDivisions(DivisionList);
-            _saveGameSettingsService.SaveGameSettings(_playerTeamId);
+            _playerTeamId = _saveGameSettingsService.GetPlayerTeamId();
         }
 
         private void UpdateJersey(UpdateJerseyMessage obj)
