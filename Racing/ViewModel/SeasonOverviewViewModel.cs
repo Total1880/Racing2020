@@ -21,6 +21,7 @@ namespace Racing.ViewModel
         private readonly ISaveGameDivisionService _saveGameDivisionService;
         private readonly ISeasonEngineService _seasonEngineService;
         private readonly IFacilityUpgradeEngine _facilityUpgradeEngine;
+        private readonly ISaveGameSettingsService _saveGameSettingsService;
         private ObservableCollection<Race> _raceList;
         private ObservableCollection<string> _menu;
         private string _nextRaceName;
@@ -29,6 +30,7 @@ namespace Racing.ViewModel
         private int _raceLength;
         private int _seasonRaceNumber;
         private int _divisionRaceNumber;
+        private int _playerTeamId = 10;
         private bool _nextRaceBool;
         private Visibility _endOfSeason;
         private IList<Division> _divisionList;
@@ -145,13 +147,15 @@ namespace Racing.ViewModel
             IRacerPersonService racerPersonService,
             ISaveGameDivisionService saveGameDivisionService,
             ISeasonEngineService seasonEngineService,
-            IFacilityUpgradeEngine facilityUpgradeEngine)
+            IFacilityUpgradeEngine facilityUpgradeEngine,
+            ISaveGameSettingsService saveGameSettingsService)
         {
             _raceService = raceService;
             _racerPersonService = racerPersonService;
             _saveGameDivisionService = saveGameDivisionService;
             _seasonEngineService = seasonEngineService;
             _facilityUpgradeEngine = facilityUpgradeEngine;
+            _saveGameSettingsService = saveGameSettingsService;
             _ = GetRaces();
             MessengerInstance.Register<OverviewRacerPersonsMessage>(this, OnOpenSeasonOverviewPage);
             MessengerInstance.Register<UpdateJerseyMessage>(this, UpdateJersey);
@@ -184,6 +188,7 @@ namespace Racing.ViewModel
         {
             DivisionList = obj.DivisionList;
             _saveGameDivisionService.SaveDivisions(DivisionList);
+            _saveGameSettingsService.SaveGameSettings(_playerTeamId);
         }
 
         private void UpdateJersey(UpdateJerseyMessage obj)
@@ -207,8 +212,14 @@ namespace Racing.ViewModel
 
         private void NextRace()
         {
+            bool GoToNextRace = true;
             MessengerInstance.Send(new OpenRacePageMessage());
-            MessengerInstance.Send(new RaceSetupMessage(DivisionList[_divisionRaceNumber], RaceList[_seasonRaceNumber]));
+            MessengerInstance.Send(new RaceSetupMessage(DivisionList[_divisionRaceNumber], RaceList[_seasonRaceNumber], _playerTeamId));
+
+            if (DivisionList[_divisionRaceNumber].TeamList.Any(t => t.TeamId == _playerTeamId))
+            {
+                GoToNextRace = false;
+            }
 
             if (_divisionRaceNumber + 1 < DivisionList.Count)
             {
@@ -225,22 +236,13 @@ namespace Racing.ViewModel
                 EndOfSeason = Visibility.Visible;
                 NextRaceBool = false;
             }
-            //MessengerInstance.Send(new OpenRaceResultPageMessage());
-
-            //foreach (var division in DivisionList)
-            //{
-            //    MessengerInstance.Send(new RaceResultPageMessage(division.TeamList, RaceList[_seasonRaceNumber], division));
-            //}
 
             _ = GetRaces();
 
-            //ChosenMenuItem = SeasonMenu.LatestResult;
-
-            //if (ChosenDivision != null)
-            //{
-            //    MessengerInstance.Send(new RaceResultPageMessage(ChosenDivision));
-            //    MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(ChosenDivision));
-            //}
+            if (GoToNextRace)
+            {
+                NextRace();
+            }
         }
 
         private void NextSeason()

@@ -154,6 +154,12 @@ namespace Racing.ViewModel
 
             _raceEngineService.Go(_racerPeople, _race);
             RacerList = new ObservableCollection<Racer>(_raceEngineService.GetRacerList());
+
+            if (!_division.TeamList.Any(t => t.TeamId == obj.PlayerTeamId))
+            {
+                FullRace();
+                FinishRace();
+            }
         }
 
         private void NextStep()

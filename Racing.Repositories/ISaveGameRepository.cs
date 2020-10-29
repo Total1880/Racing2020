@@ -7,5 +7,7 @@ namespace Racing.Repositories
     {
         bool Save(IList<T> items);
         IList<T> Load();
+        bool SaveGameSettings(int playerTeamId);
+        int GetPlayerTeamId();
     }
 }

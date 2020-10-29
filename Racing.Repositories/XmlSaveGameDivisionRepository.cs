@@ -9,7 +9,8 @@ namespace Racing.Repositories
     public class XmlSaveGameDivisionRepository : ISaveGameRepository<Division>
     {
         private readonly string path = @".\Racing2020Save";
-        private readonly string file = $"SaveGame.xml";
+        private readonly string saveGameFile = $"SaveGame.xml";
+        private readonly string saveGameSettingsFile = $"SaveGameSettings.xml";
 
         public XmlSaveGameDivisionRepository()
         {
@@ -20,7 +21,7 @@ namespace Racing.Repositories
         {
             // to get nation, use the id and nationcontroller
             var divisions = new List<Division>();
-            var fileString = File.ReadAllText(Path.Combine(path, file));
+            var fileString = File.ReadAllText(Path.Combine(path, saveGameFile));
 
             if (string.IsNullOrWhiteSpace(fileString))
             {
@@ -144,7 +145,46 @@ namespace Racing.Repositories
                 writer.Flush();
             }
 
-            using (StreamWriter streamWriter = File.CreateText(Path.Combine(path, file)))
+            using (StreamWriter streamWriter = File.CreateText(Path.Combine(path, saveGameFile)))
+            {
+                streamWriter.Write(stream);
+            }
+
+            return true;
+        }
+
+        public int GetPlayerTeamId()
+        {
+            int teamId;
+
+            var fileString = File.ReadAllText(Path.Combine(path, saveGameSettingsFile));
+
+            using (var stringReader = new StringReader(fileString))
+            {
+                using (var xmlReader = XmlReader.Create(stringReader, new XmlReaderSettings() { IgnoreWhitespace = true }))
+                {
+                    xmlReader.MoveToContent();
+                    teamId = int.Parse(xmlReader.GetAttribute(nameof(Team.TeamId)));
+                }
+            }
+
+            return teamId;
+        }
+
+        public bool SaveGameSettings(int playerTeamId)
+        {
+            var stream = new StringWriter();
+            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings() { Indent = true }))
+            {
+                writer.WriteStartDocument();
+                writer.WriteStartElement(nameof(Team));
+                writer.WriteAttributeString(nameof(Team.TeamId), playerTeamId.ToString());
+                writer.WriteEndElement();
+
+                writer.Flush();
+            }
+
+            using (StreamWriter streamWriter = File.CreateText(Path.Combine(path, saveGameSettingsFile)))
             {
                 streamWriter.Write(stream);
             }
@@ -159,9 +199,15 @@ namespace Racing.Repositories
                 Directory.CreateDirectory(path);
             }
 
-            if (!File.Exists(Path.Combine(path, file)))
+            if (!File.Exists(Path.Combine(path, saveGameFile)))
             {
-                var createdFile = File.Create(Path.Combine(path, file));
+                var createdFile = File.Create(Path.Combine(path, saveGameFile));
+                createdFile.Close();
+            }
+
+            if (!File.Exists(Path.Combine(path, saveGameSettingsFile)))
+            {
+                var createdFile = File.Create(Path.Combine(path, saveGameSettingsFile));
                 createdFile.Close();
             }
         }
