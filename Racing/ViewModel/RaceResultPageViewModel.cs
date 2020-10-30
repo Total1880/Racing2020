@@ -79,7 +79,7 @@ namespace Racing.ViewModel
 
             _latestResultsPerDivision[obj.Division.DivisionId] = _raceEngineService.GetFinishRanking();
 
-            MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(_latestResultsPerDivision[obj.Division.DivisionId], obj.Race, obj.Division ));
+            MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(_latestResultsPerDivision[obj.Division.DivisionId], obj.Race, obj.Division, true ));
             ShowRace(obj.Race);
 
             RacerPersonList = _latestResultsPerDivision[obj.Division.DivisionId];

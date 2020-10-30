@@ -159,10 +159,20 @@ namespace Racing.ViewModel
             _ = GetRaces();
             MessengerInstance.Register<OverviewRacerPersonsMessage>(this, OnOpenSeasonOverviewPage);
             MessengerInstance.Register<UpdateJerseyMessage>(this, UpdateJersey);
-            MessengerInstance.Register<UpdateSeasonAfterRaceMessage>(this, UpdateFinance);
+            MessengerInstance.Register<UpdateSeasonAfterRaceMessage>(this, UpdateAfterRace);
             Menu = new ObservableCollection<string> { SeasonMenu.LatestResult, SeasonMenu.Ranking, SeasonMenu.NextRaceInfo, SeasonMenu.TeamOverview };
             EndOfSeason = Visibility.Hidden;
             NextRaceBool = true;
+        }
+
+        private void UpdateAfterRace(UpdateSeasonAfterRaceMessage obj)
+        {
+            UpdateFinance(obj);
+
+            if (obj.UserViewedRace && obj.Division.Tier != DivisionList.Max(d => d.Tier))
+            {
+                NextRace();
+            }
         }
 
         private void UpdateFinance(UpdateSeasonAfterRaceMessage obj)
@@ -229,12 +239,15 @@ namespace Racing.ViewModel
             {
                 _seasonRaceNumber++;
                 _divisionRaceNumber = 0;
+                GoToNextRace = false;
             }
             else
             {
                 _seasonRaceNumber = 0;
+                _divisionRaceNumber = 0;
                 EndOfSeason = Visibility.Visible;
                 NextRaceBool = false;
+                GoToNextRace = false;
             }
 
             _ = GetRaces();
@@ -242,6 +255,11 @@ namespace Racing.ViewModel
             if (GoToNextRace)
             {
                 NextRace();
+            }
+
+            if (ChosenDivision != null)
+            {
+                MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(ChosenDivision));
             }
         }
 
@@ -273,6 +291,14 @@ namespace Racing.ViewModel
                     break;
                 case SeasonMenu.Ranking:
                     MessengerInstance.Send(new OpenSeasonRankingPageMessage());
+                    if (ChosenDivision != null)
+                    {
+                        MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(ChosenDivision));
+                    }
+                    else
+                    {
+                        MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(DivisionList[0]));
+                    }
                     break;
                 case SeasonMenu.NextRaceInfo:
                     MessengerInstance.Send(new OpenNextRaceInfoPageMessage());

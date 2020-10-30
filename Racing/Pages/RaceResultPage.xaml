@@ -21,7 +21,7 @@
                         <DataTrigger Binding="{Binding Jersey}"
                                      Value="Yellow">
                             <Setter Property="Background"
-                                    Value="Yellow"/>
+                                    Value="{Binding Jersey}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

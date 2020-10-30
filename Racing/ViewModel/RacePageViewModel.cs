@@ -31,6 +31,7 @@ namespace Racing.ViewModel
         private bool _oneStepButtonEnabled;
         private bool _pauseButtonEnabled;
         private bool _fullRaceButtonEnabled;
+        private bool _userViewedRace;
         private string _raceInfo;
         private StringBuilder _raceInfoBuilder;
 
@@ -138,6 +139,7 @@ namespace Racing.ViewModel
             _race = obj.Race;
             _racerPeople = new List<RacerPerson>();
             _racePaused = true;
+            _userViewedRace = true;
             GoButtonEnabled = true;
             OneStepButtonEnabled = true;
             PauseButtonEnabled = false;
@@ -157,6 +159,7 @@ namespace Racing.ViewModel
 
             if (!_division.TeamList.Any(t => t.TeamId == obj.PlayerTeamId))
             {
+                _userViewedRace = false;
                 FullRace();
                 FinishRace();
             }
@@ -211,7 +214,7 @@ namespace Racing.ViewModel
         private void FinishRace()
         {
             MessengerInstance.Send(new OpenSeasonOverviewPageMessage());
-            MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(FinishRanking, _race, _division));
+            MessengerInstance.Send(new UpdateSeasonAfterRaceMessage(FinishRanking, _race, _division, _userViewedRace));
             FinishRanking.Clear();
             RaceHasFinished = false;
         }
