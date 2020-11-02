@@ -26,6 +26,8 @@ namespace Racing.Services
             {
                 foreach (var team in division.TeamList)
                 {
+                    Downgrade(team);
+
                     var costTrainingFacilityUpgrade = ((team.TrainingFacility + 1) * _basicPriceFacilityUpgrade) * _factorFacilityUpgrade;
                     var costYouthFacilityUpgrade = ((team.YouthFacility + 1) * _basicPriceFacilityUpgrade) * _factorFacilityUpgrade;
 
@@ -59,8 +61,6 @@ namespace Racing.Services
                             team.YouthFacility++;
                             team.Budget -= costYouthFacilityUpgrade;
                         }
-
-                        Downgrade(team);
                     }
                 }
             }
