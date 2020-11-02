@@ -155,6 +155,7 @@ namespace AddNamesToDatabase.ViewModel
             _ = GetRaces();
             _ = NewRacePointList();
             RacePointList = new List<RacePoint>();
+            RacePartList = new List<RacePart>();
             RacePartEnumList = Enum.GetValues(typeof(RacePartEnum)).Cast<RacePartEnum>().ToList();
         }
 
